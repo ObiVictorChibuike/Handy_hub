@@ -3,8 +3,6 @@ import 'package:rxdart/rxdart.dart';
 
 class RegistrationBloc with RegistrationValidation {
   final _userType = BehaviorSubject<String>();
-  final _serviceID = BehaviorSubject<String>();
-
   final _customerID = BehaviorSubject<int>();
   final _firstName = BehaviorSubject<String>();
   final _lastName = BehaviorSubject<String>();
@@ -19,7 +17,6 @@ class RegistrationBloc with RegistrationValidation {
   final _termAndCondition = BehaviorSubject<bool>();
 
   Stream<String> get userType => _userType.stream;
-  Stream<String> get serviceID => _serviceID.stream;
 
   Stream<int> get customerID => _customerID.stream;
 
@@ -40,11 +37,12 @@ class RegistrationBloc with RegistrationValidation {
   Stream<String> get password => _password.stream.transform(passwordValidation);
   Stream<String> get referralCode => _referralCode.stream;
 
-  Stream<bool> get termsAndCondition => _termAndCondition.stream;
+  Stream<bool> get termsAndCondition =>
+      _termAndCondition.stream.transform(termsAndConditionValidation);
 
   addUserType(String? e) => _userType.sink.add(e!);
-  addServiceID(String? e) => _serviceID.sink.add(e!);
   addCustomerID(int? e) => _customerID.sink.add(e!);
+  addEmail(String? e) => _email.sink.add(e!);
   addFirstName(String? e) => _firstName.sink.add(e!);
   addLastName(String? e) => _lastName.sink.add(e!);
   addPhone(String? e) => _phoneNumber.sink.add(e!);
@@ -53,12 +51,11 @@ class RegistrationBloc with RegistrationValidation {
   addCatgoryID(String? e) => _catgoryID.sink.add(e!);
   addState(String? e) => _stateID.sink.add(e!);
   addPassword(String? e) => _password.sink.add(e!);
-  addReferralCode(String? e) => _referralCode.sink.add(e!);
-  addTermsAndConditions(bool? e) => _termAndCondition.sink.add(e!);
+  addReferralCode(String? e) => _referralCode.sink.add(e ?? "00000");
+  void addTermsAndConditions(bool? e) => _termAndCondition.sink.add(e!);
 
-  Stream<bool> get isFormComplete => Rx.combineLatest([
-        userType,
-        serviceID,
+  Stream<bool> get isSet => Rx.combineLatest([
+         
         customerID,
         firstName,
         lastName,
@@ -72,8 +69,25 @@ class RegistrationBloc with RegistrationValidation {
         termsAndCondition
       ], (values) => true);
 
+  //
+  //
+  // Rx.combineLatestList([
+
+  //     ], (a,b,c,d,e,f,g,h,i,j,k,l) => true);
+
   dispose() {
     _userType.close();
+    _termAndCondition.close();
+    _password.close();
+    _stateID.close();
+    _businessName.close();
+    _referralCode.close();
+    _address.close();
+    _customerID.close();
+    _email.close();
+    _phoneNumber.close();
+    _lastName.close();
+    _firstName.close();
   }
 
   get body => {
@@ -85,8 +99,8 @@ class RegistrationBloc with RegistrationValidation {
         "email": _email.value,
         "businessName": _businessName.value,
         "address": _address.value,
-        "categoryId": _catgoryID.value,
-        "stateId": _stateID.value,
+        "categoryId": int.tryParse(_catgoryID.value),
+        "stateId": int.tryParse(_stateID.value),
         "password": _password.value,
         "referralCode": _referralCode.valueOrNull,
         "termsAndCondition": _termAndCondition.value

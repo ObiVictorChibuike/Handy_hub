@@ -1,5 +1,8 @@
+import 'package:esolink/logic/states/states_request.dart';
 import 'package:esolink/views/screens/sign_up/customer_registration.dart';
+import 'package:esolink/views/screens/sign_up/rider_registration.dart';
 import 'package:esolink/views/screens/sign_up/service_provider_registration.dart';
+import 'package:esolink/views/screens/sign_up/store_vendor_registration.dart';
 import 'package:esolink/views/widgets/auth_header.dart';
 import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:esolink/views/widgets/sign_up_selection_tile.dart';
@@ -14,7 +17,8 @@ class SignUpSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     getAllCategories(context);
+    getAllCategories(context);
+    getAllState(context);
     RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
     return Scaffold(
       body: Padding(
@@ -58,12 +62,22 @@ class SignUpSelection extends StatelessWidget {
                       snapshot.data == "Customer"
                           ? Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                              return const CustomerRegistration();
+                              return CustomerRegistration();
                             }))
                           : snapshot.data == "Service Provider"
                               ? Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                  return const ServiceProviderRegistration();
+                                  return ServiceProviderRegistration();
+                                }))
+                              : snapshot.data == "Store Vendor"
+                                  ? Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                      return StoreVendorRegistration();
+                                    }))
+                                  : snapshot.data == "Dispatch Rider"
+                                      ? Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                          return RiderRegistration();
                                 }))
                               : null;
                     },

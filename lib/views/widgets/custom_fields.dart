@@ -1,3 +1,5 @@
+import 'package:esolink/models/states/states_model.dart';
+import 'package:esolink/views/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -211,8 +213,8 @@ class PlainTextFieldII extends StatelessWidget {
   }
 }
 
-class SelectField extends StatelessWidget {
-  const SelectField(
+class CategoryField extends StatelessWidget {
+  const CategoryField(
       {Key? key,
       this.label,
       this.hint,
@@ -233,7 +235,7 @@ class SelectField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(items?.map((e) => e.categoryId));
+    items?.map((e) => e.categoryId);
     return Padding(
       padding: const EdgeInsets.only(bottom: 25.0),
       child: Container(
@@ -302,6 +304,137 @@ class SelectField extends StatelessWidget {
   }
 }
 
+
+
+class StateField extends StatelessWidget {
+  const StateField(
+      {Key? key,
+      this.label,
+      this.hint,
+      this.info,
+      this.items2,
+      this.stream,
+      this.value,
+      this.onchanged})
+      : super(key: key);
+
+  final String? label;
+  final String? hint;
+  final Widget? info;
+  final List<StateModel>? items2;
+  final Stream? stream;
+  final String? value;
+  final void Function(String? e)? onchanged;
+
+  @override
+  Widget build(BuildContext context) {
+    items2?.map((e) => e.stateId);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25.0),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "$label",
+              style: subHeaderText.copyWith(
+                fontSize: 15,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 15),
+                  fillColor: const Color(0xffF2F2F2),
+                  hintStyle: GoogleFonts.montserrat(
+                      color: const Color(0xff828282),
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14)),
+              isExpanded: true,
+              value: value,
+              // value: items2![0].stateId == '' ? items2![0].stateId : '1',
+              onChanged: onchanged!,
+              isDense: true,
+              items: [
+                DropdownMenuItem(
+                  enabled: false,
+                  child: Text(
+                    "$hint",
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+                ...items2!
+                    .map<DropdownMenuItem<String>>((e) => DropdownMenuItem(
+                          value: "${e.stateId}",
+                          onTap: () {},
+                          child: Text(
+                            "${e.stateName}",
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.montserrat(
+                                color: const Color(0xff828282),
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14),
+                          ),
+                        ))
+                    .toList(),
+              ],
+              hint: Text(
+                "$hint",
+                style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Color(0xff999999),
+                    fontSize: 14),
+              ),
+              icon: const Icon(Icons.keyboard_arrow_down),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TextCheckBox extends StatelessWidget {
+  const TextCheckBox({Key? key, this.text, this.stream, this.onchanged})
+      : super(key: key);
+
+  final Widget? text;
+  final Stream<bool>? stream;
+  final void Function(bool? e)? onchanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          StreamBuilder<bool>(
+              stream: stream,
+              builder: (context, snapshot) {
+                return GestureDetector(
+                  excludeFromSemantics: true,
+                  child: Checkbox(
+                      checkColor: Colors.white,
+                      fillColor: MaterialStateProperty.all(primaryColor),
+                      value: snapshot.data ?? false,
+                      onChanged: onchanged),
+                );
+              }),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          Expanded(child: text!)
+        ],
+      ),
+    );
+  }
+}
+
 class PasswordField extends StatelessWidget {
   const PasswordField(
       {Key? key,
@@ -326,7 +459,7 @@ class PasswordField extends StatelessWidget {
     TogglePasswordVisibilityBloc togglePasswordVisibilityBloc =
         TogglePasswordVisibilityBloc();
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

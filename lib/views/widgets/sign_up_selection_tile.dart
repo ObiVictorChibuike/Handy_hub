@@ -25,7 +25,7 @@ class SignUpSelectionTile extends StatelessWidget {
               child: Container(
                 // height: 86,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 26, vertical: 13),
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
                 decoration: BoxDecoration(
                     border: Border.all(
                         color: snapshot.data == title
@@ -54,7 +54,7 @@ class SignUpSelectionTile extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 2),
                           constraints: const BoxConstraints(
-                              maxHeight: 38, maxWidth: 209),
+                              maxHeight: 38, maxWidth: 200),
                           child: Text(
                             "$subTitle",
                             style: subHeaderText.copyWith(fontSize: 14),
@@ -62,6 +62,7 @@ class SignUpSelectionTile extends StatelessWidget {
                         )
                       ],
                     ),
+               
                     const Icon(
                       Icons.arrow_forward,
                       size: 12,

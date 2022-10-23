@@ -12,6 +12,18 @@ mixin RegistrationValidation {
     }
   });
 
+
+
+  StreamTransformer<bool, bool> termsAndConditionValidation =
+      StreamTransformer<bool, bool>.fromHandlers(handleData: (terms, sink) {
+    if (terms != true) {
+      sink.addError("Please accept terms and conditions to proceed");
+    } else {
+      sink.add(terms);
+    }
+  });
+}
+
   StreamTransformer<String, String> textFieldValidation =
       StreamTransformer.fromHandlers(handleData: (data, sink) {
     if (data.isEmpty) {
@@ -85,6 +97,8 @@ mixin RegistrationValidation {
     }
   });
 
+  
+
   StreamTransformer<bool, bool> termsAndConditionValidation =
       StreamTransformer<bool, bool>.fromHandlers(handleData: (terms, sink) {
     if (terms != true) {
@@ -93,4 +107,4 @@ mixin RegistrationValidation {
       sink.add(terms);
     }
   });
-}
+
