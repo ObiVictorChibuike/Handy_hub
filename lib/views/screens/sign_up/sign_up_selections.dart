@@ -6,6 +6,7 @@ import 'package:esolink/views/widgets/sign_up_selection_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../logic/registration/registration_bloc.dart';
+import '../../../logic/services_category/services_request.dart';
 import '../../../service_locator.dart';
 
 class SignUpSelection extends StatelessWidget {
@@ -13,6 +14,7 @@ class SignUpSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     getAllCategories(context);
     RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
     return Scaffold(
       body: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../logic/toggle_password_visibility/toggle_password_visibility_bloc.dart';
 import '../constants/text_decoration.dart';
@@ -213,74 +214,89 @@ class PlainTextFieldII extends StatelessWidget {
 class SelectField extends StatelessWidget {
   const SelectField(
       {Key? key,
+      this.label,
       this.hint,
       this.info,
       this.items,
       this.stream,
-      this.label,
+      this.value,
       this.onchanged})
       : super(key: key);
 
   final String? label;
   final String? hint;
   final Widget? info;
-  final List<String>? items;
+  final List<dynamic>? items;
   final Stream? stream;
+  final String? value;
   final void Function(String? e)? onchanged;
 
   @override
   Widget build(BuildContext context) {
+    print(items?.map((e) => e.categoryId));
     return Padding(
       padding: const EdgeInsets.only(bottom: 25.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "$label",
-            style: subHeaderText.copyWith(
-              fontSize: 15,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          DropdownButtonFormField<String>(
-            isExpanded: true,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            ),
-            onChanged: onchanged,
-            isDense: true,
-            items: [
-              DropdownMenuItem(
-                enabled: false,
-                onTap: () {},
-                child: Text(hint!,
-                    overflow: TextOverflow.ellipsis, style: subHeaderText),
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "$label",
+              style: subHeaderText.copyWith(
+                fontSize: 15,
               ),
-              ...items!
-                  .map<DropdownMenuItem<String>>((e) => DropdownMenuItem(
-                        enabled: true,
-                        value: e,
-                        onTap: () {},
-                        child: Text(
-                          e,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ))
-                  .toList()
-            ],
-            hint: Text(
-              "$hint",
-              style: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                  color: Color(0xff999999),
-                  fontSize: 14),
             ),
-            icon: const Icon(Icons.keyboard_arrow_down),
-          )
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 15),
+                  fillColor: const Color(0xffF2F2F2),
+                  hintStyle: GoogleFonts.montserrat(
+                      color: const Color(0xff828282),
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14)),
+              isExpanded: true,
+              value: items![0].categoryId == '' ? items![0].categoryId : '14',
+              onChanged: onchanged!,
+              isDense: true,
+              items: [
+                DropdownMenuItem(
+                  enabled: false,
+                  child: Text(
+                    "$hint",
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+                ...items!
+                    .map<DropdownMenuItem<String>>((e) => DropdownMenuItem(
+                          value: value != null ? "${e.categoryId}" : "$e",
+                          onTap: () {},
+                          child: Text(
+                            "${e.name}",
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.montserrat(
+                                color: const Color(0xff828282),
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14),
+                          ),
+                        ))
+                    .toList(),
+              ],
+              hint: Text(
+                "$hint",
+                style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Color(0xff999999),
+                    fontSize: 14),
+              ),
+              icon: const Icon(Icons.keyboard_arrow_down),
+            )
+          ],
+        ),
       ),
     );
   }

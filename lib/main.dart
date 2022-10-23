@@ -1,3 +1,4 @@
+import 'package:esolink/logic/services_category/services_request.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/screens/sign_up/sign_up_selections.dart';
 import 'package:esolink/views/screens/splash_screens/splash_screens.dart';
@@ -11,7 +12,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
