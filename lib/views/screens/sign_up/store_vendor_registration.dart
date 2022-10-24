@@ -13,6 +13,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../logic/registration/registration_request.dart';
+import '../sign_in/initial_sign_in.dart';
 
 class StoreVendorRegistration extends StatelessWidget {
   StoreVendorRegistration({Key? key}) : super(key: key);
@@ -32,8 +33,8 @@ class StoreVendorRegistration extends StatelessWidget {
               height: 20,
             ),
             const AuthHeader(
-              title: "Service Provider",
-              subTitle: "You are registering as a service provider",
+              title: "Store Vendor",
+              subTitle: "You are registering as a Store Vendor",
             ),
             const SizedBox(
               height: 39,
@@ -194,6 +195,40 @@ class StoreVendorRegistration extends StatelessWidget {
                     },
                   );
                 })
+          ,
+            const SizedBox(
+              height: 12,
+            ),
+            Center(
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: "Already having an account?",
+                      style: subHeaderText.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: const Color(0xff4F4F4F),
+                      )),
+                  TextSpan(
+                      text: "Login",
+                      style: subHeaderText.copyWith(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const InitialSignIn();
+                          }));
+                        }),
+                ]),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
           ]),
         ),
       ),

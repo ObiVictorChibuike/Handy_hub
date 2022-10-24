@@ -1,7 +1,6 @@
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
 import 'package:esolink/views/screens/onboarding_screens/onboarding_screen.dart';
-import 'package:esolink/views/screens/sign_up/sign_up_selections.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

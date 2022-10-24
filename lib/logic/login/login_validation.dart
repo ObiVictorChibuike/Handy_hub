@@ -4,7 +4,7 @@ mixin LoginValidation {
   StreamTransformer<String, String> emailValidation =
       StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
     if (email.isEmpty ||
-        !email.contains(RegExp(
+        !email.trim().contains(RegExp(
             r"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"))) {
       sink.addError("Enter a valid email address");
     } else {

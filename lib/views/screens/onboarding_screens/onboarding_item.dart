@@ -1,3 +1,4 @@
+import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,8 @@ class OnboardingItem extends StatelessWidget {
           Center(
             child: Image.asset(
               image!,
+              color: primaryColor,
+              colorBlendMode: BlendMode.color,
               fit: BoxFit.cover,
             ),
           ),

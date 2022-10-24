@@ -6,6 +6,7 @@ import 'package:esolink/models/states/states_model.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
+import 'package:esolink/views/screens/sign_in/initial_sign_in.dart';
 import 'package:esolink/views/widgets/auth_header.dart';
 import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:esolink/views/widgets/custom_fields.dart';
@@ -138,7 +139,7 @@ class ServiceProviderRegistration extends StatelessWidget {
               onchanged: registrationBloc.addPassword,
               hint: "password",
             ),
-             PlainTextField(
+            PlainTextField(
               stream: registrationBloc.referralCode,
               onChanged: registrationBloc.addReferralCode,
               label: "Referral Code[Optional]",
@@ -190,11 +191,44 @@ class ServiceProviderRegistration extends StatelessWidget {
                   return CustomButton(
                     enabled: snapshot.data,
                     text: "Register",
-                         onTap: () async {
+                    onTap: () async {
                       await registerUser(context);
                     },
                   );
-                })
+                }),
+            const SizedBox(
+              height: 12,
+            ),
+            Center(
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: "Already having an account?",
+                      style: subHeaderText.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: const Color(0xff4F4F4F),
+                      )),
+                  TextSpan(
+                      text: "Login",
+                      style: subHeaderText.copyWith(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const InitialSignIn();
+                          }));
+                        }),
+                ]),
+              ),
+            )
+         ,  const SizedBox(
+              height: 12,
+            ),
           ]),
         ),
       ),

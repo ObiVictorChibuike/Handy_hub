@@ -1,3 +1,4 @@
+import 'package:esolink/logic/login/login_bloc.dart';
 import 'package:esolink/logic/registration/registration_bloc.dart';
 import 'package:esolink/logic/services_category/service_bloc.dart';
 import 'package:esolink/logic/states/state_bloc.dart';
@@ -13,4 +14,6 @@ serviceLocator() {
   locator.registerLazySingleton(() => RegistrationBloc());
   locator.registerLazySingleton(() => CategoriesBloc());
   locator.registerLazySingleton(() => StateBloc());
+  
+  locator.registerLazySingleton(() => LoginBloc());
 }

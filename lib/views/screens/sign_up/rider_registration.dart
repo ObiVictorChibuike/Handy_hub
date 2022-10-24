@@ -13,6 +13,8 @@ import 'package:esolink/views/widgets/custom_fields.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../sign_in/initial_sign_in.dart';
+
 class RiderRegistration extends StatelessWidget {
   RiderRegistration({Key? key}) : super(key: key);
   final RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
@@ -191,7 +193,40 @@ class RiderRegistration extends StatelessWidget {
                       await registerUser(context);
                     },
                   );
-                })
+                }),
+            const SizedBox(
+              height: 12,
+            ),
+            Center(
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: "Already having an account?",
+                      style: subHeaderText.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: const Color(0xff4F4F4F),
+                      )),
+                  TextSpan(
+                      text: "Login",
+                      style: subHeaderText.copyWith(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const InitialSignIn();
+                          }));
+                        }),
+                ]),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
           ]),
         ),
       ),

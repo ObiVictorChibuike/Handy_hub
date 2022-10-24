@@ -60,7 +60,7 @@ post(
     Navigator.pop(context);
   }
   return {
-    "data": data,
+    "data": data['status'],
     "status_code": response != null ? response.statusCode : 504
   };
 }
