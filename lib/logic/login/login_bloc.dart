@@ -13,7 +13,7 @@ class LoginBloc with LoginValidation {
 
   Stream<bool> get isSet => Rx.combineLatest2(email, password, (a, b) => true);
 
-  get loginBody => {"email_address": _email.value, "password": _password.value};
+  get loginBody => {"username": _email.value, "password": _password.value};
 
   dispose() {
     _email.close();

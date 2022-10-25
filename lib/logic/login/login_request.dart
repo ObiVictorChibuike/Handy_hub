@@ -11,14 +11,16 @@ login(BuildContext? context) async {
   var url = "${BASE_URL}Services/identity/login";
   var response =
       await post(url: url, context: context, body: loginBloc.loginBody);
- 
+
   if (response['data']['isSuccessful'] == true) {
+    print(response);
     showMessageSnackBar(context!,
         title: "Success",
-        content: response['data']['message']['friendlyMessage']);
+        content: response['data']['message']['friendlyMessage'] ??
+            "Login Successful");
   } else {
     showErrorSnackBar(context!,
         title: "Something Went Wrong",
-        content: response['data']['message']['friendlyMessage']);
+        content: response['data']['message']['friendlyMessage'] ?? "Error");
   }
 }
