@@ -10,25 +10,42 @@ class CategoriesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 21, vertical: 14),
-        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        elevation: 3,
         color: white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.network(categoriesModel!.icon.toString()),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 45,
+              width: 45,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.network(categoriesModel!.icon.toString()),
+              ),
             ),
             const SizedBox(
               height: 7,
             ),
-            Text(
-              "${categoriesModel!.name}",
-              style: subHeaderText.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xff4F4F4F)),
-            )
+            Flexible(
+              child: Text(
+                "${categoriesModel!.name}",
+                softWrap: true,
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.center,
+                style: subHeaderText.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xff4F4F4F)),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
           ],
         ));
   }

@@ -1,5 +1,6 @@
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/screens/dashboard/dashboard.dart';
+import 'package:esolink/views/screens/splash_screens/splash_screens.dart';
 import 'package:esolink/views/themes/light_theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Esolink',
         theme: lightTheme,
-        home: const Dashboard());
+        home: const SplashScreen());
   }
 }
