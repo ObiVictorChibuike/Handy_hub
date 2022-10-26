@@ -22,6 +22,10 @@ login(BuildContext? context) async {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return const Dashboard();
     }));
+  } else if (response['status_code'] == 504) {
+    showErrorSnackBar(context!,
+        title: "Something Went Wrong",
+        content: "Check your Internet connections");
   } else {
     showErrorSnackBar(context!,
         title: "Something Went Wrong",

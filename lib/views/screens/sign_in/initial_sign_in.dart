@@ -6,18 +6,18 @@ import 'package:esolink/views/screens/sign_up/sign_up_selections.dart';
 import 'package:esolink/views/widgets/auth_header.dart';
 import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:esolink/views/widgets/custom_fields.dart';
-import 'package:esolink/views/widgets/navigate.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/text_decoration.dart';
 
-class InitialSignIn extends StatelessWidget {
+class InitialSignIn extends StatelessWidget with WidgetsBindingObserver {
   const InitialSignIn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addObserver(this);
     LoginBloc loginBloc = locator.get<LoginBloc>();
     return Scaffold(
       body: Padding(
@@ -95,7 +95,7 @@ class InitialSignIn extends StatelessWidget {
                       ..onTap = () async {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return const SignUpSelection();
+                          return SignUpSelection();
                         }));
                       }),
               ]),
@@ -108,4 +108,6 @@ class InitialSignIn extends StatelessWidget {
       ),
     );
   }
+
+ 
 }

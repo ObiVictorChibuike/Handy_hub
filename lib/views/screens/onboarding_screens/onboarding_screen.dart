@@ -77,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       : Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignUpSelection()));
+                              builder: (context) => SignUpSelection()));
                 },
                 text: "Get Started",
               ),

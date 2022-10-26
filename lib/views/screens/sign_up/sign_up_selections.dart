@@ -16,14 +16,16 @@ import '../../constants/colors.dart';
 import '../../constants/text_decoration.dart';
 import '../sign_in/initial_sign_in.dart';
 
+// ignore: must_be_immutable
 class SignUpSelection extends StatelessWidget {
-  const SignUpSelection({Key? key}) : super(key: key);
+  RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
+
+  SignUpSelection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     getAllCategories(context);
-    getAllState(context);
-    RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
+    getAllState(context); 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 32),
@@ -56,12 +58,12 @@ class SignUpSelection extends StatelessWidget {
               subTitle:
                   "Personal account to pre-order or calculate farm produce ",
             ),
-            const Spacer(),
             StreamBuilder<String>(
                 stream: registrationBloc.userType,
                 builder: (context, snapshot) {
+                  print(snapshot.hasData);
                   return CustomButton(
-                    enabled: snapshot.hasData,
+                    enabled: snapshot.hasData ? true : false,
                     onTap: () {
                       snapshot.data == "Customer"
                           ? Navigator.push(context,
@@ -133,4 +135,6 @@ class SignUpSelection extends StatelessWidget {
       ),
     );
   }
+
+ 
 }

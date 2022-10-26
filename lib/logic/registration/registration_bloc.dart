@@ -55,7 +55,6 @@ class RegistrationBloc with RegistrationValidation {
   void addTermsAndConditions(bool? e) => _termAndCondition.sink.add(e!);
 
   Stream<bool> get isSet => Rx.combineLatest([
-         
         customerID,
         firstName,
         lastName,
@@ -76,7 +75,7 @@ class RegistrationBloc with RegistrationValidation {
   //     ], (a,b,c,d,e,f,g,h,i,j,k,l) => true);
 
   dispose() {
-    _userType.close();
+    _userType.drain(null);
     _termAndCondition.close();
     _password.close();
     _stateID.close();

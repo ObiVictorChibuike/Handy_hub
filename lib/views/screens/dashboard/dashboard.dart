@@ -27,9 +27,9 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     body = [
-        Homepage(),
+      Homepage(),
       const StoreScreen(),
-      const RequestScreen(),
+        RequestScreen(),
       const DeliveryScreen(),
       const AccountScreen()
     ];

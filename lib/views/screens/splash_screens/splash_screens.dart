@@ -15,7 +15,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    getAllCategories(context);
     super.initState();
     Future.delayed(
         const Duration(seconds: 3),
@@ -23,12 +22,13 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const OnboardingScreen()))
+                      builder: (context) => const Dashboard()))
             });
   }
 
   @override
   Widget build(BuildContext context) {
+    getAllCategories(context);
     return Container(
       color: white,
       height: double.infinity,
