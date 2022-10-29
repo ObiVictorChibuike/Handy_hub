@@ -2,17 +2,17 @@ import 'package:esolink/models/request_model/request_model.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
+import 'package:esolink/views/screens/dashboard/requests/request_detail.dart';
 import 'package:flutter/material.dart';
 
 class ReturnedRequestCard extends StatelessWidget {
-  const ReturnedRequestCard({Key? key, this.requestsModel}) : super(key: key);
+  const ReturnedRequestCard({Key? key, this.requestsModel, this.catID})
+      : super(key: key);
 
   final RequestsModel? requestsModel;
+  final String? catID;
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   title: Text(requestsModel!.firstName.toString()),
-    // );
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: Card(
@@ -20,29 +20,32 @@ class ReturnedRequestCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Container(
-                height: 56,
-                width: 56,
-                decoration: const BoxDecoration(shape: BoxShape.circle),
-                child: Image.network(
-                  requestsModel!.photoUrl.toString(),
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: primaryColor, width: 3)),
-                      child: Center(
-                          child: Text(
-                        requestsModel!.firstName![0],
-                        style: subHeaderText.copyWith(color: Colors.black),
-                      )),
-                    );
-                  },
+            Flexible(
+              flex: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Container(
+                  height: 56,
+                  width: 56,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Image.network(
+                    requestsModel!.photoUrl.toString(),
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 56,
+                        width: 56,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: primaryColor, width: 3)),
+                        child: Center(
+                            child: Text(
+                          requestsModel!.firstName![0],
+                          style: subHeaderText.copyWith(color: Colors.black),
+                        )),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -133,19 +136,31 @@ class ReturnedRequestCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Container(
-                      height: 21,
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(5)),
-                      width: 56,
-                      child: Center(
-                        child: Text(
-                          "Preview",
-                          style: subHeaderText.copyWith(
-                              fontSize: 10,
-                              color: white,
-                              fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return RequestDetailsScreen(
+                            requestsModel: requestsModel,
+                            title: requestsModel!.firstName,
+                            catID: catID,
+                          );
+                        }));
+                      },
+                      child: Container(
+                        height: 21,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 56,
+                        child: Center(
+                          child: Text(
+                            "Preview",
+                            style: subHeaderText.copyWith(
+                                fontSize: 10,
+                                color: white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),

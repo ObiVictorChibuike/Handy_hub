@@ -18,6 +18,7 @@ class FetchedRequestScreen extends StatelessWidget {
     fetchAllRequest(context, catID, "1984");
     return Scaffold(
         body: PageWithBackButton(
+    title: title,
       body: Expanded(
         child: ListView(children: [
           StreamBuilder<List<RequestsModel>>(
@@ -32,6 +33,7 @@ class FetchedRequestScreen extends StatelessWidget {
                     ...snapshot.data!
                         .map((e) => ReturnedRequestCard(
                               requestsModel: e,
+                              catID: catID,
                             ))
                         .toList()
                   ]),

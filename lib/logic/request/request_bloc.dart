@@ -12,7 +12,7 @@ class RequestBLoc {
   addRequestID(String? e) => _requestID.sink.add(e!);
 
   void  dispose() async {
-    await _requests.drain(0);
+    await _requests.drain([0]);
     _requests.close();
     await _requestID.drain(0);
     _requestID.close();

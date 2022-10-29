@@ -25,7 +25,6 @@ class Homepage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Card(
-                   
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(70)),
                   elevation: 4,

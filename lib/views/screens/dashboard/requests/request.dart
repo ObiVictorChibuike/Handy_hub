@@ -70,7 +70,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       }
                       return CategoryField(
                         stream: requestBLoc.requestID,
-                        onchanged: (e) {},
+                        onchanged: requestBLoc.addRequestID,
                         value: snapshot.data.toString(),
                         items:
                             snapshot.data!.map<dynamic>((CategoriesModel? e) {
@@ -94,6 +94,8 @@ class _RequestScreenState extends State<RequestScreen> {
                                 MaterialPageRoute(builder: (context) {
                               return FetchedRequestScreen(
                                 catID: snapshot.data,
+                                
+                               
                                 // title: ,
                               );
                             }));
