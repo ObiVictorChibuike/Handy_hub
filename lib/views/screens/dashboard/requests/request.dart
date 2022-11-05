@@ -6,6 +6,7 @@ import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:esolink/views/widgets/page_with_back_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../logic/request/request_calls.dart';
 import '../../../../models/services_category/categories.dart';
 import '../../../../service_locator.dart';
 import '../../../widgets/custom_fields.dart';
@@ -90,11 +91,11 @@ class _RequestScreenState extends State<RequestScreen> {
                       builder: (context, snapshot) {
                         return CustomButton(
                           onTap: () {
+                            requestBLoc.addRequestID("");
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return FetchedRequestScreen(
-                                catID: snapshot.data,
-
+                                id: snapshot.data,
                                 // title: ,
                               );
                             }));

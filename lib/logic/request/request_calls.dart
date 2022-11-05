@@ -6,8 +6,9 @@ import 'package:flutter/cupertino.dart';
 
 import '../../views/widgets/custom_snack.dart';
 
-fetchAllRequest(BuildContext? context, String? catID, String customerID) async {
-  RequestBLoc requestBLoc = locator.get<RequestBLoc>();
+Future<List<RequestsModel>> fetchAllRequest(
+    BuildContext? context, String? catID,) async {
+  // RequestBLoc requestBLoc = locator.get<RequestBLoc>();
   var url =
       "https://api.esolink.com/Services/all/providers/by/category/and/location/Id?categoryId=$catID&customerId=1984";
   var response = await get(url: url, context: context);
@@ -15,7 +16,9 @@ fetchAllRequest(BuildContext? context, String? catID, String customerID) async {
   requestModel = response['data']['serviceProviders'].map<RequestsModel>((e) {
     return RequestsModel.fromJson(e);
   }).toList();
-  requestBLoc.addAllRequest(requestModel);
+
+  return requestModel;
+  // requestBLoc.addAllRequest(requestModel);
   // fetchBusinessPhotos(context!, catID);
 }
 

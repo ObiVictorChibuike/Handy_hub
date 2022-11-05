@@ -1,5 +1,4 @@
 import 'package:esolink/logic/request/request_bloc.dart';
-import 'package:esolink/logic/request/request_calls.dart';
 import 'package:esolink/models/request_model/request_model.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/constants/colors.dart';
@@ -9,11 +8,13 @@ import 'package:esolink/views/screens/dashboard/requests/request_detail.dart';
 import 'package:flutter/material.dart';
 
 class ReturnedRequestCard extends StatelessWidget {
-  ReturnedRequestCard({Key? key, this.requestsModel, this.catID})
+  ReturnedRequestCard({
+    Key? key,
+    this.requestsModel,
+  })
       : super(key: key);
 
-  final RequestsModel? requestsModel;
-  final String? catID;
+  final RequestsModel? requestsModel; 
   MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
   @override
   Widget build(BuildContext context) {
@@ -147,8 +148,7 @@ class ReturnedRequestCard extends StatelessWidget {
                             MaterialPageRoute(builder: (context) {
                           return RequestDetailsScreen(
                             requestsModel: requestsModel,
-                            title: requestsModel!.firstName,
-                            catID: catID,
+                            title: requestsModel!.firstName, 
                           );
                         }));
                       },
@@ -178,8 +178,7 @@ class ReturnedRequestCard extends StatelessWidget {
                             MaterialPageRoute(builder: (context) {
                           return RequestDetailsScreen(
                             requestsModel: requestsModel,
-                            title: requestsModel!.firstName,
-                            catID: catID,
+                            title: requestsModel!.firstName, 
                           );
                         }));
                       },

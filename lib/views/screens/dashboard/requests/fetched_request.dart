@@ -9,24 +9,25 @@ import '../../../widgets/page_with_back_button.dart';
 import '../../../widgets/returned_requests_card.dart';
 
 class FetchedRequestScreen extends StatelessWidget {
-  FetchedRequestScreen({Key? key, this.catID, this.title}) : super(key: key);
+  FetchedRequestScreen({Key? key, this.title, this.id}) : super(key: key);
 
-  final String? catID, title;
+  final String? title, id;
   final RequestBLoc requestBLoc = locator.get<RequestBLoc>();
-  final 
-  MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
+  final MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
 
   @override
   Widget build(BuildContext context) {
-    fetchAllRequest(context, catID, "1984");
-   return Scaffold(
-   
+    return Scaffold(
         body: PageWithBackButton(
+      onDispose: () async {
+        await requestBLoc.addRequestID("");
+        requestBLoc.dispose();
+      },
       title: title,
       body: Expanded(
         child: ListView(children: [
-          StreamBuilder<List<RequestsModel>>(
-              stream: requestBLoc.allRequest,
+          FutureBuilder<List<RequestsModel>>(
+              future: fetchAllRequest(context, id),
               builder: (context, snapshot) {
                 while (!snapshot.hasData) {
                   return const Center(child: CupertinoActivityIndicator());
@@ -37,7 +38,6 @@ class FetchedRequestScreen extends StatelessWidget {
                     ...snapshot.data!
                         .map((e) => ReturnedRequestCard(
                               requestsModel: e,
-                              catID: catID,
                             ))
                         .toList()
                   ]),

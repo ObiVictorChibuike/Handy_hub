@@ -13,10 +13,10 @@ import '../../../constants/text_decoration.dart';
 import '../../../widgets/custom_button.dart';
 
 class RequestDetailsScreen extends StatelessWidget {
-  RequestDetailsScreen({Key? key, this.title, this.catID, this.requestsModel})
+  RequestDetailsScreen({Key? key, this.title, this.requestsModel})
       : super(key: key);
 
-  final String? title, catID;
+  final String? title;
   final RequestsModel? requestsModel;
   final MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
   @override
