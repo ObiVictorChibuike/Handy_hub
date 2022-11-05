@@ -19,4 +19,5 @@ serviceLocator() {
   locator.registerLazySingleton(() => LoginBloc());
   
   locator.registerLazySingleton(() => RequestBLoc());
+   locator.registerLazySingleton(() => MakeRequestBloc());
 }

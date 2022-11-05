@@ -1,4 +1,7 @@
+import 'package:esolink/logic/request/request_bloc.dart';
+import 'package:esolink/logic/request/request_calls.dart';
 import 'package:esolink/models/request_model/request_model.dart';
+import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
@@ -6,11 +9,12 @@ import 'package:esolink/views/screens/dashboard/requests/request_detail.dart';
 import 'package:flutter/material.dart';
 
 class ReturnedRequestCard extends StatelessWidget {
-  const ReturnedRequestCard({Key? key, this.requestsModel, this.catID})
+  ReturnedRequestCard({Key? key, this.requestsModel, this.catID})
       : super(key: key);
 
   final RequestsModel? requestsModel;
   final String? catID;
+  MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -71,7 +75,8 @@ class ReturnedRequestCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 3),
                     Text(
-                      "${requestsModel!.phoneNumber}",
+                      "${requestsModel!.phoneNumber}"
+                          .replaceRange(1, 6, "******"),
                       style: subHeaderText.copyWith(
                           fontSize: 8,
                           color: grey,
@@ -167,20 +172,32 @@ class ReturnedRequestCard extends StatelessWidget {
                     const SizedBox(
                       width: 21,
                     ),
-                    Container(
-                      height: 21,
-                      decoration: BoxDecoration(
-                          color: white,
-                          border: Border.all(color: primaryColor),
-                          borderRadius: BorderRadius.circular(5)),
-                      width: 56,
-                      child: Center(
-                        child: Text(
-                          "Request",
-                          style: subHeaderText.copyWith(
-                              fontSize: 10,
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return RequestDetailsScreen(
+                            requestsModel: requestsModel,
+                            title: requestsModel!.firstName,
+                            catID: catID,
+                          );
+                        }));
+                      },
+                      child: Container(
+                        height: 21,
+                        decoration: BoxDecoration(
+                            color: white,
+                            border: Border.all(color: primaryColor),
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 56,
+                        child: Center(
+                          child: Text(
+                            "Request",
+                            style: subHeaderText.copyWith(
+                                fontSize: 10,
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),

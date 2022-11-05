@@ -1,23 +1,32 @@
+import 'package:esolink/logic/request/request_bloc.dart';
 import 'package:esolink/logic/request/request_calls.dart';
+import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/widgets/custom_date.dart';
 import 'package:esolink/views/widgets/desscription_card.dart';
+import 'package:esolink/views/widgets/images_card.dart';
 import 'package:esolink/views/widgets/page_with_back_button.dart';
-import 'package:esolink/views/widgets/photo_card.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/request_model/request_model.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/text_decoration.dart';
+import '../../../widgets/custom_button.dart';
 
 class RequestDetailsScreen extends StatelessWidget {
-  const RequestDetailsScreen(
-      {Key? key, this.title, this.catID, this.requestsModel})
+  RequestDetailsScreen({Key? key, this.title, this.catID, this.requestsModel})
       : super(key: key);
 
   final String? title, catID;
   final RequestsModel? requestsModel;
+  final MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+    makeRequestBloc.addCategoryID(requestsModel!.categoryId);
+    makeRequestBloc.addEmail(requestsModel!.email);
+    makeRequestBloc.addPhone(requestsModel!.phoneNumber);
+    makeRequestBloc.addFullName(requestsModel!.firstName);
+    makeRequestBloc.addLocale(requestsModel!.address);
+    makeRequestBloc.addServiceID(requestsModel!.serviceProviderId);
     return Scaffold(
       body: PageWithBackButton(
           title: title,
@@ -146,7 +155,7 @@ class RequestDetailsScreen extends StatelessWidget {
                 const SizedBox(
                   height: 14,
                 ),
-                DescriptionCard(
+                Descriptionard(
                   date: CustomDate.slash(requestsModel!.createdOn.toString()),
                   desc: requestsModel!.description,
                 ),
@@ -154,65 +163,19 @@ class RequestDetailsScreen extends StatelessWidget {
                   height: 10,
                 ),
 
-                // FutureBuilder<List<BusinessPhoto>>(
-                //     future: fetchBusinessPhotos(context, catID),
-                //     builder: (context, snapshot) {
-
-                //       while (snapshot.data!.isEmpty) {
-                //         return Container();
-                //       }
-                //       return Row(children: [
-                //         ...snapshot.data!.map(((e) {
-                //           return PhotoCard(
-                //             imageUrl: e.photoUrl,
-                //           );
-                //         })).toList()
-                //       ]);
-                //     }),
-
-                // Visibility(
-                //   visible:
-                //       // ignore: unnecessary_null_comparison
-                //       requestsModel!.businessPhoto! != [],
-                //   child: Card(
-                //       color: white,
-                //       elevation: 1.5,
-                //       shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(10)),
-                //       child: Padding(
-                //         padding: const EdgeInsets.symmetric(
-                //             horizontal: 16, vertical: 18),
-                //         child: Row(
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //           children: [
-                //             PhotoCard(
-                //               // ignore: prefer_if_null_operators, unnecessary_null_comparison
-                //               imageUrl: requestsModel!
-                //                   .businessPhoto!
-                //                   .toString().isEmpty ? "https://res.cloudinary.com/esolink/image/upload/v1644743449/engomb1fiyuul51ubmxq.jpg": requestsModel!.businessPhoto![0].photoUrl
-                //                       .toString(),
-                //             ),
-                //             // PhotoCard(
-                //             //   imageUrl: requestsModel!
-                //             //       .businessPhoto![1].photoUrl
-                //             //       .toString(),
-                //             // ),
-                //             // PhotoCard(
-                //             //   imageUrl: requestsModel!
-                //             //       .businessPhoto![2].photoUrl
-                //             //       .toString(),
-                //             // ),
-                //             // PhotoCard(
-                //             //   imageUrl: requestsModel!
-                //             //       .businessPhoto![3].photoUrl
-                //             //       .toString(),
-                //             // ),
-                //           ],
-                //         ),
-                //       )),
-                // )
-             
+                const ImageCard(),
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: CustomButton(
+                    onTap: () async {
+                      await makeRequest(context);
+                    },
+                    text: "Make a Request",
+                  ),
+                ) 
               ],
             ),
           )),

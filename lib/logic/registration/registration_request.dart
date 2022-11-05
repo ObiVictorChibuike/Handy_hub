@@ -4,8 +4,6 @@ import 'package:esolink/logic/registration/registration_bloc.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/screens/sign_up/otp_screen.dart';
 import 'package:esolink/views/widgets/custom_snack.dart';
-import 'package:esolink/views/widgets/navigate.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 registerUser(BuildContext? context) async {
@@ -13,8 +11,7 @@ registerUser(BuildContext? context) async {
   Map<String, dynamic>? result;
   result = registrationBloc.body;
   var url = "${BASE_URL}Services/register/service/provider/website";
-  var response = await post(url: url, context: context, body: result);
-  print(result);
+  var response = await post(url: url, context: context, body: result); 
   if (response['data']['isSuccessful'] == true) {
     showMessageSnackBar(context!,
         title: "Success",

@@ -1,20 +1,39 @@
 import 'package:flutter/material.dart';
 
 class PhotoCard extends StatelessWidget {
-  const PhotoCard({Key? key, this.imageUrl}) : super(key: key);
-
-  final String? imageUrl;
+  const PhotoCard({
+    Key? key,
+  }) : super(key: key);
   @override
-  Widget build(BuildContext context) { 
-    return Container(
-      height: 76,
-      width: 76,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(imageUrl == "file:///null"
-                  ? "https://res.cloudinary.com/esolink/image/upload/v1644743449/engomb1fiyuul51ubmxq.jpg"
-                  : imageUrl!)),
-          borderRadius: BorderRadius.circular(10)),
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    contentPadding: const EdgeInsets.all(0),
+                    content: Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      width: 344,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: AssetImage("assets/images/photo_model.png")),
+                      ),
+                    ),
+                  ));
+        },
+        child: Container(
+          height: 76,
+          width: 76,
+          decoration: BoxDecoration(
+              image: const DecorationImage(
+                  image: AssetImage("assets/images/photo_model.png")),
+              borderRadius: BorderRadius.circular(10)),
+        ),
+      ),
     );
   }
 }

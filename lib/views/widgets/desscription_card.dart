@@ -2,8 +2,8 @@ import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:flutter/material.dart';
 
-class DescriptionCard extends StatelessWidget {
-  const DescriptionCard({Key? key, this.date, this.desc}) : super(key: key);
+class Descriptionard extends StatelessWidget {
+  const Descriptionard({Key? key, this.date, this.desc}) : super(key: key);
 
   final String? desc, date;
   @override
@@ -45,11 +45,5 @@ class DescriptionCard extends StatelessWidget {
   }
 }
 
-class ImageCard extends StatelessWidget {
-  const ImageCard({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
+
