@@ -9,8 +9,7 @@ getAllState(BuildContext? context) async {
   StateBloc stateBloc = locator.get<StateBloc>();
   var url = "${BASE_URL}Category/all/states";
   var response = await get(url: url, context: context);
-  print(url);
-  print(response);
+ 
   List<StateModel> stateModel;
   stateModel = response['data']['state'].map<StateModel>((e) {
     return StateModel.fromJson(e);

@@ -15,7 +15,7 @@ class CategoriesCard extends StatelessWidget {
       onTap: () async {
         await Navigator.push(context, MaterialPageRoute(builder: (context) {
           return FetchedRequestScreen(
-              // catID: categoriesModel!.categoryId.toString(),
+              id: categoriesModel!.categoryId.toString(),
               title: categoriesModel!.name);
         }));
       },

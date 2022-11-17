@@ -11,8 +11,8 @@ class OnboardingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: positionIndex == currentIndex ? 25 : 12,
-      width: positionIndex == currentIndex ? 3 : 3,
+      height: positionIndex == currentIndex ? 8 : 6,
+      width: positionIndex == currentIndex ? 8 : 6,
       decoration: BoxDecoration(
         border: Border.all(
           color: positionIndex == currentIndex
