@@ -20,6 +20,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Esolink',
         theme: lightTheme,
-        home:   StoreScreen());
+        home: const SplashScreen());
   }
 }

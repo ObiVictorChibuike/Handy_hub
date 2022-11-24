@@ -18,6 +18,7 @@ class PhotoCard extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 3,
                       width: 344,
                       decoration: const BoxDecoration(
+                       
                         image: DecorationImage(
                             fit: BoxFit.contain,
                             image: AssetImage("assets/images/photo_model.png")),

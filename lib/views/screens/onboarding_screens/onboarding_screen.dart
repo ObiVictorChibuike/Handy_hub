@@ -130,14 +130,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               //   child: CustomButton(
               //     enabled: true,
               //     onTap: () {
-              //       currentIndex < 2
-              //           ? _pageController.nextPage(
-              //               duration: const Duration(milliseconds: 300),
-              //               curve: Curves.easeInOut)
-              //           : Navigator.pushReplacement(
-              //               context,
-              //               MaterialPageRoute(
-              //                   builder: (context) => SignUpSelection()));
+                      // currentIndex < 2
+                      //     ? _pageController.nextPage(
+                      //         duration: const Duration(milliseconds: 300),
+                      //         curve: Curves.easeInOut)
+                      //     : Navigator.pushReplacement(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => SignUpSelection()));
               //     },
               //     text: "Get Started",
               //   ),
