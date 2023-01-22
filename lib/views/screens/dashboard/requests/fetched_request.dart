@@ -33,7 +33,7 @@ class FetchedRequestScreen extends StatelessWidget {
                   return const Center(child: CupertinoActivityIndicator());
                 }
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(children: [
                     ...snapshot.data!
                         .map((e) => ReturnedRequestCard(

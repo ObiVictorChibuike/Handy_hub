@@ -4,9 +4,11 @@ import 'package:esolink/views/screens/dashboard/store/stores_products.dart';
 import 'package:flutter/material.dart';
 
 class StoresCard extends StatelessWidget {
-  const StoresCard({Key? key, this.stores}) : super(key: key);
+  const StoresCard({Key? key, this.stores, required this.height, required this.width}) : super(key: key);
 
   final StoresCategory? stores;
+  final double height;
+  final double width;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -20,30 +22,42 @@ class StoresCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 7),
         child: Stack(children: [
-          Container(
-            height: 113 * .5,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                gradient: LinearGradient(
-                    // begin: FractionalOffset.topCenter,
-                    // end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Colors.white,
-                      Colors.white.withOpacity(.95),
-                    ], stops: const [
-                  0.0,
-                  1.0
-                ])),
-          ),
-          Container(
-            height: 113,
-            decoration: BoxDecoration(
-                border:
-                    Border.all(color: const Color(0xff187226).withOpacity(.65)),
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/car.png"))),
+          // Container(
+          //   height: 113 * .5,
+          //   decoration: BoxDecoration(
+          //       color: Colors.white,
+          //       gradient: LinearGradient(
+          //           // begin: FractionalOffset.topCenter,
+          //           // end: FractionalOffset.bottomCenter,
+          //           colors: [
+          //             Colors.white,
+          //             Colors.white.withOpacity(.95),
+          //           ], stops: const [
+          //         0.0,
+          //         1.0
+          //       ])),
+          // ),
+          ShaderMask(
+            shaderCallback: (Rect bounds){
+              return LinearGradient(
+                  begin: Alignment.center,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Colors.transparent
+                  ]).createShader(bounds);
+            },
+            child: Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                  border:
+                      Border.all(color: const Color(0xff187226)),
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/images/car.png"))),
+            ),
           ),
           Positioned(
             bottom: 5,

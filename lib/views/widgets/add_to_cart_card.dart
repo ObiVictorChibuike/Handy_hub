@@ -1,4 +1,4 @@
-import 'package:esolink/models/stores_model/stores_model.dart';
+ import 'package:esolink/models/stores_model/stores_model.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:flutter/material.dart';

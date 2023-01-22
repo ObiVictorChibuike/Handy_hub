@@ -19,8 +19,9 @@ class ReturnedRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 5),
       child: Card(
+        elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),

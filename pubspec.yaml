@@ -38,6 +38,8 @@ dependencies:
   http: ^0.13.5
   pin_code_fields: ^7.4.0
   rxdart: ^0.27.5
+  carousel_slider: ^4.2.1
+  flutter_wall_layout: ^2.1.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

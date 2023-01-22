@@ -24,5 +24,6 @@ fetchAllStoresCategories(BuildContext? context) async {
   storesCategories = response['data']['storeCategory'].map<StoresCategory>((e) {
     return StoresCategory.fromJson(e);
   }).toList();
+  print(response);
   storesBLoc.addStoresCategories(storesCategories);
 }

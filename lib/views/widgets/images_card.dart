@@ -26,68 +26,6 @@ class ImageCard extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              Wrap(spacing: 2, children: [
-                Chip(
-                  backgroundColor: white,
-                  side: const BorderSide(color: Color(0xffF2F2F2)),
-                  label: Text(
-                    "Potrait photograph",
-                    textAlign: TextAlign.center,
-                    style: subHeaderText.copyWith(
-                        color: const Color(0xff828282),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                Chip(
-                  backgroundColor: white,
-                  side: const BorderSide(color: Color(0xffF2F2F2)),
-                  label: Text(
-                    "Video coverage",
-                    textAlign: TextAlign.center,
-                    style: subHeaderText.copyWith(
-                        color: const Color(0xff828282),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                Chip(
-                  backgroundColor: white,
-                  side: const BorderSide(color: Color(0xffF2F2F2)),
-                  label: Text(
-                    "Birthday shoot",
-                    textAlign: TextAlign.center,
-                    style: subHeaderText.copyWith(
-                        color: const Color(0xff828282),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                Chip(
-                  backgroundColor: white,
-                  side: const BorderSide(color: Color(0xffF2F2F2)),
-                  label: Text(
-                    "Wedding Ceremony",
-                    textAlign: TextAlign.center,
-                    style: subHeaderText.copyWith(
-                        color: const Color(0xff828282),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                Chip(
-                  backgroundColor: white,
-                  side: const BorderSide(color: Color(0xffF2F2F2)),
-                  label: Text(
-                    "Burial Ceremony",
-                    textAlign: TextAlign.center,
-                    style: subHeaderText.copyWith(
-                        color: const Color(0xff828282),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-              ]),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(children: const [

@@ -47,155 +47,125 @@ class _DashboardState extends State<Dashboard> {
               label: "Home",
               icon: index == 0
                   ? Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: primaryColor),
+                      height: 37,
+                      width: 37,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "home",
-                          color: white,
+                          color: primaryColor,
                           size: 15,
                         ),
                       ))
                   : Container(
-                      height: 29,
-                      width: 29,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffF5F9F2),
-                      ),
+                      height: 37,
+                      width: 37,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "home",
                           size: 15,
-                          color: primaryColor,
+                          color: Colors.black38,
                         ),
                       ))),
           BottomNavigationBarItem(
               label: "Store",
               icon: index == 1
                   ? Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: primaryColor),
+                  height: 37,
+                  width: 37,
                       child: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "store",
+                          color: Color(0xff187226),
                           size: 15,
-                          color: Colors.white,
                         ),
                       ))
                   : Container(
-                      height: 29,
-                      width: 29,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffF5F9F2),
-                      ),
+                  height: 37,
+                  width: 37,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "store",
                           size: 15,
-                          color: primaryColor,
+                          color: Colors.black38,
                         ),
                       ))),
           BottomNavigationBarItem(
               label: "Request",
               icon: index == 2
                   ? Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: primaryColor),
+                  height: 37,
+                  width: 37,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: EsolinkIcons(
-                          icons: "request",
-                          size: 15,
-                          color: white,
-                        ),
-                      ))
-                  : Container(
-                      height: 29,
-                      width: 29,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffF5F9F2),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "request",
                           size: 15,
                           color: primaryColor,
+                        ),
+                      ))
+                  : Container(
+                  height: 37,
+                  width: 37,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: EsolinkIcons(
+                          icons: "request",
+                          size: 15,
+                          color: Colors.black38,
                         ),
                       ))),
           BottomNavigationBarItem(
               label: "Delivery",
               icon: index == 3
                   ? Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: primaryColor),
+                  height: 37,
+                  width: 37,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: EsolinkIcons(
-                          icons: "delivery",
-                          size: 15,
-                          color: white,
-                        ),
-                      ))
-                  : Container(
-                      height: 29,
-                      width: 29,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffF5F9F2),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "delivery",
                           size: 15,
                           color: primaryColor,
+                        ),
+                      ))
+                  : Container(
+                  height: 37,
+                  width: 37,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: EsolinkIcons(
+                          icons: "delivery",
+                          size: 15,
+                          color: Colors.black38,
                         ),
                       ))),
           BottomNavigationBarItem(
               label: "Accounts",
               icon: index == 4
                   ? Container(
-                      height: 29,
-                      width: 29,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: primaryColor),
+                  height: 37,
+                  width: 37,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: EsolinkIcons(
-                          icons: "account",
-                          size: 15,
-                          color: white,
-                        ),
-                      ))
-                  : Container(
-                      height: 29,
-                      width: 29,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffF5F9F2),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: EsolinkIcons(
                           icons: "account",
                           size: 15,
                           color: primaryColor,
+                        ),
+                      ))
+                  : Container(
+                  height: 37,
+                  width: 37,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: EsolinkIcons(
+                          icons: "account",
+                          size: 15,
+                            color: Colors.black38,
                         ),
                       ))),
         ],

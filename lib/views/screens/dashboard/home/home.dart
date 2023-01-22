@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:esolink/logic/services_category/service_bloc.dart';
 import 'package:esolink/models/services_category/categories.dart';
 import 'package:esolink/service_locator.dart';
@@ -9,47 +10,92 @@ import 'package:esolink/views/widgets/catogories_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   Homepage({Key? key}) : super(key: key);
 
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   final CategoriesBloc categoriesBloc = locator.get<CategoriesBloc>();
+
+  bool show = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: const Color(0x00f9f9f9),
+        backgroundColor: const Color(0xE5E5E5),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(70)),
-                  elevation: 4,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 9),
-                        filled: true,
-                        fillColor: white,
-                        hintText: "Search for available services",
-                        hintStyle: subHeaderText.copyWith(
-                            color: const Color(0xffBDBDBD),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                        suffixIcon: const Icon(Icons.search)),
-                  ),
+                TextField(
+                  decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 9),
+                      filled: true,
+                      fillColor: white,
+                      hintText: "Search for available services",
+                      hintStyle: subHeaderText.copyWith(
+                          color: const Color(0xffBDBDBD),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                      suffixIcon: const Icon(Icons.search)),
                 ),
                 const SizedBox(
                   height: 14,
                 ),
-                const EsolinkIcons(
-                  image: "display_1",
+                Container(
+                  height: 140,
+                  child: ListView(
+                    children: [
+                      CarouselSlider(
+                        items: [
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/display_1.png"),
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/display_2.png"),
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/display_3.png"),
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ],
+
+                        options: CarouselOptions(
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          aspectRatio: 2.6
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 13,
@@ -68,18 +114,29 @@ class Homepage extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      "N120,000",
+                    show ? Text(
+                      "N120,000.00",
+                      style: subHeaderText.copyWith(
+                          color: primaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800),
+                    ) : Text(
+                      "*******",
                       style: subHeaderText.copyWith(
                           color: primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w800),
                     ),
                     const Spacer(),
-                    Icon(
-                      Icons.visibility,
-                      size: 15,
-                      color: primaryColor,
+                    IconButton(
+                      icon: show ? Icon(Icons.visibility,
+                        size: 15, color: primaryColor) : Icon(Icons.visibility_off,
+                          size: 15, color: primaryColor),
+                      onPressed: () {
+                        setState(() {
+                          show = !show;
+                        });
+                      },
                     )
                   ],
                 ),

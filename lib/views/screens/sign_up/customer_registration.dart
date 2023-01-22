@@ -52,12 +52,6 @@ class CustomerRegistration extends StatelessWidget {
               hint: "Last Name",
             ),
             PlainTextField(
-              stream: registrationBloc.businessName,
-              onChanged: registrationBloc.addBusinessName,
-              label: "Business Name",
-              hint: "Business Name",
-            ),
-            PlainTextField(
               stream: registrationBloc.phoneNumber,
               onChanged: registrationBloc.addPhone,
               label: "Phone",
@@ -69,45 +63,45 @@ class CustomerRegistration extends StatelessWidget {
               label: "Email Address",
               hint: "",
             ),
-            StreamBuilder<List<CategoriesModel>>(
-                initialData: [
-                  CategoriesModel.fromJson(
-                    {
-                      "categoryId": 14,
-                      "name": " Architect",
-                      "icon":
-                          "https://res.cloudinary.com/esolink/image/upload/v1641928046/ikbniod9u9l4narj50aj.png",
-                      "publicId": null,
-                      "description": " Architect",
-                      "supervisorName": "Fortune Johnbull",
-                      "supervisorEmail": "goodyrhome@gmail.com ",
-                      "supervisorNumber": "2349056309508",
-                      "group": "B",
-                      "active": null,
-                      "deleted": null,
-                      "createdBy": null,
-                      "createdOn": null,
-                      "updatedBy": null,
-                      "updatedOn": null
-                    },
-                  )
-                ],
-                stream: categoriesBloc.allCategories,
-                builder: (context, snapshot) {
-                  if (snapshot.data != null && snapshot.data!.isEmpty) {
-                    return const SizedBox();
-                  }
-                  return CategoryField(
-                    stream: registrationBloc.categoryID,
-                    onchanged: registrationBloc.addCatgoryID,
-                    value: snapshot.data.toString(),
-                    items: snapshot.data!
-                        .map<dynamic>((CategoriesModel? e) => e)
-                        .toList(),
-                    hint: "Select Service Category",
-                    label: "Type of Service",
-                  );
-                }),
+            // StreamBuilder<List<CategoriesModel>>(
+            //     initialData: [
+            //       CategoriesModel.fromJson(
+            //         {
+            //           "categoryId": 14,
+            //           "name": " Architect",
+            //           "icon":
+            //               "https://res.cloudinary.com/esolink/image/upload/v1641928046/ikbniod9u9l4narj50aj.png",
+            //           "publicId": null,
+            //           "description": " Architect",
+            //           "supervisorName": "Fortune Johnbull",
+            //           "supervisorEmail": "goodyrhome@gmail.com ",
+            //           "supervisorNumber": "2349056309508",
+            //           "group": "B",
+            //           "active": null,
+            //           "deleted": null,
+            //           "createdBy": null,
+            //           "createdOn": null,
+            //           "updatedBy": null,
+            //           "updatedOn": null
+            //         },
+            //       )
+            //     ],
+            //     stream: categoriesBloc.allCategories,
+            //     builder: (context, snapshot) {
+            //       if (snapshot.data != null && snapshot.data!.isEmpty) {
+            //         return const SizedBox();
+            //       }
+            //       return CategoryField(
+            //         stream: registrationBloc.categoryID,
+            //         onchanged: registrationBloc.addCatgoryID,
+            //         value: snapshot.data.toString(),
+            //         items: snapshot.data!
+            //             .map<dynamic>((CategoriesModel? e) => e)
+            //             .toList(),
+            //         hint: "Select Service Category",
+            //         label: "Type of Service",
+            //       );
+            //     }),
             PlainTextField(
               stream: registrationBloc.address,
               onChanged: registrationBloc.addAddress,

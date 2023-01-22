@@ -23,7 +23,7 @@ class CategoriesScreen extends StatelessWidget {
         ),
         body: Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(left: 22, right: 22, bottom: 22),
+            padding: const EdgeInsets.only(left: 10, right: 22, bottom: 22),
             child: ListView(
               children: [
                 StreamBuilder<List<CategoriesModel>>(

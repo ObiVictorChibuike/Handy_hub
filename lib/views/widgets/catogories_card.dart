@@ -21,7 +21,7 @@ class CategoriesCard extends StatelessWidget {
       },
       child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-          elevation: 3,
+          elevation: .2,
           color: white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

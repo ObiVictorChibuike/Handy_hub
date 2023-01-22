@@ -15,27 +15,38 @@ class NewOnboardingScreen extends StatelessWidget {
         width: double.infinity,
         child: Stack(children: [
           Center(
-            child: Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("assets/images/$image.png")))
-                ),
+            child: ShaderMask(
+              shaderCallback: (Rect bounds){
+                return LinearGradient(
+                  begin: Alignment.center,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white,
+                      Colors.transparent
+                ]).createShader(bounds);
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("assets/images/$image.png")))
+                  ),
+            ),
           ),
           Container( 
-            decoration: BoxDecoration(
-                color: Colors.white,
-                gradient: LinearGradient(
-                    begin: FractionalOffset.topCenter,
-                    end: FractionalOffset.bottomCenter,
-                    colors: [
-                      Colors.grey.withOpacity(0.0),
-                      Colors.black,
-                    ],
-                    stops: const [
-                      0.0,
-                      1.0
-                    ])),
+            // decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     gradient: LinearGradient(
+            //         begin: FractionalOffset.topCenter,
+            //         end: FractionalOffset.bottomCenter,
+            //         colors: [
+            //           Colors.grey.withOpacity(0.0),
+            //           Colors.black,
+            //         ],
+            //         stops: const [
+            //           0.0,
+            //           1.0
+            //         ])),
           ),
           Positioned(
             top: 60,
@@ -43,14 +54,11 @@ class NewOnboardingScreen extends StatelessWidget {
               title: "$title",
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 88),
-            child: Align( 
-              alignment: Alignment.bottomCenter,
-              child: OnboardingDetailsCard(
-                descriptions: description ??
-                    "Speak directly with professionals, negotiate price and pay securely though esolink app.Esolink will monitor to ensure your job is completed to your satisfaction.",
-              ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: OnboardingDetailsCard(
+              descriptions: description ??
+                  "Speak directly with professionals, negotiate price and pay securely though esolink app.Esolink will monitor to ensure your job is completed to your satisfaction.",
             ),
           )
         ]),
