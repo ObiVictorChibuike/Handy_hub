@@ -14,31 +14,33 @@ class DeliveryScreen extends StatelessWidget {
       body: PageWithBackButton(
         title: "Delivery",
         automaticallyImplyLeading: false,
-        body: Padding(
-          padding: const EdgeInsets.only(top:90.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const EsolinkIcons(
-                icons: "delivery_1",
-                size: 380,
-              ),
-              const SizedBox(
-                height: 140,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomButton(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                                return allDeliveryScreen();
-                              }));
-                        },
-                        text: "Make a request",
-                      ),
-              ),
-            ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top:90.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const EsolinkIcons(
+                  icons: "delivery_1",
+                  size: 380,
+                ),
+                const SizedBox(
+                  height: 140,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomButton(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return allDeliveryScreen();
+                                }));
+                          },
+                          text: "Make a request",
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
