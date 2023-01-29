@@ -113,6 +113,102 @@ class PlainTextField extends StatelessWidget {
   }
 }
 
+class PlainTextField3 extends StatelessWidget {
+  PlainTextField3(
+      {Key? key,
+        this.label,
+        this.hint,
+        this.stream,
+        this.onChanged,
+        this.maxLines,
+        this.enabled,
+        this.onTap,
+        this.controller,
+        this.readOnly,
+        this.obscureText,
+        this.trailing,
+        this.initialValue,
+        this.currency = false,
+        this.keyboardType})
+      : super(key: key);
+
+  final String? label, hint, initialValue;
+  final Stream? stream;
+  final Widget? trailing;
+  final Function(String? e)? onChanged;
+  final int? maxLines;
+  final bool? enabled;
+  final void Function()? onTap;
+  final bool? readOnly;
+  final TextEditingController? controller;
+  final bool? obscureText;
+  final TextInputType? keyboardType;
+  final bool? currency;
+
+  final TextEditingController amount = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 25.0),
+      child: StreamBuilder(
+          stream: stream,
+          builder: (context, snapshot) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "$label",
+                  style: subHeaderText.copyWith(
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  textInputAction: TextInputAction.done,
+                  // textCapitalization: TextCapitalization.none,
+                  keyboardType: keyboardType ?? TextInputType.text,
+                  initialValue: initialValue,
+                  controller: controller,
+                  onTap: onTap,
+                  obscureText: obscureText ?? false,
+                  onChanged: !currency!
+                      ? onChanged
+                      : (e) {
+                    onChanged!(e.replaceAll(",", ""));
+                    String convertedText =
+                    convertToCurrency(e.replaceAll(",", ""));
+                    if (controller != null) {
+                      controller!.value = controller!.value.copyWith(
+                          text: convertedText,
+                          selection: TextSelection.collapsed(
+                              offset: convertedText.length));
+                    } else {
+                      amount.value = amount.value.copyWith(
+                          text: convertedText,
+                          selection: TextSelection.collapsed(
+                              offset: convertedText.length));
+                    }
+                  },
+                  maxLines: maxLines ?? 5,
+                  enabled: enabled ?? true,
+                  readOnly: readOnly ?? false,
+                  decoration: InputDecoration(
+                      suffix: trailing,
+                      errorText:
+                      snapshot.hasError ? snapshot.error.toString() : null,
+                      hintText: hint,
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 15)),
+                )
+              ],
+            );
+          }),
+    );
+  }
+}
+
 class PlainTextFieldII extends StatelessWidget {
   PlainTextFieldII(
       {Key? key,

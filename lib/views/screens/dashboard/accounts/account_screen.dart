@@ -1,3 +1,4 @@
+import 'package:esolink/views/screens/dashboard/requested_Service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/colors.dart';
@@ -11,6 +12,7 @@ import '../inv-mgt/inventoryScreen.dart';
 import '../jobs/jobs.dart';
 import '../orders/ordersPage.dart';
 import '../password/password.dart';
+import '../profile/profile.dart';
 import '../reminder/reminderScreen.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -55,7 +57,10 @@ class AccountScreen extends StatelessWidget {
                   child: Text('My Esolink Account', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                 ),
                 accounts_Card(iconText: 'requested_service', text: 'Requested service', onTap: () {
-
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return requested_Page();
+                      }));
                 },),
                 accounts_Card(iconText: 'shopping-bag', text: 'Orders', onTap: () {
                   Navigator.push(context,
@@ -85,7 +90,12 @@ class AccountScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left:15.0, top: 15.0, bottom: 15.0),
                   child: Text('My Settings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                 ),
-                accounts_Card(iconText: 'Active', text: 'Profile', onTap: () {  },),
+                accounts_Card(iconText: 'Active', text: 'Profile', onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return profile_Screen();
+                      }));
+                },),
                 accounts_Card(iconText: 'padlock', text: 'Change Password', onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) {

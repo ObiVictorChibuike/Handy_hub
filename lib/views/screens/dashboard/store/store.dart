@@ -15,57 +15,135 @@ class StoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     fetchAllStoresCategories(context);
     return Scaffold(
-      body: PageWithBackButton(
-        title: "Stores",
+      appBar: AppBar(
+        title: Text("Stores"),
         automaticallyImplyLeading: false,
-        action: const Icon(Icons.search),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                Column(
+        centerTitle: true,
+      ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Store01(name: 'Super Market',),
-                    Store01(name: 'Home & Office',),
+                    Column(
+                      children: [
+                        GestureDetector(onTap: (){},
+                            child: Image.asset('assets/images/homeOffice.png')),
+                        SizedBox(height: 10,),
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/computerPhone.png')),
+                      ],
+                    ),
+                    GestureDetector(onTap:(){},
+                        child: Image.asset('assets/images/makeUp.png')),
                   ],
                 ),
-                store02(name: 'Hair Products',),
-              ],
-            ),
-            Row(
-              children: [
-                store03(name: 'Computer/Phone accessories',),
-                Column(
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    store04(name: 'Jewelries/Accesspries',),
-                    store04(name: 'Electronics',),
+                    GestureDetector(onTap:(){},
+                        child: Image.asset('assets/images/hairProducts.png')),
+                    Column(
+                      children: [
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/menWomen.png')),
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/babyTeen.png')),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Column(
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Store01(name: 'Men/Women Wears',),
-                    Store01(name: 'Baby/Teen Products',),
+                    Column(
+                      children: [
+                        GestureDetector(onTap: (){},
+                            child: Image.asset('assets/images/sportShopOne.png')),
+                        SizedBox(height: 10,),
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/electronics.png')),
+                      ],
+                    ),
+                    GestureDetector(onTap:(){},
+                        child: Image.asset('assets/images/groceries.png')),
                   ],
                 ),
-                store02(name: 'MakeUp',),
-              ],
-            ),
-            Row(
-              children: [
-                store03(name: 'Sport Shop',),
-                Column(
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    store04(name: 'AutoMobile',),
-                    store04(name: 'Thrift Shop',),
+                    GestureDetector(onTap:(){},
+                        child: Image.asset('assets/images/thriftShop.png')),
+                    Column(
+                      children: [
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/automobile.png')),
+                        SizedBox(height: 10,),
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/perfume.png')),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-          ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        GestureDetector(onTap: (){},
+                            child: Image.asset('assets/images/jewelries.png')),
+                        SizedBox(height: 10,),
+                        GestureDetector(onTap:(){},
+                            child: Image.asset('assets/images/books.png')),
+                      ],
+                    ),
+                    GestureDetector(onTap:(){},
+                        child: Image.asset('assets/images/groceries.png')),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(onTap:(){},
+                      child: Image.asset('assets/images/supermarket.png')),
+                  Column(
+                    children: [
+                      GestureDetector(onTap:(){},
+                          child: Image.asset('assets/images/clothing.png')),
+                      SizedBox(height: 10,),
+                      GestureDetector(onTap:(){},
+                          child: Image.asset('assets/images/snacks.png')),
+                    ],
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right:30.0, top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Image.asset('assets/images/drinks.png'),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
         // body: StreamBuilder<List<StoresCategory>>(
         //     stream: storesBLoc.storesCategories,
@@ -83,7 +161,6 @@ class StoreScreen extends StatelessWidget {
         //         ),
         //       );
         //     }),
-      ),
     );
   }
 }

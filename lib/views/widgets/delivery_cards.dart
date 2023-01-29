@@ -9,26 +9,34 @@ import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryCard extends StatelessWidget {
-  // ReturnedRequestCard({
-  //   Key? key,
-  //   this.requestsModel,
-  // })
-  //     : super(key: key);
+  DeliveryCard({
+    Key? key,
+    required this.color,
+    required this.text
+  })
+      : super(key: key);
+
+  final Color color;
+  final String text;
 
   // final RequestsModel? requestsModel;
   // MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Card(
-        margin: EdgeInsets.only(bottom: 30),
-        elevation: .4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: Container(
+        height: MediaQuery.of(context).size.height * .32,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(40.0),
+          ),
+          color: Colors.white,
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.only(left:15.0, right: 5.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
@@ -59,10 +67,13 @@ class DeliveryCard extends StatelessWidget {
 
               ],
             ),
-            Divider(
-              color: Color(0XFF828282),
-            ),
-            Row(
+          ),
+          Divider(
+            color: Color(0XFF828282),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left:15.0, right: 15.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
               Text('Pick Up Location:', style: TextStyle(color: Color(0XFF828282), fontSize: 12),),
@@ -76,7 +87,10 @@ class DeliveryCard extends StatelessWidget {
                 ],
               ),
             ],),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left:15.0, right: 15.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
               Text('Delivery Location:', style: TextStyle(color: Color(0XFF828282), fontSize: 12),),
@@ -90,32 +104,41 @@ class DeliveryCard extends StatelessWidget {
                 ],
               ),
             ],),
-            Row(children: [
-              ElevatedButton(
-                onPressed: () {  },
-                child: Text('Pay'),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left:15.0),
+            child: Row(children: [
+              TextButton(
+                child: Text('Pay', style: TextStyle(color: Colors.white),),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 28),
+                  backgroundColor: Color(0XFF187226),
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
+                onPressed: () {
+                },
               ),
             ],),
-            SizedBox(height: 6,),
-            ClipRRect(
+          ),
+          SizedBox(height: 6,),
+          Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(25.0),
               ),
-              child: Container(
-                height: 30,
-                color: Color(0XFFADFFBA),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                    Text('Rider name: Samuel', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),),
-                    Text('Status: Pending', style: TextStyle(fontSize: 13,fontWeight: FontWeight.w700, ),),
-                  ],),
-                ),),
-            )
-          ]),
-        ),
+              color: this.color,
+            ),
+            height: 35,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Text('Rider name: Samuel', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),),
+                Text('Status: ${text}', style: TextStyle(fontSize: 13,fontWeight: FontWeight.w700, ),),
+              ],),
+            ),)
+        ]),
       ),
     );
   }

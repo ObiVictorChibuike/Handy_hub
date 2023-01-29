@@ -1,3 +1,4 @@
+import 'package:esolink/views/widgets/special_btn.dart';
 import 'package:flutter/material.dart';
 
 class reminder_Card extends StatelessWidget {
@@ -67,9 +68,9 @@ class reminder_Card extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(onPressed: (){}, child: Text('Postpone', style: TextStyle(fontSize: 12),)),
-                ElevatedButton(onPressed: (){}, child: Text('Request', style: TextStyle(fontSize: 12),)),
-                ElevatedButton(onPressed: (){}, child: Text('Dismiss', style: TextStyle(fontSize: 12),)),
+                special_Btn(text: 'Postpone',color1: Color(0XFF187226),color2: Colors.white,),
+                special_Btn(text: 'Request',color1: Color(0XFF187226),color2: Colors.white,),
+                special_Btn(text: 'Dismiss',color1: Color(0XFF187226),color2: Colors.white,),
               ],
             ),
 
