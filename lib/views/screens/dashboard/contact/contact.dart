@@ -27,7 +27,7 @@ class contact_Page extends StatelessWidget {
             SizedBox(height: 20),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .345,
+              height: MediaQuery.of(context).size.height * .375,
               color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -96,7 +96,7 @@ class contact_Page extends StatelessWidget {
             SizedBox(height: 15),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .55,
+              height: MediaQuery.of(context).size.height * .58,
               color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),

@@ -26,7 +26,7 @@ class DeliveryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
       child: Container(
-        height: MediaQuery.of(context).size.height * .32,
+        height: MediaQuery.of(context).size.height * .34,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(40.0),
@@ -97,7 +97,7 @@ class DeliveryCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  SizedBox(height: 22,),
+                  SizedBox(height: 22),
                   Text('12, Garki Estate Leventus Ikeja Lagos'),
                   SizedBox(height: 6,),
                   Text('27 Dec 2021', style: TextStyle(color: Color(0XFF828282))),
@@ -120,7 +120,6 @@ class DeliveryCard extends StatelessWidget {
               ),
             ],),
           ),
-          SizedBox(height: 6,),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(

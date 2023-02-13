@@ -10,7 +10,7 @@ class inventory_Card extends StatelessWidget {
       child: Container(
         color: Colors.white,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * .22,
+        height: MediaQuery.of(context).size.height * .23,
         child: Padding(
           padding: const EdgeInsets.all(2.0),
           child: Column(

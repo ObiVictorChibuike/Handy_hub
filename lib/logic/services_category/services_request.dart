@@ -14,6 +14,5 @@ getAllCategories(BuildContext? context) async {
   categoriesModel = response['data']['category'].map<CategoriesModel>((e) {
     return CategoriesModel.fromJson(e);
   }).toList();
-  print(response);
   categoriesBloc.addAllCategories(categoriesModel);
 }

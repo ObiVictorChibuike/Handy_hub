@@ -11,9 +11,11 @@ class DeliveryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageWithBackButton(
-        title: "Delivery",
+      appBar: AppBar(
+        title: Text("Delivery"),
         automaticallyImplyLeading: false,
+        centerTitle: true,
+      ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(top:90.0),
@@ -25,7 +27,7 @@ class DeliveryScreen extends StatelessWidget {
                   size: 380,
                 ),
                 const SizedBox(
-                  height: 140,
+                  height: 80,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -43,7 +45,6 @@ class DeliveryScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }

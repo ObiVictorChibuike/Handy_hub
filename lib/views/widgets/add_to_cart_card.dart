@@ -1,6 +1,7 @@
  import 'package:esolink/models/stores_model/stores_model.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
+import 'package:esolink/views/widgets/special_btn.dart';
 import 'package:flutter/material.dart';
 
 class AddToCartCard extends StatelessWidget {
@@ -9,6 +10,7 @@ class AddToCartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height * .35,
       padding: const EdgeInsets.symmetric(
         horizontal: 12,
       ),
@@ -19,44 +21,12 @@ class AddToCartCard extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        Flexible(
-          flex: 2,
-          fit: FlexFit.loose,
-          child: Stack(
-            children: [
-              Center(
-                child: Image.asset(
-                  "assets/images/prod.png",
-                  fit: BoxFit.fitHeight,
-                  height: 100,
-                  width: 100,
-                ),
-              ),
-              Container(
-                height: 100,
-                decoration: BoxDecoration(
-                    // color: valueDarkBlue,
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.1),
-                          Colors.transparent,
-                          Colors.transparent
-                        ]),
-                    borderRadius: const BorderRadius.all(Radius.circular(4))),
-              ),
-            ],
-          ),
-        ),
+        Image(image: NetworkImage("${stores!.photoUrlList![0].photoUrl}")),
         const SizedBox(height: 4),
-        const Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Icon(
-            Icons.favorite,
-            size: 12,
-            color: Color(0xffBDBDBD),
-          ),
+        Icon(
+          Icons.favorite,
+          size: 12,
+          color: Color(0xffBDBDBD),
         ),
         const SizedBox(height: 5),
         Text(
@@ -76,11 +46,7 @@ class AddToCartCard extends StatelessWidget {
         const SizedBox(
           height: 6,
         ),
-
-        ElevatedButton(
-            onPressed: () {},
-            child: Text("Add to Cart",
-                style: subHeaderText.copyWith(fontSize: 13, color: white)))
+        special_Btn(text: 'Add to Cart', color1: const Color(0XFF187226), color2: Colors.white,)
 
         // Container(
         //   width: double.infinity,
@@ -93,7 +59,7 @@ class AddToCartCard extends StatelessWidget {
         //       style: subHeaderText.copyWith(fontSize: 13, color: white),
         //     ),
         //   ),
-        // ),
+        // )
       ]),
     );
   }

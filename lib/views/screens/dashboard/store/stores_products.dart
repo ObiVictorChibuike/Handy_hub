@@ -43,7 +43,7 @@ class StoresProduct extends StatelessWidget {
                   return GridView.count(
                     crossAxisCount: 2,
                     shrinkWrap: true,
-                    mainAxisSpacing: 15, crossAxisSpacing: 5,
+                    mainAxisSpacing: 140, crossAxisSpacing: 5,
                     children: [
                       ...snapshot.data!
                           .map((e) => AddToCartCard(

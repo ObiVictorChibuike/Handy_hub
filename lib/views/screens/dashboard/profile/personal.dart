@@ -41,7 +41,7 @@ class personal_Page extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10) ,
                       child: Container(
-                        height: MediaQuery.of(context).size.height * .2,
+                        height: MediaQuery.of(context).size.height * .21,
                         decoration: BoxDecoration(
                           color: Color(0XFFE5E5E5),
                           border: Border.all(

@@ -54,9 +54,9 @@ class StoresCard extends StatelessWidget {
                   border:
                       Border.all(color: const Color(0xff187226)),
                   borderRadius: BorderRadius.circular(10),
-                  image: const DecorationImage(
+                  image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage("assets/images/car.png"))),
+                      image: NetworkImage('${stores!.photoUrl}'))),
             ),
           ),
           Positioned(

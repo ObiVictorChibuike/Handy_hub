@@ -1,9 +1,32 @@
+import 'package:esolink/logic/api_services/services.dart';
 import 'package:esolink/views/widgets/faqCard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class faq_Page extends StatelessWidget {
+import '../../../../models/faq_model.dart';
+
+class faq_Page extends StatefulWidget {
   const faq_Page({Key? key}) : super(key: key);
 
+  @override
+  State<faq_Page> createState() => _faq_PageState();
+}
+
+  
+
+class _faq_PageState extends State<faq_Page> {
+
+  final List<Faq> _faqs = <Faq>[];
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    ApiServices().getFaqs().then((value) => setState((){
+      _faqs.addAll(value);
+    }));
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,20 +38,25 @@ class faq_Page extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
-      body: Column(
-       children: [
-         SizedBox(height: 20,),
-         faq_Card(title: 'What is Esolink', onTap: (){}),
-         faq_Card(title: 'How does Esolink work if is sign up \n as a customer', onTap: (){}),
-         faq_Card(title: 'How does Esolink work as a store vendor', onTap: (){}),
-         faq_Card(title: 'How do i know that the result will meet my \n expectation', onTap: (){}),
-         faq_Card(title: 'How much does each request for service costs?', onTap: (){}),
-         faq_Card(title: 'What payment method can i use', onTap: (){}),
-         faq_Card(title: 'What do i do if i am not satisfied \n with the services', onTap: (){}),
-         faq_Card(title: 'What are the benefits of being on \n esolink platform as a service provider', onTap: (){}),
-         faq_Card(title: 'What are the benefits of being on \n esolink platform as a vendor', onTap: (){}),
-         faq_Card(title: 'What are the services available for request', onTap: (){}),
-       ], 
+      body: SingleChildScrollView(
+        child: Column(
+         children: [
+           SizedBox(height: 20,),
+           StreamBuilder<List<Faq>>(
+              stream: ApiServices().getFaqs().asStream(),
+               builder:(context, snapshot){
+                 while (!snapshot.hasData) {
+                   return const Center(
+                       child: CupertinoActivityIndicator());
+                 }
+                 return Container(
+                   height: MediaQuery.of(context).size.height,
+                   child: ListView.builder(
+                       itemCount: _faqs.length,
+                       itemBuilder: (context, index) => faq_Card(title: _faqs[index].question.toString(), subTitle: _faqs[index].answer.toString())),
+                 );}),
+         ],
+        ),
       ),
     );
   }

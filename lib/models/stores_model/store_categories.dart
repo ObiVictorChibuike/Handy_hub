@@ -1,6 +1,7 @@
 class StoresCategory {
   int? categoryId;
   String? name;
+  String? photoUrl;
   String? description;
   bool? active;
   bool? deleted;
@@ -14,6 +15,7 @@ class StoresCategory {
   StoresCategory.fromJson(Map<String, dynamic> json) {
     categoryId = json['categoryId'];
     name = json['name'];
+    photoUrl = json['image'];
     description = json['description'];
     active = json['active'];
     deleted = json['deleted'];

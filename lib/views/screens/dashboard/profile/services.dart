@@ -11,7 +11,7 @@ class services_Page extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * .75,
+            height: MediaQuery.of(context).size.height * .78,
             child: Column(
               children: [
                 SizedBox(height: 20,),

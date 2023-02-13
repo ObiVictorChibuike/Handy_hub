@@ -2,6 +2,7 @@ import 'package:esolink/logic/store/stores_bloc.dart';
 import 'package:esolink/logic/store/stores_request.dart';
 import 'package:esolink/models/stores_model/store_categories.dart';
 import 'package:esolink/service_locator.dart';
+import 'package:esolink/views/screens/dashboard/store/stores_products.dart';
 import 'package:esolink/views/widgets/page_with_back_button.dart';
 import 'package:flutter/material.dart';
 import '../../../constants/text_decoration.dart';
@@ -30,14 +31,32 @@ class StoreScreen extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        GestureDetector(onTap: (){},
+                        GestureDetector(onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 3,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/homeOffice.png')),
                         SizedBox(height: 10,),
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 4,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/computerPhone.png')),
                       ],
                     ),
-                    GestureDetector(onTap:(){},
+                    GestureDetector(onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const StoresProduct(
+                          id: 9,
+                        );
+                      }));
+                    },
                         child: Image.asset('assets/images/makeUp.png')),
                   ],
                 ),
@@ -47,13 +66,31 @@ class StoreScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(onTap:(){},
+                    GestureDetector(onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const StoresProduct(
+                          id: 2,
+                        );
+                      }));
+                    },
                         child: Image.asset('assets/images/hairProducts.png')),
                     Column(
                       children: [
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 7,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/menWomen.png')),
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 8,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/babyTeen.png')),
                       ],
                     ),
@@ -67,10 +104,22 @@ class StoreScreen extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        GestureDetector(onTap: (){},
+                        GestureDetector(onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 10,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/sportShopOne.png')),
                         SizedBox(height: 10,),
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 6,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/electronics.png')),
                       ],
                     ),
@@ -84,14 +133,32 @@ class StoreScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(onTap:(){},
+                    GestureDetector(onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const StoresProduct(
+                          id: 12,
+                        );
+                      }));
+                    },
                         child: Image.asset('assets/images/thriftShop.png')),
                     Column(
                       children: [
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 11,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/automobile.png')),
                         SizedBox(height: 10,),
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 13,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/perfume.png')),
                       ],
                     ),
@@ -105,10 +172,22 @@ class StoreScreen extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        GestureDetector(onTap: (){},
+                        GestureDetector(onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 5,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/jewelries.png')),
                         SizedBox(height: 10,),
-                        GestureDetector(onTap:(){},
+                        GestureDetector(onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const StoresProduct(
+                              id: 16,
+                            );
+                          }));
+                        },
                             child: Image.asset('assets/images/books.png')),
                       ],
                     ),
@@ -120,14 +199,32 @@ class StoreScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  GestureDetector(onTap:(){},
+                  GestureDetector(onTap:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const StoresProduct(
+                    id: 1,
+                    );
+                    }));
+                  },
                       child: Image.asset('assets/images/supermarket.png')),
                   Column(
                     children: [
-                      GestureDetector(onTap:(){},
+                      GestureDetector(onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const StoresProduct(
+                            id: 17,
+                          );
+                        }));
+                      },
                           child: Image.asset('assets/images/clothing.png')),
                       SizedBox(height: 10,),
-                      GestureDetector(onTap:(){},
+                      GestureDetector(onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const StoresProduct(
+                            id: 18,
+                          );
+                        }));
+                      },
                           child: Image.asset('assets/images/snacks.png')),
                     ],
                   ),
@@ -138,7 +235,13 @@ class StoreScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Image.asset('assets/images/drinks.png'),
+                    GestureDetector(onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const StoresProduct(
+                          id: 15,
+                        );
+                      }));
+                    }, child: Image.asset('assets/images/drinks.png')),
                   ],
                 ),
               )

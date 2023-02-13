@@ -23,7 +23,7 @@ class change_Password extends StatelessWidget {
             height: 30,
           ),
           Container(
-            height: MediaQuery.of(context).size.height * .4,
+            height: MediaQuery.of(context).size.height * .435,
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(15.0),
