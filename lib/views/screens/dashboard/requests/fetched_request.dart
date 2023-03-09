@@ -30,6 +30,10 @@ class FetchedRequestScreen extends StatelessWidget {
               future: fetchAllRequest(context, id),
               builder: (context, snapshot) {
                 while (!snapshot.hasData) {
+                  print(snapshot.error);
+                  print(snapshot.error.toString());
+                  print(snapshot.hasError);
+                  print(snapshot.connectionState);
                   return const Center(child: CupertinoActivityIndicator());
                 }
                 return Padding(

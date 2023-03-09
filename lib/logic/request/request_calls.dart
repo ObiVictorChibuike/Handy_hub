@@ -6,17 +6,19 @@ import 'package:flutter/cupertino.dart';
 
 import '../../views/widgets/custom_snack.dart';
 
+String? customerId;
+
 Future<List<RequestsModel>> fetchAllRequest(
     BuildContext? context, String? catID,) async {
   // RequestBLoc requestBLoc = locator.get<RequestBLoc>();
   var url =
-      "https://api.esolink.com/Services/all/providers/by/category/and/location/Id?categoryId=$catID&customerId=1984";
+      "http://handyhub.goserp.co.uk/Services/all/providers/by/category/and/location/Id?categoryId=$catID&customerId=1";
   var response = await get(url: url, context: context);
   List<RequestsModel> requestModel;
   requestModel = response['data']['serviceProviders'].map<RequestsModel>((e) {
     return RequestsModel.fromJson(e);
   }).toList();
-
+  print(requestModel);
   return requestModel;
   // requestBLoc.addAllRequest(requestModel);
   // fetchBusinessPhotos(context!, catID);
@@ -24,7 +26,7 @@ Future<List<RequestsModel>> fetchAllRequest(
 
 makeRequest(BuildContext? context) async {
   MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
-  var url = "https://api.esolink.com/services/update/requested/service";
+  var url = "https://handyhub.goserp.co.uk/Services/update/requested/service";
 
   print(makeRequestBloc.body);
   var response =

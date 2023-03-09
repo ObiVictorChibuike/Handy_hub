@@ -7,13 +7,21 @@ import 'package:flutter/material.dart';
 
 import '../../views/widgets/custom_snack.dart';
 
+String? customerId;
+String? customToken;
+
 login(BuildContext? context) async {
   LoginBloc loginBloc = locator.get<LoginBloc>();
   var url = "${BASE_URL}Services/identity/login";
   var response =
       await post(url: url, context: context, body: loginBloc.loginBody);
 
+  print(response);
+
   if (response['data']['isSuccessful'] == true) {
+    customToken = response['data']['token'];
+    print(customToken);
+    print(response);
     showMessageSnackBar(context!,
         title: "Success",
         content: response['data']['message']['friendlyMessage'] ??
