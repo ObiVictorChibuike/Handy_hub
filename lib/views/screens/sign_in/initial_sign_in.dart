@@ -1,5 +1,6 @@
 import 'package:esolink/logic/login/login_bloc.dart';
 import 'package:esolink/logic/login/login_request.dart';
+import 'package:esolink/logic/registration/registration_validation.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/screens/sign_in/forgot_password/forgot_password.dart';
 import 'package:esolink/views/screens/sign_up/sign_up_selections.dart';
@@ -17,6 +18,8 @@ class InitialSignIn extends StatelessWidget with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController mail = TextEditingController();
+    TextEditingController password = TextEditingController();
     WidgetsBinding.instance.addObserver(this);
     LoginBloc loginBloc = locator.get<LoginBloc>();
     return Scaffold(
@@ -31,12 +34,14 @@ class InitialSignIn extends StatelessWidget with WidgetsBindingObserver {
             height: 39,
           ),
           PlainTextField(
+            controller: mail,
             stream: loginBloc.email,
             onChanged: loginBloc.addEmail,
             label: "Email Address",
             hint: "email address",
           ),
           PasswordField(
+            controller: password,
             stream: loginBloc.password,
             onchanged: loginBloc.addPassword,
             label: "Password",
@@ -66,6 +71,7 @@ class InitialSignIn extends StatelessWidget with WidgetsBindingObserver {
                 return CustomButton(
                   onTap: () async {
                     await login(context);
+                    await ApiServices().login2(mail.text, password.text);
                   },
                   enabled: snapshot.data,
                   text: "Login",

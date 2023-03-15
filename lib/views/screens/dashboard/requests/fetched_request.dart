@@ -19,36 +19,33 @@ class FetchedRequestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: PageWithBackButton(
-      onDispose: () async {
-        await requestBLoc.addRequestID("");
-        requestBLoc.dispose();
-      },
-      title: title,
-      body: Expanded(
-        child: ListView(children: [
-          FutureBuilder<List<RequestsModel>>(
-              future: fetchAllRequest(context, id),
-              builder: (context, snapshot) {
-                while (!snapshot.hasData) {
-                  print(snapshot.error);
-                  print(snapshot.error.toString());
-                  print(snapshot.hasError);
-                  print(snapshot.connectionState);
-                  return const Center(child: CupertinoActivityIndicator());
-                }
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(children: [
-                    ...snapshot.data!
-                        .map((e) => ReturnedRequestCard(
-                              requestsModel: e,
-                            ))
-                        .toList()
-                  ]),
-                );
-              })
-        ]),
-      ),
+          onDispose: () async {
+            await requestBLoc.addRequestID("");
+            requestBLoc.dispose();
+          },
+          title: title,
+          body: Expanded(
+            child: ListView(children: [
+              FutureBuilder<List<RequestsModel>>(
+                  future: fetchAllRequest(context, id),
+                  builder: (context, snapshot) {
+                    while (!snapshot.hasData) {
+                      print(snapshot.hasData);
+                      return const Center(child: CupertinoActivityIndicator());
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(children: [
+                        ...snapshot.data!
+                            .map((e) => ReturnedRequestCard(
+                                  requestsModel: e,
+                                ))
+                            .toList()
+                      ]),
+                    );
+                  })
+            ]),
+          ),
     ));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:esolink/logic/login/login_request.dart';
 import 'package:esolink/logic/store/stores_bloc.dart';
 import 'package:esolink/logic/store/stores_request.dart';
 import 'package:esolink/models/stores_model/store_categories.dart';
@@ -8,10 +9,21 @@ import 'package:flutter/material.dart';
 import '../../../constants/text_decoration.dart';
 import '../../../widgets/stores_card.dart';
 
-class StoreScreen extends StatelessWidget {
+class StoreScreen extends StatefulWidget {
   StoreScreen({Key? key}) : super(key: key);
 
+  @override
+  State<StoreScreen> createState() => _StoreScreenState();
+}
+
+class _StoreScreenState extends State<StoreScreen> {
   final StoresBLoc storesBLoc = locator.get<StoresBLoc>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     fetchAllStoresCategories(context);
@@ -35,6 +47,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 3,
+                              title: 'Home and Office',
                             );
                           }));
                         },
@@ -44,6 +57,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 4,
+                              title: 'Computer and Phone Accessories',
                             );
                           }));
                         },
@@ -54,6 +68,7 @@ class StoreScreen extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const StoresProduct(
                           id: 9,
+                          title: 'Make Up',
                         );
                       }));
                     },
@@ -70,6 +85,7 @@ class StoreScreen extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const StoresProduct(
                           id: 2,
+                          title: 'Hair Products',
                         );
                       }));
                     },
@@ -88,6 +104,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 8,
+                              title: 'men and women wears',
                             );
                           }));
                         },
@@ -108,6 +125,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 10,
+                              title: 'Sport Shop',
                             );
                           }));
                         },
@@ -117,6 +135,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 6,
+                              title: 'Electronics',
                             );
                           }));
                         },
@@ -137,6 +156,7 @@ class StoreScreen extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const StoresProduct(
                           id: 12,
+                          title: 'Thrift Shop',
                         );
                       }));
                     },
@@ -156,6 +176,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 13,
+                              title: 'Automobile',
                             );
                           }));
                         },
@@ -176,6 +197,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 5,
+                              title: 'Jewelries',
                             );
                           }));
                         },
@@ -185,6 +207,7 @@ class StoreScreen extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 16,
+                              title: 'Books and Stationaries',
                             );
                           }));
                         },
@@ -203,6 +226,7 @@ class StoreScreen extends StatelessWidget {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const StoresProduct(
                     id: 1,
+                      title: 'Supermarket',
                     );
                     }));
                   },
@@ -213,6 +237,7 @@ class StoreScreen extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const StoresProduct(
                             id: 17,
+                            title: 'Clothings',
                           );
                         }));
                       },
@@ -222,6 +247,7 @@ class StoreScreen extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const StoresProduct(
                             id: 18,
+                            title: 'Snacks',
                           );
                         }));
                       },
@@ -239,6 +265,7 @@ class StoreScreen extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
                         return const StoresProduct(
                           id: 15,
+                          title: 'Drinks',
                         );
                       }));
                     }, child: Image.asset('assets/images/drinks.png')),

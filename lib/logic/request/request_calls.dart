@@ -5,15 +5,19 @@ import 'package:esolink/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../views/widgets/custom_snack.dart';
+import 'package:esolink/logic/login/login_request.dart';
 
 String? customerId;
+String? token;
 
 Future<List<RequestsModel>> fetchAllRequest(
     BuildContext? context, String? catID,) async {
   // RequestBLoc requestBLoc = locator.get<RequestBLoc>();
+
+  token = ApiServices().getToken();
   var url =
       "http://handyhub.goserp.co.uk/Services/all/providers/by/category/and/location/Id?categoryId=$catID&customerId=1";
-  var response = await get(url: url, context: context);
+  var response = await get(url: url, context: context, token: token);
   List<RequestsModel> requestModel;
   requestModel = response['data']['serviceProviders'].map<RequestsModel>((e) {
     return RequestsModel.fromJson(e);

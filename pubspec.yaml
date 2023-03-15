@@ -40,6 +40,7 @@ dependencies:
   rxdart: ^0.27.5
   carousel_slider: ^4.2.1
   flutter_wall_layout: ^2.1.1
+  flutter_staggered_grid_view: ^0.6.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0
