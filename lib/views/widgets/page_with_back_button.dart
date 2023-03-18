@@ -34,7 +34,7 @@ class PageWithBackButton extends StatelessWidget {
             height: 100,
             color: white,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 52, 22, 22),
+              padding: const EdgeInsets.fromLTRB(0, 52, 22, 22),
               child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
