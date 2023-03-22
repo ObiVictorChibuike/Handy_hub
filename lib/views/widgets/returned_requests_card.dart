@@ -21,10 +21,10 @@ class ReturnedRequestCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Card(
-        elevation: 0,
+        elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Flexible(
               flex: 1,
@@ -64,7 +64,7 @@ class ReturnedRequestCard extends StatelessWidget {
                 Text(
                   "${requestsModel!.firstName}",
                   style: subHeaderText.copyWith(
-                      fontSize: 14, color: grey, fontWeight: FontWeight.bold),
+                      fontSize: 15, color: grey, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 7,
@@ -80,7 +80,7 @@ class ReturnedRequestCard extends StatelessWidget {
                       "${requestsModel!.phoneNumber}"
                           .replaceRange(1, 6, "******"),
                       style: subHeaderText.copyWith(
-                          fontSize: 8,
+                          fontSize: 14,
                           color: grey,
                           fontWeight: FontWeight.w400),
                     ),
@@ -99,7 +99,7 @@ class ReturnedRequestCard extends StatelessWidget {
                     Text(
                       "${requestsModel!.distance}",
                       style: subHeaderText.copyWith(
-                          fontSize: 8,
+                          fontSize: 12,
                           color: grey,
                           fontWeight: FontWeight.w400),
                     ),
@@ -154,16 +154,16 @@ class ReturnedRequestCard extends StatelessWidget {
                         }));
                       },
                       child: Container(
-                        height: 21,
+                        height: 31,
                         decoration: BoxDecoration(
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(5)),
-                        width: 56,
+                        width: 72,
                         child: Center(
                           child: Text(
                             "Preview",
                             style: subHeaderText.copyWith(
-                                fontSize: 10,
+                                fontSize: 12,
                                 color: white,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -184,17 +184,17 @@ class ReturnedRequestCard extends StatelessWidget {
                         }));
                       },
                       child: Container(
-                        height: 21,
+                        height: 31,
                         decoration: BoxDecoration(
                             color: white,
                             border: Border.all(color: primaryColor),
                             borderRadius: BorderRadius.circular(5)),
-                        width: 56,
+                        width: 72,
                         child: Center(
                           child: Text(
                             "Request",
                             style: subHeaderText.copyWith(
-                                fontSize: 10,
+                                fontSize: 12,
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),

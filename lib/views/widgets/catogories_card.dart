@@ -21,7 +21,7 @@ class CategoriesCard extends StatelessWidget {
       },
       child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-          elevation: .2,
+          elevation: 2,
           color: white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +50,7 @@ class CategoriesCard extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   textAlign: TextAlign.center,
                   style: subHeaderText.copyWith(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff4F4F4F)),
                 ),

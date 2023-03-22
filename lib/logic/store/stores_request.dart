@@ -11,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../models/stores_model/product_details.dart';
+
 String? token;
 
 Future<List<Stores>> fetchAllStoresByID(
@@ -22,12 +24,37 @@ Future<List<Stores>> fetchAllStoresByID(
   stores = response['data']['product'].map<Stores>((e) {
     return Stores.fromJson(e);
   }).toList();
-  print(stores);
   return stores;
 }
 
+Future<ProductDetails> fetchAllProductDetails(BuildContext? context, String? id) async {
+  var url = '${BASE_URL}Stores/single/product/Id?Id=$id';
+  token = ApiServices().getToken();
+  var response = await get(url: url, context: context, token: token);
+  ProductDetails products;
+  products = response['data'].map<ProductDetails>((e){
+    return ProductDetails.fromJson(e);
+  });
+  print(products);
+  return products;
+}
+
+Future<List<ProductDetails>> fetchAllProductDetail(int id) async {
+  var url = '${BASE_URL}Stores/single/product/Id?Id=$id';
+  final headers = {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Authorization' : 'Bearer $token'
+  };
+  final response = await http.get(Uri.parse(url),headers: headers);
+
+  final responseData = json.decode(response.body);
+  print(responseData);
+  print(response.statusCode);
+  return responseData.map((e) => ProductDetails.fromJson(e));
+}
+
 Future<List<Stores>> fetchStoresById(String id) async{
-  var url = 'https://handyhub.goserp.co.uk/Stores/all/products/by/category?Id=$id';
+  var url = '${BASE_URL}Stores/all/products/by/category?Id=$id';
   final headers = {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization' : 'Bearer $token'

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class ApiServices{
   Future<List<CategoriesModel>> getCategories() async {
-    var url = "${BASE_URL}Category/all/category";
+    var url = "${BASE_URL}Category/all/category/dashboard";
     final headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };

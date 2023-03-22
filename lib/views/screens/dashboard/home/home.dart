@@ -100,7 +100,7 @@ class _HomepageState extends State<Homepage> {
                                     ), separatorBuilder: (BuildContext context, int index) { return const Divider(); },),
                           ))
                       : Container(
-                          height: MediaQuery.of(context).size.height * .74,
+                          height: MediaQuery.of(context).size.height * .82,
                           child: Column(children: [
                             Container(
                               height: 140,
@@ -195,7 +195,8 @@ class _HomepageState extends State<Homepage> {
                               padding: EdgeInsets.symmetric(vertical: 12),
                               child: Divider(),
                             ),
-                            Expanded(
+                            Container(
+                              height: MediaQuery.of(context).size.height * .5,
                               child: ListView(
                                 children: [
                                   Row(
@@ -229,8 +230,8 @@ class _HomepageState extends State<Homepage> {
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  StreamBuilder<List<CategoriesModel>>(
-                                      stream: categoriesBloc.allCategories,
+                                  FutureBuilder<List<CategoriesModel>>(
+                                      future: ApiServices().getCategories(),
                                       builder: (context, snapshot) {
                                         while (!snapshot.hasData) {
                                           return const Center(
@@ -241,11 +242,10 @@ class _HomepageState extends State<Homepage> {
                                           physics: const BouncingScrollPhysics(),
                                           shrinkWrap: true,
                                           crossAxisCount: 3,
-                                          mainAxisSpacing: 15,
-                                          crossAxisSpacing: 10.2,
+                                          mainAxisSpacing: 10,
+                                          crossAxisSpacing: 10,
                                           children: [
                                             ...snapshot.data!
-                                                .take(9)
                                                 .map((e) => CategoriesCard(
                                                       categoriesModel: e,
                                                     ))
