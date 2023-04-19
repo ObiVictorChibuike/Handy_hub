@@ -59,9 +59,9 @@ class Product {
     this.updatedOn,
   });
 
-  int? productId;
-  int? vendorId;
-  int? categoryId;
+  num? productId;
+  num? vendorId;
+  num? categoryId;
   String? name;
   String? vendorName;
   String? categoryName;
@@ -71,7 +71,7 @@ class Product {
   String? photoUrl;
   List<PhotoUrlList>? photoUrlList;
   String? description;
-  int? amount;
+  num? amount;
   bool? active;
   bool? deleted;
   String? createdBy;

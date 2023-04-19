@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:clean_dialog/clean_dialog.dart';
 import 'package:esolink/logic/states/states_request.dart';
 import 'package:esolink/views/screens/sign_up/customer_registration.dart';
 import 'package:esolink/views/screens/sign_up/rider_registration.dart';
@@ -17,22 +20,28 @@ import '../../constants/text_decoration.dart';
 import '../sign_in/initial_sign_in.dart';
 
 // ignore: must_be_immutable
-class SignUpSelection extends StatelessWidget {
-  RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
+class SignUpSelection extends StatefulWidget {
 
-  SignUpSelection({Key? key}) : super(key: key);
+  const SignUpSelection({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpSelection> createState() => _SignUpSelectionState();
+}
+
+class _SignUpSelectionState extends State<SignUpSelection> {
+  RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
 
   @override
   Widget build(BuildContext context) {
     getAllCategories(context);
-    getAllState(context); 
+    getAllState(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 32),
         child: ListView(
           children: [
             const AuthHeader(
-              title: "Hello",
+              title: "Hello 👋",
               subTitle: "How would you like to Register?",
             ),
             const SizedBox(
@@ -41,22 +50,22 @@ class SignUpSelection extends StatelessWidget {
             const SignUpSelectionTile(
               title: "Customer",
               subTitle:
-                  "Personal account to pre-order or calculate farm produce ",
+                  "Personal account for customers",
             ),
             const SignUpSelectionTile(
               title: "Service Provider",
               subTitle:
-                  "Personal account to pre-order or calculate farm produce ",
+                  "Personal account for service providers",
             ),
             const SignUpSelectionTile(
               title: "Store Vendor",
               subTitle:
-                  "Personal account to pre-order or calculate farm produce ",
+                  "Personal account for store vendors",
             ),
             const SignUpSelectionTile(
               title: "Dispatch Rider",
               subTitle:
-                  "Personal account to pre-order or calculate farm produce ",
+                  "Personal account for Dispatch Rider",
             ),
             StreamBuilder<String>(
                 stream: registrationBloc.userType,
@@ -135,6 +144,4 @@ class SignUpSelection extends StatelessWidget {
       ),
     );
   }
-
- 
 }

@@ -9,18 +9,21 @@ import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryCard extends StatelessWidget {
-  DeliveryCard({
-    Key? key,
-    required this.color,
-    required this.text
-  })
-      : super(key: key);
+  const DeliveryCard({Key? key, this.color, this.deliveryStatus,
+    this.deliveryId, this.goodsType, this.receiverName, this.pickUpLocation,
+    this.deliveryDate, this.riderName, this.deliveryLocation, this.pickUpdate, this.senderName}) : super(key: key);
 
-  final Color color;
-  final String text;
-
-  // final RequestsModel? requestsModel;
-  // MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
+  final Color? color;
+  final String? deliveryStatus;
+  final String? deliveryId;
+  final String? goodsType;
+  final String? receiverName;
+  final String? pickUpLocation;
+  final String? deliveryDate;
+  final String? riderName;
+  final String? deliveryLocation;
+  final String? pickUpdate;
+  final String? senderName;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,9 +45,9 @@ class DeliveryCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('1629824592', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
-                    Text('Perishable goods', style: TextStyle(fontSize: 11, color: Color(0XFF828282)),),
-                    Text('from: Shade Gbabson', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),),
+                    Text(deliveryId ?? '1629824592', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
+                    Text(goodsType ?? 'Perishable goods', style: TextStyle(fontSize: 11, color: Color(0XFF828282)),),
+                    Text('from: ${senderName ?? "Shade Gbabson"}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700),),
                   ],
                 ),
                 Row(
@@ -52,7 +55,7 @@ class DeliveryCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('Mr Dapo Abiodun', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
+                        Text(receiverName ?? '', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
                         Text('Receiver', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),),
                         SizedBox(height: 10,),
 
@@ -81,9 +84,9 @@ class DeliveryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(height: 22,),
-                  Text('12, Garki Estate Leventus Ikeja Lagos'),
+                  Text(pickUpLocation ?? '12, Garki Estate Leventus Ikeja Lagos'),
                   SizedBox(height: 6,),
-                  Text('27 Dec 2021', style: TextStyle(color: Color(0XFF828282))),
+                  Text(pickUpdate ?? '27 Dec 2021', style: TextStyle(color: Color(0XFF828282))),
                 ],
               ),
             ],),
@@ -98,9 +101,9 @@ class DeliveryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SizedBox(height: 22),
-                  Text('12, Garki Estate Leventus Ikeja Lagos'),
+                  Text(deliveryLocation ?? '12, Garki Estate Leventus Ikeja Lagos'),
                   SizedBox(height: 6,),
-                  Text('27 Dec 2021', style: TextStyle(color: Color(0XFF828282))),
+                  Text(deliveryDate ?? '27 Dec 2021', style: TextStyle(color: Color(0XFF828282))),
                 ],
               ),
             ],),
@@ -133,8 +136,8 @@ class DeliveryCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                Text('Rider name: Samuel', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),),
-                Text('Status: ${text}', style: TextStyle(fontSize: 13,fontWeight: FontWeight.w700, ),),
+                Text('Rider name: ${riderName ?? "Samuel"}', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),),
+                Text('Status: $deliveryStatus', style: TextStyle(fontSize: 13,fontWeight: FontWeight.w700, ),),
               ],),
             ),)
         ]),

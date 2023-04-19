@@ -2,7 +2,6 @@ import 'package:esolink/models/services_category/categories.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:flutter/material.dart';
-
 import '../screens/dashboard/requests/fetched_request.dart';
 
 class CategoriesCard extends StatelessWidget {
@@ -35,9 +34,9 @@ class CategoriesCard extends StatelessWidget {
                 width: 45,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                
+
                   child: Image.network(categoriesModel!.icon.toString()),
-                
+
                 ),
               ),
               const SizedBox(

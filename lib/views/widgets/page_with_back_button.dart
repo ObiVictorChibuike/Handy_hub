@@ -51,7 +51,7 @@ class PageWithBackButton extends StatelessWidget {
                   Visibility(
                       visible: title != null,
                       child: Text("$title",
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
                           style: subHeaderText.copyWith(
                               color: Colors.black,
                               fontSize: 18,

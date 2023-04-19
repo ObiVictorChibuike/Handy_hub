@@ -35,7 +35,7 @@ class DeliveryScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return allDeliveryScreen();
+                                  return const AllDeliveryScreen();
                                 }));
                           },
                           text: "Make a request",

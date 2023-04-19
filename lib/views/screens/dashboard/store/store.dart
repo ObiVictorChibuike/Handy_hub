@@ -1,16 +1,12 @@
-import 'package:esolink/logic/login/login_request.dart';
 import 'package:esolink/logic/store/stores_bloc.dart';
 import 'package:esolink/logic/store/stores_request.dart';
-import 'package:esolink/models/stores_model/store_categories.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/screens/dashboard/store/stores_products.dart';
-import 'package:esolink/views/widgets/page_with_back_button.dart';
 import 'package:flutter/material.dart';
 import '../../../constants/text_decoration.dart';
-import '../../../widgets/stores_card.dart';
 
 class StoreScreen extends StatefulWidget {
-  StoreScreen({Key? key}) : super(key: key);
+  const StoreScreen({Key? key}) : super(key: key);
 
   @override
   State<StoreScreen> createState() => _StoreScreenState();
@@ -29,11 +25,12 @@ class _StoreScreenState extends State<StoreScreen> {
     fetchAllStoresCategories(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Stores"),
+        title: const Text("Stores"),
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               Padding(
@@ -96,6 +93,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 7,
+                              title: 'Men and Women wears',
                             );
                           }));
                         },
@@ -104,7 +102,7 @@ class _StoreScreenState extends State<StoreScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const StoresProduct(
                               id: 8,
-                              title: 'men and women wears',
+                              title: 'Baby and Teen products',
                             );
                           }));
                         },

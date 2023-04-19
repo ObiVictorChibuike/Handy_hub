@@ -43,18 +43,18 @@ class CustomerRegistration extends StatelessWidget {
               stream: registrationBloc.firstName,
               onChanged: registrationBloc.addFirstName,
               label: "First Name",
-              hint: "First Name",
+              hint: "",
             ),
             PlainTextField(
               stream: registrationBloc.lastName,
               onChanged: registrationBloc.addLastName,
               label: "Last Name",
-              hint: "Last Name",
+              hint: "",
             ),
             PlainTextField(
               stream: registrationBloc.phoneNumber,
               onChanged: registrationBloc.addPhone,
-              label: "Phone",
+              label: "Business Name",
               hint: "",
             ),
             PlainTextField(

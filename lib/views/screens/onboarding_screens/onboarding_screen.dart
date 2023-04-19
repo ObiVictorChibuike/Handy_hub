@@ -1,7 +1,10 @@
+
+import 'package:esolink/logic/api_services/local/local_storage.dart';
 import 'package:esolink/views/constants/colors.dart';
+import 'package:esolink/views/screens/dashboard/dashboard.dart';
 import 'package:esolink/views/screens/onboarding_screens/new_onboarding.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../../widgets/custom_button.dart';
 import '../sign_up/sign_up_selections.dart';
 import 'onboarding_indicator.dart';
@@ -34,6 +37,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _pageController.dispose();
     // _timer.cancel();
     super.dispose();
+  }
+
+  Future<void> hasOnBoarded() async {
+    if(mounted){
+      Get.put<LocalCachedData>(await LocalCachedData.create());
+      LocalCachedData.instance.cacheHasOnBoardedStatus(hasOnBoarded: true);
+    }
   }
 
   @override
@@ -89,11 +99,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 22),
                   child: CustomButton(
                     enabled: true,
-                    onTap: () {
-                     Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpSelection()));
+                    onTap: () async {
+                     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpSelection()));
+                      hasOnBoarded();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {return const Dashboard();}));
                     },
                     text: "Get Started",
                   ),

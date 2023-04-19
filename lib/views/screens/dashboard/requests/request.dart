@@ -1,15 +1,15 @@
 import 'package:esolink/logic/request/request_bloc.dart';
+import 'package:esolink/logic/request/request_controller.dart';
 import 'package:esolink/logic/services_category/service_bloc.dart';
+import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
 import 'package:esolink/views/screens/dashboard/requests/fetched_request.dart';
 import 'package:esolink/views/widgets/custom_button.dart';
+import 'package:esolink/views/widgets/drop_down_field.dart';
 import 'package:esolink/views/widgets/page_with_back_button.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../logic/request/request_calls.dart';
-import '../../../../models/services_category/categories.dart';
+import 'package:get/get.dart';
 import '../../../../service_locator.dart';
-import '../../../widgets/custom_fields.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({Key? key}) : super(key: key);
@@ -22,6 +22,8 @@ class _RequestScreenState extends State<RequestScreen> {
   final CategoriesBloc categoriesBloc = locator.get<CategoriesBloc>();
 
   final RequestBLoc requestBLoc = locator.get<RequestBLoc>();
+  int? categoryId;
+  String? title;
 
   @override
   void dispose() {
@@ -31,59 +33,43 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageWithBackButton(
-        automaticallyImplyLeading: false,
-        title: "Requests",
+    return GetBuilder<RequestController>(
+      init: RequestController(),
+        builder: (controller){
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Requests"),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+        ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 22,),
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                StreamBuilder<List<CategoriesModel>>(
-                    initialData: [
-                      CategoriesModel.fromJson(
-                        {
-                          "categoryId": 14,
-                          "name": " Architect",
-                          "icon":
-                              "https://res.cloudinary.com/esolink/image/upload/v1641928046/ikbniod9u9l4narj50aj.png",
-                          "publicId": null,
-                          "description": " Architect",
-                          "supervisorName": "Fortune Johnbull",
-                          "supervisorEmail": "goodyrhome@gmail.com ",
-                          "supervisorNumber": "2349056309508",
-                          "group": "B",
-                          "active": null,
-                          "deleted": null,
-                          "createdBy": null,
-                          "createdOn": null,
-                          "updatedBy": null,
-                          "updatedOn": null
-                        },
-                      )
-                    ],
-                    stream: categoriesBloc.allCategories,
-                    builder: (context, snapshot) {
-                      if (snapshot.data != null && snapshot.data!.isEmpty) {
-                        return const SizedBox();
-                      }
-                      return CategoryField(
-                        stream: requestBLoc.requestID,
-                        onchanged: requestBLoc.addRequestID,
-                        value: snapshot.data.toString(),
-                        items:
-                            snapshot.data!.map<dynamic>((CategoriesModel? e) {
-                          return e;
-                        }).toList(),
-                        hint: "Search for available services",
-                        label: "What service do you need?",
-                      );
-                    }),
-                const SizedBox(
-                  height: 100,
+                const SizedBox(height: 30,),
+                Align(alignment: Alignment.topLeft,
+                  child: Text("What service do you need?",style: subHeaderText.copyWith(
+                    fontSize: 15,
+                  )),
                 ),
+                const SizedBox(height: 25,),
+                DropDownTextField(
+                  onChanged: (value) {
+                    controller.selectedCategory = value.toString();
+                    final index = controller.requestCategoryModel?.category?.indexWhere((element) => element.name == controller.selectedCategory);
+                    final id = controller.requestCategoryModel?.category![index!].categoryId;
+                    title = controller.requestCategoryModel?.category![index!].name;
+                    categoryId = id;
+                    setState(() {});
+                  },
+                  items: controller.requestCategoryModel?.category?.map((item) => DropdownMenuItem<String>(
+                    value: item.name,
+                    child: Text(item.name ?? "", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.black, fontSize: 15)),
+                  )).toList(),
+                  title: "Search for available services",
+                ),
+                const SizedBox(height: 100,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: StreamBuilder<String>(
@@ -94,13 +80,13 @@ class _RequestScreenState extends State<RequestScreen> {
                             requestBLoc.addRequestID("");
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return FetchedRequestScreen(
-                                id: snapshot.data,
-                                // title: ,
-                              );
-                            }));
+                                  return FetchedRequestScreen(
+                                    id: categoryId.toString(),
+                                    title: title,
+                                  );
+                                }));
                           },
-                          enabled: snapshot.hasData ? true : false,
+                          enabled: categoryId != null ? true : false,
                           text: "Find Service",
                         );
                       }),
@@ -113,7 +99,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 )
               ]),
         ),
-      ),
-    );
+      );
+    });
   }
 }

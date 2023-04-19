@@ -1,7 +1,6 @@
 import 'package:esolink/logic/services_category/services_request.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
-import 'package:esolink/views/screens/dashboard/dashboard.dart';
 import 'package:esolink/views/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 

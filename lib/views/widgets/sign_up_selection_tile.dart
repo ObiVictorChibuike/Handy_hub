@@ -28,16 +28,36 @@ class SignUpSelectionTile extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color: snapshot.data == title
-                            ? primaryColor
-                            : Colors.transparent),
+                        color: snapshot.data == title ? primaryColor : Colors.transparent),
                     borderRadius: BorderRadius.circular(6),
                     color: snapshot.data == title
                         ? white
                         : const Color(0xffF7F7F7)),
                 child: Row(
                   children: [
-                    const IconBox(),
+                   Builder(builder: (controller){
+                     if(title == "Customer"){
+                       return IconBox(
+                         image: "user",
+                         color: snapshot.data == title ? primaryColor : boldTextColor,
+                       );
+                     }else if(title == "Service Provider"){
+                       return IconBox(
+                         image: "gear",
+                         color: snapshot.data == title ? primaryColor : boldTextColor,
+                       );
+                     }else if(title == "Store Vendor"){
+                       return IconBox(
+                         image: "vendor",
+                         color: snapshot.data == title ? primaryColor : boldTextColor,
+                       );
+                     }else{
+                       return IconBox(
+                         image: "rider",
+                         color: snapshot.data == title ? primaryColor : boldTextColor,
+                       );
+                     }
+                   }),
                     const SizedBox(
                       width: 24,
                     ),

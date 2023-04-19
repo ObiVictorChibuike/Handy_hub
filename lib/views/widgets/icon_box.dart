@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class IconBox extends StatelessWidget {
-  const IconBox({Key? key, this.icon}) : super(key: key);
+  const IconBox({Key? key, this.image, this.color, this.height, this.width}) : super(key: key);
 
-  final String? icon;
+  final String? image;
+  final Color? color;
+  final double? height;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,10 +15,13 @@ class IconBox extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           color: const Color(0xff284065).withOpacity(.1)),
-      child: const Icon(
-        Icons.person,
-        size: 12,
-      ),
+      child: Image.asset(
+        "assets/images/$image.png",
+        color: color,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+      )
     );
   }
 }

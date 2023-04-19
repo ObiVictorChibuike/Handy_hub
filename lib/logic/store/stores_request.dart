@@ -1,8 +1,9 @@
 import 'dart:convert';
-
+import 'package:esolink/logic/api_services/local/local_storage.dart';
+import 'package:get/get.dart';
 import 'package:esolink/logic/api_services/base_url.dart';
 import 'package:esolink/logic/api_services/http_services.dart';
-import 'package:esolink/logic/login/login_request.dart';
+import 'package:esolink/logic/login/login_controller.dart';
 import 'package:esolink/logic/store/stores_bloc.dart';
 import 'package:esolink/models/stores_model/store_categories.dart';
 import 'package:esolink/models/stores_model/stores_model.dart';
@@ -17,7 +18,8 @@ String? token;
 
 Future<List<Stores>> fetchAllStoresByID(
     BuildContext? context, String? id) async {
-  token = ApiServices().getToken();
+  Get.put<LocalCachedData>(await LocalCachedData.create());
+  final token = await LocalCachedData.instance.getAuthToken();
   var url = "${BASE_URL}Stores/all/products/by/category?Id=$id";
   var response = await get(url: url, context: context, token: token);
   List<Stores> stores;
@@ -29,7 +31,8 @@ Future<List<Stores>> fetchAllStoresByID(
 
 Future<ProductDetails> fetchAllProductDetails(BuildContext? context, String? id) async {
   var url = '${BASE_URL}Stores/single/product/Id?Id=$id';
-  token = ApiServices().getToken();
+  Get.put<LocalCachedData>(await LocalCachedData.create());
+  final token = await LocalCachedData.instance.getAuthToken();
   var response = await get(url: url, context: context, token: token);
   ProductDetails products;
   products = response['data'].map<ProductDetails>((e){
