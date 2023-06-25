@@ -35,44 +35,51 @@ Future<List<RequestsModel>> fetchAllRequest(
   // fetchBusinessPhotos(context!, catID);
 }
 
-makeRequest(BuildContext? context, {required String fullName, required String email,
-  required String phoneNumber, required int categoryId, required String location, required int serviceProviderId}) async {
-  progressIndicator(context);
+Future<void> makeRequest({required int categoryId, required int serviceProviderId}) async {
+  Get.put<LocalCachedData>(await LocalCachedData.create());
+  final userDetails = await LocalCachedData.instance.fetchUserDetails();
+  final address = userDetails.serviceProviders![0].address;
+  final phoneNumber = userDetails.serviceProviders![0].phoneNumber;
+  final email = userDetails.serviceProviders![0].email;
+  final fullName = userDetails.serviceProviders![0].firstName;
+  progressIndicator(Get.context);
   try{
     final body = {
       "fullName": fullName,
       "email": email,
       "phoneNumber": phoneNumber,
       "categoryId": categoryId,
-      "location": location,
+      "location": address,
       "serviceProviderId": serviceProviderId
     };
     var response = await NetworkProvider().call(path: "/Services/update/requested/service", method: RequestMethod.post, body: body,);
     final payLoad = MakeRequestResponse.fromJson(response!.data);
     if(payLoad.status!.isSuccessful == true){
       Get.back();
-      showMessageSnackBar(context,
+      showMessageSnackBar(Get.context,
           title: "Successful",
           content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
       Get.offAll(()=> const Dashboard());
     }else{
       Get.back();
-      showErrorSnackBar(context,
+      showErrorSnackBar(Get.context,
           title: "Oops!",
           content: payLoad.status?.message?.friendlyMessage ?? "Request failed");
     }
+    log(payLoad.status!.message!.friendlyMessage.toString());
   }on DioError catch (err) {
     final errorMessage = Future.error(ApiError.fromDio(err));
     Get.back();
-    showErrorSnackBar(context,
+    showErrorSnackBar(Get.context,
         title: "Something Went Wrong",
         content: err.response?.data['title'] ?? errorMessage);
     throw errorMessage;
   } catch (err) {
     Get.back();
-    showErrorSnackBar(context,
+    showErrorSnackBar(Get.context,
         title: "Something Went Wrong",
         content: err.toString());
+    log(err.toString());
     throw err.toString();
   }
 }

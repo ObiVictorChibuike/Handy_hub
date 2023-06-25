@@ -14,7 +14,6 @@ import 'package:http/http.dart' as http;
 
 import '../../models/stores_model/product_details.dart';
 
-String? token;
 
 Future<List<Stores>> fetchAllStoresByID(
     BuildContext? context, String? id) async {
@@ -44,6 +43,8 @@ Future<ProductDetails> fetchAllProductDetails(BuildContext? context, String? id)
 
 Future<List<ProductDetails>> fetchAllProductDetail(int id) async {
   var url = '${BASE_URL}Stores/single/product/Id?Id=$id';
+  Get.put<LocalCachedData>(await LocalCachedData.create());
+  final token = await LocalCachedData.instance.getAuthToken();
   final headers = {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization' : 'Bearer $token'
@@ -58,6 +59,8 @@ Future<List<ProductDetails>> fetchAllProductDetail(int id) async {
 
 Future<List<Stores>> fetchStoresById(String id) async{
   var url = '${BASE_URL}Stores/all/products/by/category?Id=$id';
+  Get.put<LocalCachedData>(await LocalCachedData.create());
+  final token = await LocalCachedData.instance.getAuthToken();
   final headers = {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization' : 'Bearer $token'
@@ -76,7 +79,9 @@ Future<List<Stores>> fetchStoresById(String id) async{
 
 fetchAllStoresCategories(BuildContext? context) async {
   StoresBLoc storesBLoc = locator.get<StoresBLoc>();
-  var url = "http://handyhub.goserp.co.uk/Stores/all/store/category";
+  Get.put<LocalCachedData>(await LocalCachedData.create());
+  final token = await LocalCachedData.instance.getAuthToken();
+  var url = "https://gethandyhub.com/Stores/all/store/category";
   var response = await get(url: url, context: context, token: token);
   List<StoresCategory> storesCategories;
   storesCategories = response['data']['storeCategory'].map<StoresCategory>((e) {

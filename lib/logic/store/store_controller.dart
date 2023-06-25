@@ -8,6 +8,7 @@ import 'package:esolink/models/stores_model/add_to_cart_response.dart';
 import 'package:esolink/models/stores_model/cart_payment_checkout_response.dart';
 import 'package:esolink/models/stores_model/increase_cart_item_response.dart';
 import 'package:esolink/models/stores_model/product_details.dart';
+import 'package:esolink/models/stores_model/store_response.dart';
 import 'package:esolink/models/stores_model/total_cart_item.dart';
 import 'package:esolink/views/widgets/custom_snack.dart';
 import 'package:esolink/views/widgets/progress_indicator.dart';
@@ -56,6 +57,8 @@ class  StoreController extends GetxController{
       throw err.toString();
     }
   }
+
+  List<StoreProduct>? storeProductList = <StoreProduct>[].obs;
   TotalCartItemResponse? totalCartItemResponse;
 
   // Future<TotalCartItemResponse> getTotalCartItem({required BuildContext context}) async {
@@ -139,7 +142,7 @@ class  StoreController extends GetxController{
         "customerId": customerId
       };
       update();
-      var response = await NetworkProvider().call(path: "/Stores/update/store/checkout", method: RequestMethod.post, body: body);
+      var response = await NetworkProvider().call(path: "/Stores/update/store/checkout/wallet", method: RequestMethod.post, body: body);
       final payLoad = CardPaymentCheckoutResponse.fromJson(response!.data);
       if(payLoad.status?.isSuccessful == true ){
         await getTotalCartItemInit(context: context);

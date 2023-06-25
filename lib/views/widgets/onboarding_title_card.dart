@@ -36,16 +36,14 @@ class OnboardingDetailsCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 21),
       child: Container(
         padding: const EdgeInsets.all(25),
-        height: 140,
+        // height: 140,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: const Color(0xff187226).withOpacity(.8)),
-        child: Center(
-          child: Text(
-            "$descriptions",
-            style: subHeaderText.copyWith(
-                fontSize: 14, fontWeight: FontWeight.bold, color: white, height: 1.5),
-          ),
+        child: Text(
+          "$descriptions",
+          style: subHeaderText.copyWith(
+              fontSize: 14, fontWeight: FontWeight.bold, color: white, height: 1.5),
         ),
       ),
     );

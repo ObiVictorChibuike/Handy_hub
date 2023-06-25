@@ -1,3 +1,4 @@
+import 'package:esolink/views/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class special_Btn extends StatelessWidget {
@@ -10,17 +11,14 @@ class special_Btn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: Text('${text}', style: TextStyle(color: color2, fontSize: 12),),
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-        backgroundColor: color1,
-        side: BorderSide(
-          color: Color(0XFF187226),
-        ),
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-      ),
-      onPressed: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+          decoration: BoxDecoration(color: color1, borderRadius: BorderRadius.circular(5), border: Border.all(color: primaryColor)),
+        child: Center(
+          child: Text(text, style: TextStyle(color: color2, fontSize: 12),),
+      )),
     );
   }
 }

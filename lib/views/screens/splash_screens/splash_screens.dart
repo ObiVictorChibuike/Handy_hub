@@ -28,24 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     getAllCategories(context);
-    return Container(
-      color: white,
-      height: double.infinity,
-      width: double.infinity,
-      child: Stack(children: const [
-        Positioned(
-          right: 0,
-          top: 0,
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
           child: EsolinkIcons(
-            image: "splash",
-          ),
-        ),
-        Center(
-            child: EsolinkIcons(
-          image: "logo",
-          size: 200,
-        )),
-      ]),
+            image: "logo",
+            size: 200,
+          )
+      ),
     );
   }
 }

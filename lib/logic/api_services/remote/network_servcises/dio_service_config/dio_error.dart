@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:esolink/views/screens/sign_in/initial_sign_in.dart';
+import 'package:get/get.dart' as route;
 
 class ApiError {
   late  String errorDescription;
@@ -28,7 +30,7 @@ class ApiError {
         case DioErrorType.response:
           if (dioError.response!.statusCode == 401) {
             errorDescription = 'Session Expired';
-
+            // route.Get.offAll(()=>const InitialSignIn());
           } else if (dioError.response!.statusCode == 400) {
             errorDescription = extractDescriptionFromResponse(dioError.response)!;
           }else if(dioError.response!.statusCode == 500){

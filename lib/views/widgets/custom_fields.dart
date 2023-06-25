@@ -1,6 +1,7 @@
 import 'package:esolink/models/states/states_model.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../logic/toggle_password_visibility/toggle_password_visibility_bloc.dart';
@@ -33,12 +34,13 @@ class PlainTextField extends StatelessWidget {
       this.trailing,
       this.initialValue,
       this.currency = false,
-      this.keyboardType})
+      this.keyboardType, this.inputFormatters})
       : super(key: key);
 
   final String? label, hint, initialValue;
   final Stream? stream;
   final Widget? trailing;
+  final List<TextInputFormatter>? inputFormatters;
   final Function(String? e)? onChanged;
   final int? maxLines;
   final bool? enabled;
@@ -70,6 +72,7 @@ class PlainTextField extends StatelessWidget {
                   height: 10,
                 ),
                 TextFormField(
+                  inputFormatters: inputFormatters,
                   textInputAction: TextInputAction.done,
                   // textCapitalization: TextCapitalization.none,
                   keyboardType: keyboardType ?? TextInputType.text,
@@ -540,7 +543,9 @@ class PasswordField extends StatelessWidget {
       this.onchanged,
       this.number,
       this.leading,
-      this.controller})
+      this.controller,
+        this.validator,
+      })
       : super(key: key);
 
   final String? label;
@@ -549,6 +554,7 @@ class PasswordField extends StatelessWidget {
   final Function(String e)? onchanged;
   final bool? number;
   final Widget? leading;
+  final String? Function(String?)? validator;
   final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
@@ -583,6 +589,7 @@ class PasswordField extends StatelessWidget {
                         controller: controller,
                         obscureText: snapshot.data ?? true,
                         onChanged: onchanged,
+                        validator: validator,
                         keyboardType: number == true
                             ? const TextInputType.numberWithOptions()
                             : null,

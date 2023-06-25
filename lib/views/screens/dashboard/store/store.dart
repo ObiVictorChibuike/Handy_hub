@@ -6,19 +6,14 @@ import 'package:flutter/material.dart';
 import '../../../constants/text_decoration.dart';
 
 class StoreScreen extends StatefulWidget {
-  const StoreScreen({Key? key}) : super(key: key);
+  const  StoreScreen({Key? key}) : super(key: key);
 
   @override
   State<StoreScreen> createState() => _StoreScreenState();
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  final StoresBLoc storesBLoc = locator.get<StoresBLoc>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,248 +24,263 @@ class _StoreScreenState extends State<StoreScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        GestureDetector(onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 3,
-                              title: 'Home and Office',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/homeOffice.png')),
-                        SizedBox(height: 10,),
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 4,
-                              title: 'Computer and Phone Accessories',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/computerPhone.png')),
-                      ],
-                    ),
-                    GestureDetector(onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const StoresProduct(
-                          id: 9,
-                          title: 'Make Up',
-                        );
-                      }));
-                    },
-                        child: Image.asset('assets/images/makeUp.png')),
-                  ],
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            fetchAllStoresCategories(context);
+          },
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          GestureDetector(onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 3,
+                                title: 'Home and Office',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/homeOffice.png')),
+                          const SizedBox(height: 10,),
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 4,
+                                title: 'Computer and Phone Accessories',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/computerPhone.png')),
+                        ],
+                      ),
+                      GestureDetector(onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const StoresProduct(
+                            id: 9,
+                            title: 'Make Up',
+                          );
+                        }));
+                      },
+                          child: Image.asset('assets/images/makeUp.png')),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const StoresProduct(
-                          id: 2,
-                          title: 'Hair Products',
-                        );
-                      }));
-                    },
-                        child: Image.asset('assets/images/hairProducts.png')),
-                    Column(
-                      children: [
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 7,
-                              title: 'Men and Women wears',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/menWomen.png')),
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 8,
-                              title: 'Baby and Teen products',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/babyTeen.png')),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        GestureDetector(onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 10,
-                              title: 'Sport Shop',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/sportShopOne.png')),
-                        SizedBox(height: 10,),
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 6,
-                              title: 'Electronics',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/electronics.png')),
-                      ],
-                    ),
-                    GestureDetector(onTap:(){},
-                        child: Image.asset('assets/images/groceries.png')),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const StoresProduct(
-                          id: 12,
-                          title: 'Thrift Shop',
-                        );
-                      }));
-                    },
-                        child: Image.asset('assets/images/thriftShop.png')),
-                    Column(
-                      children: [
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 11,
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/automobile.png')),
-                        SizedBox(height: 10,),
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 13,
-                              title: 'Automobile',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/perfume.png')),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        GestureDetector(onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 5,
-                              title: 'Jewelries',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/jewelries.png')),
-                        SizedBox(height: 10,),
-                        GestureDetector(onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const StoresProduct(
-                              id: 16,
-                              title: 'Books and Stationaries',
-                            );
-                          }));
-                        },
-                            child: Image.asset('assets/images/books.png')),
-                      ],
-                    ),
-                    GestureDetector(onTap:(){},
-                        child: Image.asset('assets/images/groceries.png')),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(onTap:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const StoresProduct(
-                    id: 1,
-                      title: 'Supermarket',
-                    );
-                    }));
-                  },
-                      child: Image.asset('assets/images/supermarket.png')),
-                  Column(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const StoresProduct(
-                            id: 17,
-                            title: 'Clothings',
+                            id: 2,
+                            title: 'Hair Products',
                           );
                         }));
                       },
-                          child: Image.asset('assets/images/clothing.png')),
-                      SizedBox(height: 10,),
+                          child: Image.asset('assets/images/hairProducts.png')),
+                      Column(
+                        children: [
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 7,
+                                title: 'Men and Women wears',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/menWomen.png')),
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 8,
+                                title: 'Baby and Teen products',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/babyTeen.png')),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          GestureDetector(onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 10,
+                                title: 'Sport Shop',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/sportShopOne.png')),
+                          SizedBox(height: 10,),
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 6,
+                                title: 'Electronics',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/electronics.png')),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 15,
+                                title: 'Drinks',
+                              );
+                            }));
+                          }, child: Image.asset('assets/images/drinks.png')),
+                        ],
+                      )
+                      // GestureDetector(onTap:(){},
+                      //     child: Image.asset('assets/images/groceries.png')),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
                       GestureDetector(onTap:(){
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const StoresProduct(
-                            id: 18,
-                            title: 'Snacks',
+                            id: 12,
+                            title: 'Thrift Shop',
                           );
                         }));
                       },
-                          child: Image.asset('assets/images/snacks.png')),
+                          child: Image.asset('assets/images/thriftShop.png')),
+                      Column(
+                        children: [
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 11,
+                                title: 'Automobile',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/automobile.png')),
+                          SizedBox(height: 10,),
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 13,
+                                title: 'Automobile',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/perfume.png')),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right:30.0, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const StoresProduct(
-                          id: 15,
-                          title: 'Drinks',
-                        );
-                      }));
-                    }, child: Image.asset('assets/images/drinks.png')),
-                  ],
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          GestureDetector(onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 5,
+                                title: 'Jewelries',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/jewelries.png')),
+                          SizedBox(height: 10,),
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 16,
+                                title: 'Books and Stationaries',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/books.png')),
+                        ],
+                      ),
+                      GestureDetector(onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const StoresProduct(
+                            id: 1,
+                            title: 'Supermarket',
+                          );
+                        }));
+                      },
+                          child: Image.asset('assets/images/supermarket.png')),
+                      // GestureDetector(onTap:(){},
+                      //     child: Image.asset('assets/images/groceries.png')),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const StoresProduct(
+                            id: 14,
+                            title: 'Shoes/Bags',
+                          );
+                        }));
+                      },
+                          child: Image.asset('assets/images/shoe.png', width: 108,)),
+                      Column(
+                        children: [
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 17,
+                                title: 'Clothings',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/clothing.png')),
+                          SizedBox(height: 10,),
+                          GestureDetector(onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return const StoresProduct(
+                                id: 18,
+                                title: 'Snacks',
+                              );
+                            }));
+                          },
+                              child: Image.asset('assets/images/snacks.png')),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         // body: StreamBuilder<List<StoresCategory>>(
@@ -291,13 +301,18 @@ class _StoreScreenState extends State<StoreScreen> {
         //     }),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 }
 
 class store04 extends StatelessWidget {
   const store04({
     Key? key, required this.name
   }) : super(key: key);
-  
+
   final String name;
 
   @override
@@ -371,7 +386,7 @@ class store03 extends StatelessWidget {
   const store03({
     Key? key,required this.name
   }) : super(key: key);
-  
+
   final String name;
 
   @override
@@ -445,7 +460,7 @@ class store02 extends StatelessWidget {
   const store02({
     Key? key, required this.name
   }) : super(key: key);
-  
+
   final String name;
 
   @override
@@ -519,7 +534,7 @@ class Store01 extends StatelessWidget {
   const Store01({
     Key? key,required this.name
   }) : super(key: key);
-  
+
   final String name;
 
   @override

@@ -3,6 +3,7 @@ import 'package:esolink/logic/api_services/constants.dart';
 import 'package:esolink/logic/api_services/local/local_storage.dart';
 import 'package:esolink/logic/store/store_controller.dart';
 import 'package:esolink/models/stores_model/product_details.dart';
+import 'package:esolink/models/stores_model/store_response.dart';
 import 'package:esolink/models/stores_model/stores_model.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
@@ -11,6 +12,7 @@ import 'package:esolink/views/widgets/image_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:readmore/readmore.dart';
 import 'package:get/get.dart';
 import 'bottom_sheet.dart';
@@ -19,7 +21,7 @@ import 'custom_scroll_physics.dart';
 import 'custom_snack.dart';
 
 class StoreDetailsWidget extends StatefulWidget {
-  final Stores stores;
+  final StoreProduct stores;
   const StoreDetailsWidget({Key? key, required this.stores}) : super(key: key);
 
   @override
@@ -79,7 +81,7 @@ class _StoreDetailsWidgetState extends State<StoreDetailsWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    amount = widget.stores.amount ?? 0.0;
+    amount = widget.stores.amount?.toDouble() ?? 0.0;
     return GetBuilder<StoreController>(
       init: StoreController(),
         builder: (controller){
@@ -188,7 +190,9 @@ class _StoreDetailsWidgetState extends State<StoreDetailsWidget> {
                   ],
                 ),
                 const SizedBox(height: 5,),
-                Text("N ${widget.stores.amount?.toInt().toString() ?? 0}",
+                Text("N ${MoneyFormatter(
+                    amount: widget.stores.amount?.toDouble() ?? 0.00
+                ).output.nonSymbol}",
                     style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Color(0xff333333))),
                 const SizedBox(height: 5,),
                 RatingBar.builder(
@@ -242,7 +246,9 @@ class _StoreDetailsWidgetState extends State<StoreDetailsWidget> {
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: CustomButton(
               onTap: ()async{
-                esoLinkBottomSheet(children: [
+                esoLinkBottomSheet(
+                  isDismissible: false,
+                    children: [
                   StatefulBuilder(builder: (context, update){
                     return Column(
                       children: [

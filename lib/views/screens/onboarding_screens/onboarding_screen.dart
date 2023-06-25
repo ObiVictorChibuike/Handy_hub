@@ -1,12 +1,12 @@
 
 import 'package:esolink/logic/api_services/local/local_storage.dart';
+import 'package:esolink/logic/dashboard_controller.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/screens/dashboard/dashboard.dart';
 import 'package:esolink/views/screens/onboarding_screens/new_onboarding.dart';
+import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../widgets/custom_button.dart';
-import '../sign_up/sign_up_selections.dart';
 import 'onboarding_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -19,6 +19,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late PageController _pageController = PageController(initialPage: 0);
   int currentIndex = 0;
+  final _dbController = Get.put(DashboardController());
 
   @override
   void initState() {
@@ -51,8 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
         backgroundColor: white,
         body: Container(
-          height: double.infinity,
-          width: double.infinity,
+          height: double.infinity, width: double.infinity,
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisAlignment: MainAxisAlignment.center,
@@ -65,13 +65,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     NewOnboardingScreen(
                       title: "Easy Access",
                       description:
-                          "Esolink will connect you to the best rated service provider, store vendor or Dispatch rider within few minutes of your location.",
+                          "Handyhub will connect you to the best rated service provider, store vendor or Dispatch rider within few minutes of your location.",
                       image: 'onboarding_1',
                     ),
                     NewOnboardingScreen(
                       title: "Service delivery",
                       description:
-                          "Speak directly with professionals, negotiate price and pay securely though esolink app. Esolink will monitor to ensure your job is completed to your satisfaction.",
+                          "Speak directly with customers, negotiate price, and pay directly THROUGH HANDYHUB App. Handyhub will monitor to ensure your job is completed to your satisfaction.",
                       image: 'onboarding_2',
                     ),
                     NewOnboardingScreen(
@@ -83,13 +83,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     NewOnboardingScreen(
                       title: "Service Reminder",
                       description:
-                          "Set REMINDER notification for when next you need any service on Esolink app and get reminded on that date.",
+                          "Set REMINDER notification for when next you need any service on Handyhub app and get reminded on that date.",
                       image: 'onboarding_4',
                     ),
                   ],
                 ),
               ),
-
               const SizedBox(
                 height: 51,
               ),
@@ -106,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     text: "Get Started",
                   ),
-                ), 
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

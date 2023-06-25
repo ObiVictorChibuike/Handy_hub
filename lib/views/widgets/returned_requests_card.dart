@@ -9,7 +9,6 @@ import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
 import 'package:esolink/views/screens/dashboard/requests/request_detail.dart';
 import 'package:esolink/views/screens/sign_in/initial_sign_in.dart';
-import 'package:esolink/views/screens/sign_up/sign_up_selections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -18,7 +17,7 @@ import 'package:get/get.dart';
 class ReturnedRequestCard extends StatefulWidget {
   ReturnedRequestCard({Key? key, this.serviceProviders,}) : super(key: key);
 
-  final ServiceProvider? serviceProviders;
+  final RequestModelList? serviceProviders;
 
   @override
   State<ReturnedRequestCard> createState() => _ReturnedRequestCardState();
@@ -67,7 +66,6 @@ class _ReturnedRequestCardState extends State<ReturnedRequestCard> {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: GestureDetector(
@@ -87,183 +85,196 @@ class _ReturnedRequestCardState extends State<ReturnedRequestCard> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Flexible(
-                flex: 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Container(
-                    height: 56,
-                    width: 56,
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: Image.network(
-                      widget.serviceProviders!.photoUrl.toString(),
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: 56,
-                          width: 56,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: primaryColor, width: 3)),
-                          child: Center(
-                              child: Text(
-                                widget.serviceProviders!.firstName![0],
-                            style: subHeaderText.copyWith(color: Colors.black),
-                          )),
-                        );
-                      },
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      height: 56,
+                      width: 56,
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                      child: Image.network(
+                        widget.serviceProviders!.photoUrl.toString(),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            height: 56,
+                            width: 56,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: primaryColor, width: 3)),
+                            child: Center(
+                                child: Text(
+                                  widget.serviceProviders!.firstName![0],
+                              style: subHeaderText.copyWith(color: Colors.black),
+                            )),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
+                  widget.serviceProviders?.isOnline == true ?
+                  Positioned(
+                    bottom: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      height: 13, width: 13,
+                      decoration: BoxDecoration(color: primaryColor, shape: BoxShape.circle, border: Border.all(color: Colors.white)),
+                    ),
+                  ) :  const SizedBox()
+                ],
               ),
               const SizedBox(
                 width: 16,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${widget.serviceProviders!.firstName}",
-                    style: subHeaderText.copyWith(
-                        fontSize: 15, color: grey, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Row(
-                    children: [
-                      const EsolinkIcons(
-                        size: 6,
-                        icons: "phone",
-                      ),
-                      const SizedBox(width: 3),
-                      Text(
-                        "${widget.serviceProviders!.phoneNumber}"
-                            .replaceRange(1, 6, "******"),
-                        style: subHeaderText.copyWith(
-                            fontSize: 14,
-                            color: grey,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      const EsolinkIcons(
-                        size: 6,
-                        icons: "location",
-                      ),
-                      const SizedBox(width: 3),
-                      Text(
-                        "${widget.serviceProviders!.distance}",
-                        style: subHeaderText.copyWith(
-                            fontSize: 12,
-                            color: grey,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      RatingBar.builder(
-                        itemSize: 12,
-                        initialRating: widget.serviceProviders?.rating?.toDouble() ?? 0.0,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                        itemBuilder: (context, _) => const Icon(
-                          Icons.star, size: 9,
-                          color: Color(0xffF2994A),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${widget.serviceProviders!.firstName}", overflow: TextOverflow.ellipsis,
+                      style: subHeaderText.copyWith(
+                          fontSize: 14, color: grey, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    Row(
+                      children: [
+                        const EsolinkIcons(
+                          size: 6,
+                          icons: "phone",
                         ),
-                        onRatingUpdate: (rating) {
-                          if (kDebugMode) {
-                            print(rating);
-                          }
-                        },
-                      ),
-                      Text("(${widget.serviceProviders?.rating ?? 0} rating)",
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 10, fontWeight: FontWeight.w400, color: const Color(0xff4F4F4F)),),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                                return RequestDetailsScreen(
-                                  serviceProviders: widget.serviceProviders,
-                                  title: widget.serviceProviders!.firstName,
-                                  businessName: widget.serviceProviders?.businessName,
-                                );
-                              }));
-                        },
-                        child: Container(
-                          height: 31,
-                          decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(5)),
-                          width: 72,
-                          child: Center(
-                            child: Text(
-                              "Preview",
-                              style: subHeaderText.copyWith(
-                                  fontSize: 12,
-                                  color: white,
-                                  fontWeight: FontWeight.bold),
+                        const SizedBox(width: 3),
+                        Text(
+                          "${widget.serviceProviders!.phoneNumber}"
+                              .replaceRange(1, 6, "******"),
+                          style: subHeaderText.copyWith(
+                              fontSize: 12,
+                              color: grey,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        const EsolinkIcons(
+                          size: 6,
+                          icons: "location",
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          "${widget.serviceProviders!.distance}",
+                          style: subHeaderText.copyWith(
+                              fontSize: 12,
+                              color: grey,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        RatingBar.builder(
+                          itemSize: 12,
+                          initialRating: widget.serviceProviders?.rating?.toDouble() ?? 0.0,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star, size: 9,
+                            color: Color(0xffF2994A),
+                          ),
+                          onRatingUpdate: (rating) {
+                            if (kDebugMode) {
+                              print(rating);
+                            }
+                          },
+                        ),
+                        Text("(${widget.serviceProviders?.rating ?? 0} rating)",
+                          style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 9, fontWeight: FontWeight.w400, color: const Color(0xff4F4F4F)),),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return RequestDetailsScreen(
+                                    serviceProviders: widget.serviceProviders,
+                                    title: widget.serviceProviders!.firstName,
+                                    businessName: widget.serviceProviders?.businessName,
+                                  );
+                                }));
+                          },
+                          child: Container(
+                            height: 31,
+                            decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(5)),
+                            width: 72,
+                            child: Center(
+                              child: Text(
+                                "Preview",
+                                style: subHeaderText.copyWith(
+                                    fontSize: 12,
+                                    color: white,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 21,),
-                      GestureDetector(
-                        onTap: () async {
-                          loginStatus == true ?
-                          await makeRequest(context, fullName:  widget.serviceProviders?.businessName ?? widget.serviceProviders?.firstName ?? "",
-                          email: widget.serviceProviders?.email ?? "", phoneNumber: widget.serviceProviders?.phoneNumber ?? "",
-                          categoryId: widget.serviceProviders!.categoryId!.toInt(),
-                          location: widget.serviceProviders?.address ?? "", serviceProviderId: widget.serviceProviders!.serviceProviderId!.toInt())
-                          :   showAlertDialog(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitialSignIn(route: "category",)));
-                              }
-                          );
+                        const SizedBox(width: 21,),
+                        GestureDetector(
+                          onTap: () async {
+                            loginStatus == true ?
+                            await makeRequest(
+                            categoryId: widget.serviceProviders!.categoryId!.toInt(),
+                            serviceProviderId: widget.serviceProviders!.serviceProviderId!.toInt())
+                            :   showAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitialSignIn(route: "category",)));
+                                }
+                            );
 
-                        },
-                        child: Container(
-                          height: 31,
-                          decoration: BoxDecoration(
-                              color: white,
-                              border: Border.all(color: primaryColor),
-                              borderRadius: BorderRadius.circular(5)),
-                          width: 72,
-                          child: Center(
-                            child: Text(
-                              "Request",
-                              style: subHeaderText.copyWith(
-                                  fontSize: 12,
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.bold),
+                          },
+                          child: Container(
+                            height: 31,
+                            decoration: BoxDecoration(
+                                color: white,
+                                border: Border.all(color: primaryColor),
+                                borderRadius: BorderRadius.circular(5)),
+                            width: 72,
+                            child: Center(
+                              child: Text(
+                                "Request",
+                                style: subHeaderText.copyWith(
+                                    fontSize: 12,
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
-              )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              widget.serviceProviders!.isVerified == true ?
+              Icon(Icons.verified, color: primaryColor, size: 15,)
+                  : const SizedBox()
             ]),
           ),
         ),

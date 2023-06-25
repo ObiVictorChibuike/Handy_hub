@@ -1,4 +1,8 @@
+import 'package:esolink/logic/account/controller.dart';
+import 'package:esolink/logic/api_services/local/local_storage.dart';
 import 'package:esolink/logic/dashboard_controller.dart';
+import 'package:esolink/logic/delivery/delivery_controller.dart';
+import 'package:esolink/logic/request/request_controller.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/icons/esolink_icons.dart';
 import 'package:esolink/views/screens/dashboard/accounts/account_screen.dart';
@@ -9,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../constants/colors.dart';
+import 'delivery/allDelivery_screen.dart';
 import 'home/home.dart';
 
 class Dashboard extends StatefulWidget {
@@ -23,18 +28,20 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   List<Widget>? body;
   GlobalKey<ScaffoldState> s = GlobalKey();
-
+  final requestController = Get.put(RequestController());
+  final deliveryController = Get.put(DeliveryController());
   @override
   void initState() {
     super.initState();
     body = [
-      Homepage(),
+      const Homepage(),
       const StoreScreen(),
       const RequestScreen(),
-      const DeliveryScreen(),
+      const AllDeliveryScreen(),
       const AccountScreen()
     ];
   }
+  final accountController = Get.put(AccountController());
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +71,8 @@ class _DashboardState extends State<Dashboard> {
                     : Container(
                     height: 37,
                     width: 37,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(5.0),
                       child: EsolinkIcons(
                         icons: "home",
                         size: 15,
@@ -75,22 +82,22 @@ class _DashboardState extends State<Dashboard> {
             BottomNavigationBarItem(
                 label: "Store",
                 icon: controller.index == 1
-                    ? Container(
-                    height: 37,
-                    width: 37,
-                    child: const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: EsolinkIcons(
-                        icons: "store",
-                        color: Color(0xff187226),
-                        size: 15,
-                      ),
-                    ))
-                    : Container(
+                    ? SizedBox(
                     height: 37,
                     width: 37,
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
+                      child: EsolinkIcons(
+                        icons: "store",
+                        color: primaryColor,
+                        size: 15,
+                      ),
+                    ))
+                    : const SizedBox(
+                    height: 37,
+                    width: 37,
+                    child: Padding(
+                      padding: EdgeInsets.all(5.0),
                       child: EsolinkIcons(
                         icons: "store",
                         size: 15,
@@ -136,15 +143,11 @@ class _DashboardState extends State<Dashboard> {
                         color: primaryColor,
                       ),
                     ))
-                    : Container(
-                    height: 37,
-                    width: 37,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                    : Container(height: 37, width: 37,
+                    child: const Padding(
+                      padding: EdgeInsets.all(5.0),
                       child: EsolinkIcons(
-                        icons: "delivery",
-                        size: 15,
-                        color: Colors.black38,
+                        icons: "delivery", size: 15, color: Colors.black38,
                       ),
                     ))),
             BottomNavigationBarItem(
@@ -161,11 +164,9 @@ class _DashboardState extends State<Dashboard> {
                         color: primaryColor,
                       ),
                     ))
-                    : Container(
-                    height: 37,
-                    width: 37,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                    : Container(height: 37, width: 37,
+                    child: const Padding(
+                      padding: EdgeInsets.all(5.0),
                       child: EsolinkIcons(
                         icons: "account",
                         size: 15,

@@ -23,6 +23,7 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
@@ -68,4 +69,13 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    constraints {
+        implementation('com.google.android.gms:play-services-location') {
+            version {
+                strictly "16.0.0"
+            }
+            because 'location: 3.2.4 does not specify version & google.bintray.com answers 502 Bad Gateway'
+        }
+    }
 }

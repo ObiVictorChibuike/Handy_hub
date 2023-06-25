@@ -26,10 +26,7 @@ class _ViewProfileImageState extends State<ViewProfileImage> {
                   onTap: (){
                     Navigator.of(context).pop();
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: EsolinkBackButton(),
-                  )),
+                  child: EsolinkBackButton()),
               title: Text("Photo",textAlign: TextAlign.center,
                   style: subHeaderText.copyWith(
                       color: Colors.black,

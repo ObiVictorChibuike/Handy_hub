@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:clean_dialog/clean_dialog.dart';
 import 'package:esolink/logic/states/states_request.dart';
 import 'package:esolink/views/screens/sign_up/customer_registration.dart';
 import 'package:esolink/views/screens/sign_up/rider_registration.dart';
@@ -11,7 +8,6 @@ import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:esolink/views/widgets/sign_up_selection_tile.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import '../../../logic/registration/registration_bloc.dart';
 import '../../../logic/services_category/services_request.dart';
 import '../../../service_locator.dart';

@@ -49,8 +49,7 @@ class Descriptionard extends StatelessWidget {
                     style: subHeaderText.copyWith(
                         fontSize: 10, fontWeight: FontWeight.w500),
                   ),
-                  Text(
-                    "Services rendered: $servicesRendered",
+                  Text("Services rendered: $servicesRendered",
                     style: subHeaderText.copyWith(
                         fontSize: 10, fontWeight: FontWeight.w500),
                   ),

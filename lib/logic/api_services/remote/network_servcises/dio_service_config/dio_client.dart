@@ -8,7 +8,7 @@ class NetworkProvider{
 
   Dio _getDioInstance(){
     var dio = Dio(BaseOptions(
-        baseUrl: "http://handyhub.goserp.co.uk",
+        baseUrl: "http://api.gethandyhub.com",
         connectTimeout:60000,
         receiveTimeout:60000
     ));
@@ -71,4 +71,4 @@ class AuthorizationInterceptor extends Interceptor {
   }
 }
 
-enum RequestMethod { get, post, put, patch, delete }
+enum RequestMethod {get, post, put, patch, delete}

@@ -1,3 +1,4 @@
+
 class AllDeliveryResponseModel {
   AllDeliveryResponseModel({
     this.delivery,
@@ -82,10 +83,10 @@ class Delivery {
   int? paymentType;
   dynamic active;
   dynamic deleted;
-  DateTime? createdBy;
+  dynamic createdBy;
   DateTime? createdOn;
-  DateTime? updatedBy;
-  DateTime? updatedOn;
+  dynamic updatedBy;
+  dynamic updatedOn;
 
   factory Delivery.fromJson(Map<String, dynamic> json) => Delivery(
     deliveryId: json["deliveryId"],
@@ -110,10 +111,10 @@ class Delivery {
     paymentType: json["paymentType"],
     active: json["active"],
     deleted: json["deleted"],
-    createdBy: json["createdBy"] == null ? null : DateTime.parse(json["createdBy"]),
+    createdBy: json["createdBy"],
     createdOn: json["createdOn"] == null ? null : DateTime.parse(json["createdOn"]),
-    updatedBy: json["updatedBy"] == null ? null : DateTime.parse(json["updatedBy"]),
-    updatedOn: json["updatedOn"] == null ? null : DateTime.parse(json["updatedOn"]),
+    updatedBy: json["updatedBy"],
+    updatedOn: json["updatedOn"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -139,10 +140,10 @@ class Delivery {
     "paymentType": paymentType,
     "active": active,
     "deleted": deleted,
-    "createdBy": createdBy?.toIso8601String(),
+    "createdBy": createdBy,
     "createdOn": createdOn?.toIso8601String(),
-    "updatedBy": updatedBy?.toIso8601String(),
-    "updatedOn": updatedOn?.toIso8601String(),
+    "updatedBy": updatedBy,
+    "updatedOn": updatedOn,
   };
 }
 

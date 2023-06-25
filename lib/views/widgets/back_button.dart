@@ -8,12 +8,10 @@ class EsolinkBackButton extends StatelessWidget {
     return Container(
       decoration:
           const BoxDecoration(color: Color(0xffF2F2F2), shape: BoxShape.circle),
-      height: 40,
-      width: 40,
       child: const Icon(
-        Icons.arrow_left_outlined,
+        Icons.arrow_back_ios_new_rounded,
         color: Colors.black,
-        size: 18,
+        size: 20,
       ),
     );
   }

@@ -6,13 +6,13 @@ import 'package:esolink/logic/payment/payment_page.dart';
 import 'package:esolink/logic/store/store_controller.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
-import 'package:esolink/views/widgets/back_button.dart';
 import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:esolink/views/widgets/custom_radio.dart';
 import 'package:esolink/views/widgets/custom_snack.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 
 class CartPage extends StatefulWidget {
@@ -57,9 +57,16 @@ class _CartPageState extends State<CartPage> {
                 onTap: (){
                   Navigator.of(context).pop();
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(18.0),
-                  child: EsolinkBackButton(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(color: Color(0xffF2F2F2), shape: BoxShape.circle),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                  ),
                 )),
             title: Text("Cart",textAlign: TextAlign.center,
                 style: subHeaderText.copyWith(
@@ -88,16 +95,31 @@ class _CartPageState extends State<CartPage> {
                 Column(
                   children: [
                     ...controller.totalCartItemResponse!.cart!.cartList!.where((element) => element.quantity != 0).map((e){
+                      MoneyFormatter amount = MoneyFormatter(
+                          amount: e.amount?.toDouble() ?? 0.00
+                      );
                       return Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white, borderRadius: BorderRadius.circular(12),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0, 1),
+                                blurRadius: 5,
+                                spreadRadius: 1)
+                          ],),
+                        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Column(
                           children: [
                             Row(
                               children: [
-                                Container(
-                                    height: 100, width: 100, decoration: BoxDecoration(borderRadius:  BorderRadius.circular(16)),
-                                    child: Image.network(e.photoUrlList![0].photoUrl ?? imagePlaceHolder)),
+                                ClipRRect(borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                      height: 100, width: 100, decoration: BoxDecoration(borderRadius:  BorderRadius.circular(16)),
+                                      child: Image.network(e.photoUrlList![0].photoUrl ?? imagePlaceHolder, fit: BoxFit.cover,height: 100, width: 100,)),
+                                ),
                                 const SizedBox(width: 20,),
                                 Expanded(
                                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +128,7 @@ class _CartPageState extends State<CartPage> {
                                           color: Colors.black,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400)),
-                                      Text("N ${e.amount ?? 0}", style: subHeaderText.copyWith(
+                                      Text("N ${amount.output.nonSymbol}", style: subHeaderText.copyWith(
                                           color: Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400))
@@ -116,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                               ],
                             ),
                             const Divider(),
-                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
@@ -124,8 +146,7 @@ class _CartPageState extends State<CartPage> {
                                     const SizedBox(width: 20,),
                                     GestureDetector(
                                       onTap: (){
-                                        controller.removeItemFromCart(cartId: e.cartId!,
-                                            context: context);
+                                        controller.removeItemFromCart(cartId: e.cartId!, context: context);
                                       },
                                       child: Row(
                                         children: [
@@ -216,7 +237,7 @@ class _CartPageState extends State<CartPage> {
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Direct Payment",
+                              Text("Wallet",
                                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14) ),
                               CustomRadio(
                                 value: directPayment,
@@ -238,7 +259,10 @@ class _CartPageState extends State<CartPage> {
                               children: [
                                 Text("Sub Total",
                                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 12),),
-                                Text("${controller.totalCartItemResponse?.cart?.cartTotalSum ?? 0}", style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13),),
+                                Text(MoneyFormatter(
+                                    amount: controller.totalCartItemResponse?.cart?.cartTotalSum?.toDouble() ?? 0.00
+                                ).output.nonSymbol,
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13),),
                               ],
                             ),
                             const SizedBox(height: 5,),
@@ -259,7 +283,8 @@ class _CartPageState extends State<CartPage> {
                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Total", style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 12),),
-                                Text("${controller.totalCartItemResponse?.cart?.cartTotalSum ?? 0}", style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13),),
+                                Text(MoneyFormatter(amount: controller.totalCartItemResponse?.cart?.cartTotalSum?.toDouble() ?? 0.00).output.nonSymbol,
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13),),
                               ],
                             ),
                           ],

@@ -1,46 +1,111 @@
 
 class RequestsModel {
+  Response? response;
+  Status? status;
+
   RequestsModel({
-    this.serviceProviders,
-    this.serviceProviderPage,
-    this.requestedServices,
-    this.requestedServicesPage,
+    this.response,
     this.status,
-    this.counts,
-    this.serviceProviderId,
   });
 
-  List<ServiceProvider>? serviceProviders;
-  dynamic serviceProviderPage;
-  dynamic requestedServices;
-  dynamic requestedServicesPage;
-  Status? status;
-  dynamic counts;
-  int? serviceProviderId;
-
   factory RequestsModel.fromJson(Map<String, dynamic> json) => RequestsModel(
-    serviceProviders: json["serviceProviders"] == null ? [] : List<ServiceProvider>.from(json["serviceProviders"]!.map((x) => ServiceProvider.fromJson(x))),
-    serviceProviderPage: json["serviceProvider_page"],
-    requestedServices: json["requestedServices"],
-    requestedServicesPage: json["requestedServices_page"],
+    response: json["response"] == null ? null : Response.fromJson(json["response"]),
     status: json["status"] == null ? null : Status.fromJson(json["status"]),
-    counts: json["counts"],
-    serviceProviderId: json["serviceProviderId"],
   );
 
   Map<String, dynamic> toJson() => {
-    "serviceProviders": serviceProviders == null ? [] : List<dynamic>.from(serviceProviders!.map((x) => x.toJson())),
-    "serviceProvider_page": serviceProviderPage,
-    "requestedServices": requestedServices,
-    "requestedServices_page": requestedServicesPage,
+    "response": response?.toJson(),
     "status": status?.toJson(),
-    "counts": counts,
-    "serviceProviderId": serviceProviderId,
   };
 }
 
-class ServiceProvider {
-  ServiceProvider({
+class Response {
+  int? currentPage;
+  int? totalPages;
+  int? pageSize;
+  int? totalCount;
+  bool? hasPrevious;
+  bool? hasNext;
+  List<RequestModelList>? data;
+
+  Response({
+    this.currentPage,
+    this.totalPages,
+    this.pageSize,
+    this.totalCount,
+    this.hasPrevious,
+    this.hasNext,
+    this.data,
+  });
+
+  factory Response.fromJson(Map<String, dynamic> json) => Response(
+    currentPage: json["currentPage"],
+    totalPages: json["totalPages"],
+    pageSize: json["pageSize"],
+    totalCount: json["totalCount"],
+    hasPrevious: json["hasPrevious"],
+    hasNext: json["hasNext"],
+    data: json["data"] == null ? [] : List<RequestModelList>.from(json["data"]!.map((x) => RequestModelList.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "currentPage": currentPage,
+    "totalPages": totalPages,
+    "pageSize": pageSize,
+    "totalCount": totalCount,
+    "hasPrevious": hasPrevious,
+    "hasNext": hasNext,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+  };
+}
+
+class RequestModelList {
+  int? serviceProviderId;
+  int? customerTypeId;
+  String? customerTypeName;
+  dynamic fullName;
+  String? firstName;
+  String? lastName;
+  String? phoneNumber;
+  int? wallet;
+  String? email;
+  dynamic businessName;
+  String? address;
+  String? distance;
+  num? distanceNumber;
+  dynamic category;
+  dynamic confirmed;
+  dynamic verified;
+  int? categoryId;
+  int? stateId;
+  int? countryId;
+  int? servicesRendered;
+  dynamic photoString;
+  String? photoUrl;
+  dynamic publicId;
+  dynamic photo;
+  dynamic password;
+  dynamic referralCode;
+  num? rating;
+  dynamic fileName;
+  dynamic fileExtension;
+  String? description;
+  dynamic latitude;
+  dynamic longitude;
+  bool? isConfirmed;
+  dynamic active;
+  bool? isOnline;
+  bool? isVerified;
+  dynamic deleted;
+  dynamic createdBy;
+  DateTime? createdOn;
+  DateTime? lastSeen;
+  dynamic updatedBy;
+  dynamic updatedOn;
+  dynamic images;
+  List<BusinessPhoto>? businessPhoto;
+
+  RequestModelList({
     this.serviceProviderId,
     this.customerTypeId,
     this.customerTypeName,
@@ -56,10 +121,12 @@ class ServiceProvider {
     this.distanceNumber,
     this.category,
     this.confirmed,
+    this.verified,
     this.categoryId,
     this.stateId,
     this.countryId,
     this.servicesRendered,
+    this.photoString,
     this.photoUrl,
     this.publicId,
     this.photo,
@@ -73,6 +140,8 @@ class ServiceProvider {
     this.longitude,
     this.isConfirmed,
     this.active,
+    this.isOnline,
+    this.isVerified,
     this.deleted,
     this.createdBy,
     this.createdOn,
@@ -83,48 +152,7 @@ class ServiceProvider {
     this.businessPhoto,
   });
 
-  int? serviceProviderId;
-  int? customerTypeId;
-  String? customerTypeName;
-  dynamic fullName;
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
-  num? wallet;
-  String? email;
-  String? businessName;
-  String? address;
-  String? distance;
-  double? distanceNumber;
-  dynamic category;
-  dynamic confirmed;
-  num? categoryId;
-  num? stateId;
-  num? countryId;
-  num? servicesRendered;
-  String? photoUrl;
-  dynamic publicId;
-  dynamic photo;
-  dynamic password;
-  dynamic referralCode;
-  num? rating;
-  dynamic fileName;
-  dynamic fileExtension;
-  String? description;
-  num? latitude;
-  num? longitude;
-  bool? isConfirmed;
-  dynamic active;
-  dynamic deleted;
-  dynamic createdBy;
-  DateTime? createdOn;
-  DateTime? lastSeen;
-  dynamic updatedBy;
-  dynamic updatedOn;
-  dynamic images;
-  List<BusinessPhoto>? businessPhoto;
-
-  factory ServiceProvider.fromJson(Map<String, dynamic> json) => ServiceProvider(
+  factory RequestModelList.fromJson(Map<String, dynamic> json) => RequestModelList(
     serviceProviderId: json["serviceProviderId"],
     customerTypeId: json["customerTypeId"],
     customerTypeName: json["customerTypeName"],
@@ -140,10 +168,12 @@ class ServiceProvider {
     distanceNumber: json["distanceNumber"]?.toDouble(),
     category: json["category"],
     confirmed: json["confirmed"],
+    verified: json["verified"],
     categoryId: json["categoryId"],
     stateId: json["stateId"],
     countryId: json["countryId"],
     servicesRendered: json["servicesRendered"],
+    photoString: json["photoString"],
     photoUrl: json["photoUrl"],
     publicId: json["publicId"],
     photo: json["photo"],
@@ -157,6 +187,8 @@ class ServiceProvider {
     longitude: json["longitude"],
     isConfirmed: json["isConfirmed"],
     active: json["active"],
+    isOnline: json["isOnline"],
+    isVerified: json["isVerified"],
     deleted: json["deleted"],
     createdBy: json["createdBy"],
     createdOn: json["createdOn"] == null ? null : DateTime.parse(json["createdOn"]),
@@ -183,10 +215,12 @@ class ServiceProvider {
     "distanceNumber": distanceNumber,
     "category": category,
     "confirmed": confirmed,
+    "verified": verified,
     "categoryId": categoryId,
     "stateId": stateId,
     "countryId": countryId,
     "servicesRendered": servicesRendered,
+    "photoString": photoString,
     "photoUrl": photoUrl,
     "publicId": publicId,
     "photo": photo,
@@ -200,6 +234,8 @@ class ServiceProvider {
     "longitude": longitude,
     "isConfirmed": isConfirmed,
     "active": active,
+    "isOnline": isOnline,
+    "isVerified": isVerified,
     "deleted": deleted,
     "createdBy": createdBy,
     "createdOn": createdOn?.toIso8601String(),
@@ -212,6 +248,17 @@ class ServiceProvider {
 }
 
 class BusinessPhoto {
+  int? businessPhotoIdId;
+  int? serviceProviderId;
+  String? photoUrl;
+  String? publicPhotoIdId;
+  bool? active;
+  bool? deleted;
+  dynamic createdBy;
+  DateTime? createdOn;
+  dynamic updatedBy;
+  dynamic updatedOn;
+
   BusinessPhoto({
     this.businessPhotoIdId,
     this.serviceProviderId,
@@ -224,17 +271,6 @@ class BusinessPhoto {
     this.updatedBy,
     this.updatedOn,
   });
-
-  int? businessPhotoIdId;
-  int? serviceProviderId;
-  String? photoUrl;
-  String? publicPhotoIdId;
-  bool? active;
-  bool? deleted;
-  dynamic createdBy;
-  DateTime? createdOn;
-  dynamic updatedBy;
-  dynamic updatedOn;
 
   factory BusinessPhoto.fromJson(Map<String, dynamic> json) => BusinessPhoto(
     businessPhotoIdId: json["businessPhotoIdId"],
@@ -263,18 +299,41 @@ class BusinessPhoto {
   };
 }
 
+enum CustomerTypeName { SERVICE_PROVIDER, CUSTOMER }
+
+final customerTypeNameValues = EnumValues({
+  "Customer": CustomerTypeName.CUSTOMER,
+  "Service Provider": CustomerTypeName.SERVICE_PROVIDER
+});
+
+enum Distance { LAST_LOCATION_12642_KM_AWAY, LAST_LOCATION_13178_KM_AWAY, LAST_LOCATION_66658_KM_AWAY, LAST_LOCATION_1286_KM_AWAY }
+
+final distanceValues = EnumValues({
+  "Last location: 126.42 KM Away": Distance.LAST_LOCATION_12642_KM_AWAY,
+  "Last location: 128.6 KM Away": Distance.LAST_LOCATION_1286_KM_AWAY,
+  "Last location: 131.78 KM Away": Distance.LAST_LOCATION_13178_KM_AWAY,
+  "Last location: 666.58 KM Away": Distance.LAST_LOCATION_66658_KM_AWAY
+});
+
+enum LastName { EMPTY, RETOUCH }
+
+final lastNameValues = EnumValues({
+  "": LastName.EMPTY,
+  "retouch": LastName.RETOUCH
+});
+
 class Status {
+  bool? isSuccessful;
+  dynamic customToken;
+  dynamic customSetting;
+  Message? message;
+
   Status({
     this.isSuccessful,
     this.customToken,
     this.customSetting,
     this.message,
   });
-
-  bool? isSuccessful;
-  dynamic customToken;
-  dynamic customSetting;
-  Message? message;
 
   factory Status.fromJson(Map<String, dynamic> json) => Status(
     isSuccessful: json["isSuccessful"],
@@ -292,6 +351,12 @@ class Status {
 }
 
 class Message {
+  String? friendlyMessage;
+  dynamic technicalMessage;
+  dynamic messageId;
+  dynamic searchResultMessage;
+  dynamic shortErrorMessage;
+
   Message({
     this.friendlyMessage,
     this.technicalMessage,
@@ -299,12 +364,6 @@ class Message {
     this.searchResultMessage,
     this.shortErrorMessage,
   });
-
-  String? friendlyMessage;
-  dynamic technicalMessage;
-  dynamic messageId;
-  dynamic searchResultMessage;
-  dynamic shortErrorMessage;
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
     friendlyMessage: json["friendlyMessage"],
@@ -321,4 +380,16 @@ class Message {
     "searchResultMessage": searchResultMessage,
     "shortErrorMessage": shortErrorMessage,
   };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

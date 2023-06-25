@@ -1,18 +1,17 @@
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
 class CustomDate{
 
-  // static String slash(String date) {
-  //   var parsedDate = DateTime.parse(date);
-  //   var day = parsedDate.day;
-  //   var month = parsedDate.month;
-  //   var year = parsedDate.year;
-  //
-  //   return "$day/$month/$year";
-  // }
-
   static String slash(String date) {
-    final formattedDate = Jiffy.parse(date).yMMMdjm;
+    final formattedDate = Jiffy.parse(date).yMMMd;
     return formattedDate;
+  }
+
+  static String getDate(String date) {
+    var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
+    var inputDate = inputFormat.parse(date);
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    return outputFormat.format(inputDate);
   }
 }

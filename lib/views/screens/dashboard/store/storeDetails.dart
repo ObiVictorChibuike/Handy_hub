@@ -2,6 +2,7 @@ import 'package:esolink/logic/api_services/services.dart';
 import 'package:esolink/logic/store/store_controller.dart';
 import 'package:esolink/logic/store/stores_request.dart';
 import 'package:esolink/models/stores_model/product_details.dart';
+import 'package:esolink/models/stores_model/store_response.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/widgets/back_button.dart';
@@ -16,7 +17,7 @@ import '../../../widgets/page_with_back_button.dart';
 class storeDetailsScreen extends StatefulWidget {
   const storeDetailsScreen({Key? key, required this.id, required this.stores}) : super(key: key);
   final int? id;
-  final Stores stores;
+  final StoreProduct stores;
 
   @override
   State<storeDetailsScreen> createState() => _storeDetailsScreenState();
@@ -49,9 +50,16 @@ class _storeDetailsScreenState extends State<storeDetailsScreen> {
                 onTap: (){
                   Navigator.of(context).pop();
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(18.0),
-                  child: EsolinkBackButton(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(color: Color(0xffF2F2F2), shape: BoxShape.circle),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                  ),
                 )),
             title: Text("Details",textAlign: TextAlign.center,
                 style: subHeaderText.copyWith(

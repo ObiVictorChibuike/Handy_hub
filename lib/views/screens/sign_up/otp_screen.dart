@@ -158,8 +158,11 @@
 //   }
 // }
 
+import 'dart:developer';
+
 import 'package:esolink/logic/api_services/base_url.dart';
 import 'package:esolink/logic/api_services/http_services.dart';
+import 'package:esolink/logic/login/registration_controller.dart';
 import 'package:esolink/logic/registration/registration_bloc.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/constants/colors.dart';
@@ -170,162 +173,166 @@ import 'package:esolink/views/widgets/auth_header.dart';
 import 'package:esolink/views/widgets/custom_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../widgets/custom_snack.dart';
 
-class OtpVerification extends StatelessWidget {
-  OtpVerification({Key? key}) : super(key: key);
+class OtpVerification extends StatefulWidget {
+  final String userEmail;
+  final String password;
+  const OtpVerification({Key? key, required this.userEmail, required this.password}) : super(key: key);
 
+  @override
+  State<OtpVerification> createState() => _OtpVerificationState();
+}
+
+class _OtpVerificationState extends State<OtpVerification> {
   RegistrationBloc registrationBloc = locator.get<RegistrationBloc>();
+
   @override
   Widget build(BuildContext context) {
     TextEditingController pinPutController = TextEditingController();
-    var email = "";
     var pin = "";
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            const AuthHeader(
-              title: "Verification",
-              subTitle: "",
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            const Center(
-              child: EsolinkIcons(
-                icons: "verification",
+    return GetBuilder<RegistrationController>(
+      init: RegistrationController(),
+        builder: (controller){
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 40,
               ),
-            ),
-            const SizedBox(
-              height: 48,
-            ),
-            Container(
-              constraints: const BoxConstraints(maxHeight: 44, maxWidth: 332),
-              child: StreamBuilder<String>(
-                  stream: registrationBloc.email,
-                  builder: (context, snapshot) {
-                    email = snapshot.data.toString();
-                    return Text(
-                      "Enter the verification code sent to ${snapshot.data}",
-                      textAlign: TextAlign.center,
-                      style: subHeaderText,
-                    );
-                  }),
-            ),
-            const SizedBox(
-              height: 36,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              child: PinCodeTextField(
-                keyboardType: TextInputType.number,
-                appContext: context,
-                length: 4,
-                autoDisposeControllers: false,
-                animationType: AnimationType.fade,
-                onChanged: (e) {},
-                onCompleted: (e) async {
-                  pin = e;
+              const AuthHeader(
+                title: "Verification",
+                subTitle: "",
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              const Center(
+                child: EsolinkIcons(
+                  icons: "verification",
+                ),
+              ),
+              const SizedBox(
+                height: 48,
+              ),
+              Container(
+                constraints: const BoxConstraints(maxHeight: 44, maxWidth: 332),
+                child: Text("Enter the verification code sent to ${widget.userEmail}",
+                  textAlign: TextAlign.center,
+                  style: subHeaderText,
+                ),
+              ),
+              const SizedBox(
+                height: 36,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                child: PinCodeTextField(
+                  keyboardType: TextInputType.number,
+                  appContext: context,
+                  length: 4,
+                  autoDisposeControllers: false,
+                  animationType: AnimationType.fade,
+                  onChanged: (e) {},
+                  onCompleted: (e) async {
+                    pinPutController.text = e;
+                    log(pinPutController.text);
+                  },
+                  pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: const BorderRadius.all(Radius.circular(6)),
+                      fieldHeight: 50,
+                      fieldWidth: 50,
+                      borderWidth: 1,
+                      activeFillColor: const Color(0xffFCFCFC),
+                      errorBorderColor: Colors.transparent,
+                      disabledColor: Colors.amber,
+                      inactiveColor: const Color(0xffF2F2F2),
+                      selectedColor: primaryColor,
+                      inactiveFillColor: const Color(0xffF2F2F2),
+                      selectedFillColor: Colors.grey[100],
+                      activeColor: primaryColor),
+                  textStyle: subHeaderText.copyWith(color: primaryColor),
+                  animationDuration: const Duration(milliseconds: 300),
+                  backgroundColor: Colors.transparent,
+                  cursorColor: primaryColor,
+                  enableActiveFill: true,
+                  controller: pinPutController,
+                ),
+              ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // Align(
+              //     alignment: AlignmentDirectional.centerEnd,
+              //     child: Text(
+              //       "Resend Code",
+              //       style:
+              //       subHeaderText.copyWith(fontSize: 12, color: primaryColor),
+              //     )),
+              const Spacer(),
+              GestureDetector(
+                onTap: (){
+                  if(widget.userEmail == "" && pinPutController.text.isEmpty){
+                    null;
+                  }else{
+                    controller.sendOtp(code: pinPutController.text, userEmail: widget.userEmail, password: widget.password);
+                  }
                 },
-                pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.box,
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                    fieldHeight: 50,
-                    fieldWidth: 50,
-                    borderWidth: 1,
-                    activeFillColor: const Color(0xffFCFCFC),
-                    errorBorderColor: Colors.transparent,
-                    disabledColor: Colors.amber,
-                    inactiveColor: const Color(0xffF2F2F2),
-                    selectedColor: primaryColor,
-                    inactiveFillColor: const Color(0xffF2F2F2),
-                    selectedFillColor: Colors.grey[100],
-                    activeColor: primaryColor),
-                textStyle: subHeaderText.copyWith(color: primaryColor),
-                animationDuration: const Duration(milliseconds: 300),
-                backgroundColor: Colors.transparent,
-                cursorColor: primaryColor,
-                enableActiveFill: true,
-                controller: pinPutController,
+                child: Container(
+                  height: 46,
+                  decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(10)),
+                  child: Center(child: Text("Verify", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white, ),),),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: Text(
-                  "Resend Code",
-                  style:
-                      subHeaderText.copyWith(fontSize: 12, color: primaryColor),
-                )),
-            const Spacer(),
-            CustomButton(
-              onTap: () async {
-                var url =
-                    "${BASE_URL}Services/verify/email?code=$pin&userId=$email";
-                var response = await get(url: url, context: context);
-
-                if (response['data'] == true) {
-                  // ignore: use_build_context_synchronously
-                  showMessageSnackBar(context,
-                      title: "Success", content: "OTP Verification Successful");
-                  // ignore: use_build_context_synchronously
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return const InitialSignIn();
-                  }));
-                } else {
-                  // ignore: use_build_context_synchronously
-                  showErrorSnackBar(context,
-                      title: "Something Went Wrong",
-                      content: "OTP Verification failed");
-                }
-              },
-              text: "Verify",
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            Center(
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: "Would you like to change the email address?",
-                      style: subHeaderText.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 11,
-                        color: const Color(0xff4F4F4F),
-                      )),
-                  TextSpan(
-                      text: "Click here",
-                      style: subHeaderText.copyWith(
-                        color: primaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 11,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
-                          Navigator.pop(context);
-                        }),
-                ]),
+              // CustomButton(
+              //   onTap: () {
+              //     log(widget.userEmail);
+              //     log(pinPutController.text);
+              //   },
+              //   text: "Verify",
+              //   enabled: true
+              // ),
+              const SizedBox(
+                height: 18,
               ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-          ],
+              Center(
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: "Would you like to change the email address?",
+                        style: subHeaderText.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 11,
+                          color: const Color(0xff4F4F4F),
+                        )),
+                    TextSpan(
+                        text: "Click here",
+                        style: subHeaderText.copyWith(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 11,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            Navigator.pop(context);
+                          }),
+                  ]),
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

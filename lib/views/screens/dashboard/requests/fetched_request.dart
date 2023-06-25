@@ -1,14 +1,14 @@
-import 'package:esolink/logic/request/request_bloc.dart';
-import 'package:esolink/logic/request/request_calls.dart';
+import 'dart:developer';
+
+import 'package:esolink/logic/api_services/remote/network_servcises/dio_service_config/dio_client.dart';
 import 'package:esolink/logic/services_category/category_controller.dart';
-import 'package:esolink/service_locator.dart';
+import 'package:esolink/models/request_model/request_model.dart';
+import 'package:esolink/views/constants/colors.dart';
+import 'package:esolink/views/constants/text_decoration.dart';
+import 'package:esolink/views/widgets/returned_requests_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../models/request_model/request_model.dart';
-import '../../../widgets/page_with_back_button.dart';
-import '../../../widgets/returned_requests_card.dart';
 
 class FetchedRequestScreen extends StatefulWidget {
   const FetchedRequestScreen({Key? key, this.title, this.id}) : super(key: key);
@@ -20,14 +20,65 @@ class FetchedRequestScreen extends StatefulWidget {
 }
 
 class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
-  final RequestBLoc requestBLoc = locator.get<RequestBLoc>();
+  int page = 1;
+  final int _limit = 10;
+  bool hasNextPage = true;
+  bool isLoadingMoreData = false;
+  bool _isFirstLoadRunning = false;
+  List<RequestModelList>? requestModelList = <RequestModelList>[].obs;
+  late ScrollController _scrollController;
 
-  final MakeRequestBloc makeRequestBloc = locator.get<MakeRequestBloc>();
+  Future<void> _loadMore() async {
+    if(hasNextPage == true && _isFirstLoadRunning == false && isLoadingMoreData == false
+        && _scrollController.position.extentAfter < 300){
+      setState(() {
+        isLoadingMoreData = true;
+      });
+      page += 1;
+      try{
+        var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=9.08877&Latidude=4.78888", method: RequestMethod.get,);
+        final payLoad = RequestsModel.fromJson(response!.data).response?.data;
+        if(payLoad!.isNotEmpty){
+          setState(() {
+            requestModelList?.addAll(payLoad);
+          });
+        }else{
+          setState(() {
+            hasNextPage = false;
+          });
+        }
+      }catch(err){
+        throw err.toString();
+      }
+      setState(() {
+        isLoadingMoreData = false;
+      });
+    }
+  }
+
+  void _firstLoad()async{
+    log("Started");
+    setState(() {
+      _isFirstLoadRunning = true;
+    });
+    try{
+      var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=${_ctrl.long}&Latidude=${_ctrl.lat}", method: RequestMethod.get,);
+      setState(() {
+        requestModelList = RequestsModel.fromJson(response!.data).response?.data;
+      });
+    }catch(err){
+      throw err.toString();
+    }
+    setState(() {
+      _isFirstLoadRunning = false;
+    });
+  }
   final _ctrl = Get.put(CategoryController());
 
   @override
   void initState() {
-    _ctrl.fetchAllRequest(widget.id);
+    _firstLoad();
+    _scrollController = ScrollController()..addListener(_loadMore);
     super.initState();
   }
 
@@ -37,24 +88,65 @@ class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
       init: CategoryController(),
         builder: (controller){
       return Scaffold(
-          body: PageWithBackButton(
-            title: widget.title,
-            body: Expanded(
-              child: ListView(
+          backgroundColor: white,
+          appBar: AppBar(
+              backgroundColor: white, elevation: 0.0,
+              centerTitle: true,
+              leading: GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: const BoxDecoration(color: Color(0xffF2F2F2), shape: BoxShape.circle),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                    ),
+                  )),
+              title: Text(widget.title!,textAlign: TextAlign.center,
+                  style: subHeaderText.copyWith(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold))
+          ),
+          body: _isFirstLoadRunning ?
+          const Center(
+            child: CupertinoActivityIndicator(),
+          ) : requestModelList!.isEmpty || requestModelList == [] ?
+          const Center(child: Text('No Data Found', style: TextStyle(color: Colors.red),)) :
+          RefreshIndicator(
+            onRefresh: ()async{
+              _firstLoad();
+            },
+            child: ListView(
+              controller: _scrollController,
                 physics: const BouncingScrollPhysics(),
-                  children: [
-                controller.isLoadingAllRequest == true ?
-              const Center(child: CupertinoActivityIndicator()) :
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(children: [
-                    ...controller.serviceProviders!.map((e) => ReturnedRequestCard(
-                      serviceProviders: e,
-                    )).toList(),
-                  ]),
-                ),
-              ]),
-            ),
+                children: [
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(children: [
+                      ...requestModelList!.map((e) => ReturnedRequestCard(
+                        serviceProviders: e,
+                      )).toList(),
+                    ]),
+                  ),
+                  if(isLoadingMoreData == true)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10.0, bottom: 30),
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  if(hasNextPage == false)
+                    Container(
+                      padding: const EdgeInsets.only(top: 20, bottom: 40),
+                      color: Colors.white, child: const Center(
+                      child: Text("You have fetched all the content"),
+                    ),)
+                ]),
           ));
     });
   }

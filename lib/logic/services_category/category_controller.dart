@@ -1,5 +1,6 @@
 import 'package:esolink/logic/api_services/remote/network_servcises/dio_service_config/dio_error.dart';
 import 'package:esolink/models/request_model/request_model.dart';
+import 'package:esolink/models/request_model/sevices_provider_response.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import '../api_services/remote/network_servcises/dio_service_config/dio_client.dart';
@@ -7,10 +8,10 @@ import '../api_services/remote/network_servcises/dio_service_config/dio_client.d
 class CategoryController extends GetxController{
   double? lat;
   double? long;
-  List<ServiceProvider>? serviceProviders = <ServiceProvider>[].obs;
+  List<ServiceProvider>? requestModelList = <ServiceProvider>[].obs;
   bool? isLoadingAllRequest;
 
-  Future<List<ServiceProvider>> fetchAllRequest(String? catID) async {
+  Future<List<ServiceProvider>> getAllServiceProvider(String? catID) async {
     isLoadingAllRequest = true;
     update();
    try{
@@ -20,12 +21,12 @@ class CategoryController extends GetxController{
        "longitude": long,
      };
      var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/Id", method: RequestMethod.get, queryParams: queryParams,);
-     serviceProviders = RequestsModel.fromJson(response!.data).serviceProviders?.map<ServiceProvider>((e) {
+     requestModelList = ServiceProviderResponse.fromJson(response!.data).serviceProviders?.map<ServiceProvider>((e) {
        return e;
      }).toList();
      isLoadingAllRequest = false;
      update();
-     return serviceProviders!;
+     return requestModelList ?? [];
    }on DioError catch (err) {
      isLoadingAllRequest = false;
      final errorMessage = Future.error(ApiError.fromDio(err));
@@ -46,12 +47,7 @@ class CategoryController extends GetxController{
   }
 
   getSelectedItem() {
-    return serviceProviders!.elementAt(selectedIndex!);
+    return requestModelList!.elementAt(selectedIndex!);
   }
-
-  // changeIndex(){
-  //   _controller.index = 2;
-  //   update();
-  // }
 
 }

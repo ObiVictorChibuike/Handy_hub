@@ -1,20 +1,15 @@
-import 'dart:developer';
-
 import 'package:esolink/logic/api_services/constants.dart';
 import 'package:esolink/models/request_model/request_model.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:flutter/material.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
-
 import 'back_button.dart';
 import 'custom_scroll_physics.dart';
 
 class ImageViewer extends StatefulWidget{
   final int imageCount;
-  late int? selectedIndex;
   final  List<BusinessPhoto>? imageUrl;
-  ImageViewer({Key? key, required this.imageCount, this.selectedIndex, this.imageUrl}) : super(key: key);
+  ImageViewer({Key? key, required this.imageCount, this.imageUrl}) : super(key: key);
 
   @override
   State<ImageViewer> createState() => _ImageViewerState();
@@ -24,11 +19,10 @@ class _ImageViewerState extends State<ImageViewer>  with SingleTickerProviderSta
 
   // PageController? controller;
   final ctrl = PageController();
-  int? current;
+  int current = 0;
 
   @override
   void initState() {
-    current = widget.selectedIndex;
     setState(() {});
     // controller = PageController(initialPage: 0, keepPage: true, viewportFraction: 1);
     // controller?.addListener(() {
@@ -65,14 +59,21 @@ class _ImageViewerState extends State<ImageViewer>  with SingleTickerProviderSta
         child: Scaffold(
           appBar: AppBar(
             elevation: 0.0, centerTitle: true,
-            leading: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const EsolinkBackButton()),
-            ),
+            leading: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(color: Color(0xffF2F2F2), shape: BoxShape.circle),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                  ),
+                )),
             title: Text("Photos",
                 textAlign: TextAlign.center,
                 style: subHeaderText.copyWith(
@@ -150,7 +151,7 @@ class _ImageViewerState extends State<ImageViewer>  with SingleTickerProviderSta
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                       decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(15)),
-                      child: Text("${current ?? 0 + 1} / ${widget.imageUrl!.length}", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),),
+                      child: Text("${current + 1} / ${widget.imageUrl!.length}", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),),
                     ),
                   )
                 ],

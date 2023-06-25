@@ -7,7 +7,7 @@ import '../screens/dashboard/requests/fetched_request.dart';
 class CategoriesCard extends StatelessWidget {
   const CategoriesCard({Key? key, this.categoriesModel}) : super(key: key);
 
-  final CategoriesModel? categoriesModel;
+  final Category? categoriesModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

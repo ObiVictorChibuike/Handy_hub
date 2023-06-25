@@ -25,7 +25,7 @@ class RequestDetailsScreen extends StatefulWidget {
   const RequestDetailsScreen({Key? key, this.title, this.serviceProviders, this.businessName}) : super(key: key);
   final String? title;
   final String? businessName;
-  final ServiceProvider? serviceProviders;
+  final RequestModelList? serviceProviders;
 
   @override
   State<RequestDetailsScreen> createState() => _RequestDetailsScreenState();
@@ -76,14 +76,21 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white, elevation: 0.0,
-        leading: GestureDetector(
-          onTap: (){
-            Navigator.of(context).pop();
-          },
-            child: const Padding(
-              padding: EdgeInsets.all(18.0),
-              child: EsolinkBackButton(),
-            )),
+          leading: GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: const BoxDecoration(color: Color(0xffF2F2F2), shape: BoxShape.circle),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                ),
+              )),
         title: Text(widget.title!,textAlign: TextAlign.center,
             style: subHeaderText.copyWith(
                 color: Colors.black,
@@ -102,43 +109,53 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                 ),
                 child: Row(
                   children: [
-                    Flexible(
-                      flex: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Container(
-                          height: 56,
-                          width: 56,
-                          decoration:
-                          const BoxDecoration(shape: BoxShape.circle),
-                          child: GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                  ViewProfileImage(imageUrl: widget.serviceProviders?.photoUrl.toString() ?? imagePlaceHolder,)));
-                            },
-                            child: Image.network(
-                              widget.serviceProviders?.photoUrl.toString() ?? imagePlaceHolder,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: primaryColor, width: 3)),
-                                  child: Center(
-                                      child: Text(
-                                        widget.serviceProviders!.firstName![0],
-                                        style: subHeaderText.copyWith(
-                                            color: Colors.black),
-                                      )),
-                                );
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Container(
+                            height: 56,
+                            width: 56,
+                            decoration:
+                            const BoxDecoration(shape: BoxShape.circle),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                    ViewProfileImage(imageUrl: widget.serviceProviders?.photoUrl.toString() ?? imagePlaceHolder,)));
                               },
+                              child: Image.network(
+                                widget.serviceProviders?.photoUrl.toString() ?? imagePlaceHolder,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    height: 56,
+                                    width: 56,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: primaryColor, width: 3)),
+                                    child: Center(
+                                        child: Text(
+                                          widget.serviceProviders!.firstName![0],
+                                          style: subHeaderText.copyWith(
+                                              color: Colors.black),
+                                        )),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        widget.serviceProviders?.isOnline == true ?
+                        Positioned(
+                          bottom: 0.0,
+                          right: 0.0,
+                          child: Container(
+                            height: 13, width: 13,
+                            decoration: BoxDecoration(color: primaryColor, shape: BoxShape.circle, border: Border.all(color: Colors.white)),
+                          ),
+                        ) : const SizedBox()
+                      ],
                     ),
                     const SizedBox(
                       width: 16,
@@ -146,23 +163,24 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "${widget.serviceProviders!.firstName}",
-                          style: subHeaderText.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: grey),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              widget.serviceProviders!.category ?? "",
+                              "${widget.serviceProviders!.firstName}",
                               style: subHeaderText.copyWith(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                   color: grey),
                             ),
+                            const SizedBox(width: 5,),
+                            widget.serviceProviders!.isVerified == true ? Icon(Icons.verified, color: primaryColor, size: 15,) : const SizedBox()
+                          ],
+                        ),
+                        Row(crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(widget.serviceProviders!.category ?? "",
+                              style: subHeaderText.copyWith(fontWeight: FontWeight.w500, fontSize: 14, color: grey),),
                             const SizedBox(
                               width: 5,
                             ),
@@ -196,14 +214,24 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 3,),
+                        widget.serviceProviders?.isOnline == true ? const SizedBox() :
+                            Row(
+                              children: [
+                                Text("Last seen", style: subHeaderText.copyWith(
+                                    fontSize: 10, fontWeight: FontWeight.w500),),
+                                const SizedBox(width: 5,),
+                                Text(CustomDate.getDate(widget.serviceProviders?.lastSeen?.toString() ?? DateTime.now().toString()),
+                                  style: subHeaderText.copyWith(
+                                      fontSize: 10, fontWeight: FontWeight.w500),),
+                              ],
+                            )
                       ],
                     )
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 14,
-              ),
+              const SizedBox(height: 14,),
               Descriptionard(
                   elevation: 0.0,
                   date: CustomDate.slash(widget.serviceProviders?.createdOn.toString() ?? DateTime.now().toString()),
@@ -211,77 +239,16 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                   widget.serviceProviders?.description ?? "No description records",
                   servicesRendered: "${widget.serviceProviders?.servicesRendered ?? 0.toString()}"
               ),
-              const SizedBox(
-                height: 10,
-              ),
               ImageCard(serviceProviders: widget.serviceProviders),
               const SizedBox(height: 16,),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Align(alignment: Alignment.centerLeft,
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Location",   style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Colors.black),),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(widget.serviceProviders?.address ?? "",  style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: grey),),
-                      const Divider(),
-                      Text("Date joined",   style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Colors.black),),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(CustomDate.slash(widget.serviceProviders?.createdOn.toString() ?? DateTime.now().toString()),  style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: grey),),
-                      const Divider(),
-                      Text("Last seen",   style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Colors.black),),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(CustomDate.slash(widget.serviceProviders?.lastSeen.toString() ?? DateTime.now().toString()),  style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: grey),),
-                      const Divider(),
-                      Text("Status",   style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Colors.black),),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text("Verified",  style: subHeaderText.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          color: grey),),
-                      const Divider(),
-                    ],
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: CustomButton(
                   onTap: ()async{
                     loginStatus == true ?
-                    await makeRequest(context, fullName: widget.businessName ?? widget.title ?? "",
-                        email: widget.serviceProviders?.email ?? "", phoneNumber: widget.serviceProviders?.phoneNumber ?? "",
+                    await makeRequest(
                         categoryId: widget.serviceProviders!.categoryId!.toInt(),
-                        location: widget.serviceProviders?.address ?? "", serviceProviderId: widget.serviceProviders!.serviceProviderId!.toInt()) :
+                        serviceProviderId: widget.serviceProviders!.serviceProviderId!.toInt()) :
                     showAlertDialog(
                         onPressed: () {
                           Navigator.of(context).pop();

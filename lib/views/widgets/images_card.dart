@@ -11,7 +11,7 @@ import 'image_slider.dart';
 
 
 class ImageCard extends StatefulWidget {
-  final ServiceProvider? serviceProviders;
+  final RequestModelList? serviceProviders;
   const ImageCard({Key? key, this.serviceProviders}) : super(key: key);
 
   @override
@@ -41,7 +41,6 @@ class _ImageCardState extends State<ImageCard> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>
                           ImageViewer(imageCount: widget.serviceProviders!.businessPhoto!.length,
                             imageUrl: widget.serviceProviders!.businessPhoto,
-                              selectedIndex: widget.serviceProviders!.businessPhoto!.indexOf(item),
                           )));
                     },
                 child: Row(
