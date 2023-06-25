@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "231136300656",
+    "project_id": "handyhub-16a09",
+    "storage_bucket": "handyhub-16a09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231136300656:android:4dfdbba9ae37d77f53eeb5",
+        "android_client_info": {
+          "package_name": "com.example.esolink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231136300656-h7qveo65r9odgskov9qdkjgb5ab695r3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuTJMrC2ZNIi584ZOW3ukkY5Cz7JDNkDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231136300656-h7qveo65r9odgskov9qdkjgb5ab695r3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
