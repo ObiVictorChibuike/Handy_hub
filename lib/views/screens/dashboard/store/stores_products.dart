@@ -236,269 +236,284 @@ class _StoresProductState extends State<StoresProduct> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top:8.0, left: 22, right: 22),
-              child: GestureDetector(
-                onTap: (){
-                  storeProductList = sc.storeProductList;
-                  selectedPrice = null;
-                  stateId = null;
-                  priceFilterValueIndex = null;
-                  esoLinkBottomSheet(children: [
-                    StatefulBuilder(builder: (context, update){
-                      return Column(crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 8,),
-                          Align(alignment: Alignment.topCenter,
-                              child: Container(height: 5, width: 50, decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(5)),)),
-                          const SizedBox(height: 18,),
-                          GestureDetector(
-                            onTap: (){
-                              storeProductList = sc.storeProductList;
-                              selectedPrice = null;
-                              stateId = null;
-                              priceFilterValueIndex = null;
-                              Navigator.of(context).pop();
-                            },
-                            child: const Align(alignment: Alignment.topLeft,
-                              child: Icon(Icons.clear, color: Colors.black, size: 30,),
-                            ),
-                          ),
-                          const SizedBox(height: 18,),
-                          Align(alignment: Alignment.topRight,
-                            child: GestureDetector(
-                              onTap: (){
-                                // if(selectedRating != null){
-                                //   Get.back();
-                                //   // storeProductList = storeProductList?.where((element) => element.rating.toInt.toString() == selectedRating.toString()).toList();
-                                // }else
-                                  if(selectedPrice != null && stateId == null){
-                                    log("running");
-                                  setState(() {
-                                    final priceList = storeProductList?.where((element) =>
-                                    priceFilterValueIndex == 0 && element.amount != null ? element.amount!.toInt() >= 10 && element.amount!.toInt() <= v1! :
-                                    priceFilterValueIndex == 1 && element.amount != null ? element.amount!.toInt() >= 2000 && element.amount!.toInt() <= v2! :
-                                    priceFilterValueIndex == 2 && element.amount != null ? element.amount!.toInt() >= 5000 && element.amount!.toInt() <= v3! :
-                                    priceFilterValueIndex == 3 && element.amount != null ? element.amount!.toInt() >= 10000 && element.amount!.toInt() <= v4! :
-                                    priceFilterValueIndex == 4 && element.amount != null ? element.amount!.toInt() >= 15000 && element.amount!.toInt() <= v5! :
-                                    priceFilterValueIndex == 5 && element.amount != null ? element.amount!.toInt() >= 20000 && element.amount!.toInt() <= v6! :
-                                        element.amount?.toInt() != null
-                                    ).toList();
-                                    storeProductList = priceList;
-                                  });
-                                  Get.back();
-                                }else if(stateId != null && selectedPrice == null){
-                                    log("loading");
-                                    setState(() {
-                                      final locationList = storeProductList?.where((element) => element.stateId == stateId).toList();
-                                      storeProductList = locationList;
-                                    });
-                                  Get.back();
-                                }else if(selectedPrice != null && stateId !=null){
-                                  setState(() {
-                                    final filter = storeProductList?.where((element) {
-                                      if(priceFilterValueIndex == 0 && element.amount != null){
-                                        return element.stateId == stateId && element.amount!.toInt() >= 10 && element.amount!.toInt() <= v1!;
-                                      }else if (priceFilterValueIndex == 1 && element.amount != null){
-                                        return element.stateId == stateId && element.amount!.toInt() >= 2000 && element.amount!.toInt() <= v2!;
-                                      }else if(priceFilterValueIndex == 2 && element.amount != null){
-                                        return element.stateId == stateId && element.amount!.toInt() >= 5000 && element.amount!.toInt() <= v3!;
-                                      }else if (priceFilterValueIndex == 3 && element.amount != null){
-                                        return element.stateId == stateId && element.amount!.toInt() >= 10000 && element.amount!.toInt() <= v4!;
-                                      }else if(priceFilterValueIndex == 4 && element.amount != null ){
-                                        return element.stateId == stateId && element.amount!.toInt() >= 15000 && element.amount!.toInt() <= v5!;
-                                      }else if(priceFilterValueIndex == 5 && element.amount != null ){
-                                        return element.stateId == stateId && element.amount!.toInt() >= 20000 && element.amount!.toInt() <= v6!;
-                                      }else{
-                                        return element.amount != null;
-                                      }
-                                    }).toList();
-                                    storeProductList = filter;
-                                  });
-                                  Get.back();
-                                }
-                              },
-                              child: Container(
-                                height: 35, width: MediaQuery.of(context).size.width/4,
-                                decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(10)),
-                                child: Center(child: Text('Apply Filter', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 13),),),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 9,),
-                          const Divider(),
-                          const SizedBox(height: 9,),
-                          Text("Price", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 10,),
-                          Column(crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ...List.generate(price.length, (index){
-                                return GestureDetector(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 3,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * .05,
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        storeProductList = sc.storeProductList;
+                        stateId = null;
+                        esoLinkBottomSheet(children: [
+                          StatefulBuilder(builder: (context, update){
+                            return Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 8,),
+                                Align(alignment: Alignment.topCenter,
+                                    child: Container(height: 5, width: 50, decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(5)),)),
+                                const SizedBox(height: 18,),
+                                GestureDetector(
                                   onTap: (){
-                                    update(() {
-                                      priceFilterValueIndex = index;
-                                    });
-                                    if(index == 0){
-                                      selectedPrice = 2000;
-                                      v1 = 2000;
-                                    }else if(index == 1){
-                                      selectedPrice = 5000;
-                                      v2 = 5000;
-                                    }else if(index == 2){
-                                      selectedPrice = 10000;
-                                      v3 = 10000;
-                                    }else if(index == 3){
-                                      selectedPrice = 15000;
-                                      v4 = 15000;
-                                    }else if(index == 4){
-                                      selectedPrice = 20000;
-                                      v5 = 20000;
-                                    }else if(index == 5){
-                                      selectedPrice = 25000;
-                                      v6 = 25000;
-                                    }
+                                    stateId = null;
+                                    Navigator.of(context).pop();
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          height: 18, width: 18,
-                                          decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.black), shape: BoxShape.circle),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(3.0),
-                                            child: Container(
-                                              height: 12, width: 12,
-                                              decoration: BoxDecoration(color: priceFilterValueIndex == index ? primaryColor
-                                                  : Colors.white, shape: BoxShape.circle),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8,),
-                                        Text(price[index]),
-                                      ],
+                                  child: const Align(alignment: Alignment.topLeft,
+                                    child: Icon(Icons.clear, color: Colors.black, size: 30,),
+                                  ),
+                                ),
+                                Align(alignment: Alignment.topRight,
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      storeProductList = sc.storeProductList;
+                                      if(stateId != null) {
+                                        setState(() {
+                                          final locationList = storeProductList?.where((element) => element.stateId == stateId).toList();
+                                          storeProductList = locationList;
+                                        });
+                                        Get.back();
+                                      }
+                                    },
+                                    child: Container(
+                                      height: 35, width: MediaQuery.of(context).size.width/4,
+                                      decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(10)),
+                                      child: Center(child: Text('Apply Filter', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 13),),),
                                     ),
                                   ),
-                                );
-                              })
-                            ],
-                          ),
-                          // const Divider(),
-                          // Text("Rating", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
-                          // const SizedBox(height: 10,),
-                          // Column(crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     ...List.generate(rating.length, (index){
-                          //       return GestureDetector(
-                          //         onTap: (){
-                          //           update((){
-                          //             ratingFilterValueIndex = index;
-                          //           });
-                          //           if(index == 0){
-                          //             selectedRating = 1.toString();
-                          //           }else if(index == 1){
-                          //             selectedRating = 2.toString();
-                          //           }else if(index == 2){
-                          //             selectedRating = 3.toString();
-                          //           }else if(index == 3){
-                          //             selectedRating = 4.toString();
-                          //           }else if(index == 4){
-                          //             selectedRating = 5.toString();
-                          //           }
-                          //         },
-                          //         child: Container(color: Colors.white,
-                          //           padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          //           child: Row(
-                          //             children: [
-                          //               Container(
-                          //                 height: 18, width: 18,
-                          //                 decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.black), shape: BoxShape.circle),
-                          //                 child: Padding(
-                          //                   padding: const EdgeInsets.all(3.0),
-                          //                   child: Container(
-                          //                     height: 12, width: 12,
-                          //                     decoration: BoxDecoration(color: ratingFilterValueIndex == index ? primaryColor
-                          //                         : Colors.white, shape: BoxShape.circle),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //               const SizedBox(width: 8,),
-                          //               RatingBar.builder(
-                          //                 ignoreGestures: true,
-                          //                 glowColor:  const Color(0xffF2994A),
-                          //                 itemSize: 15,
-                          //                 initialRating: rating[index].toDouble(),
-                          //                 minRating: 1,
-                          //                 direction: Axis.horizontal,
-                          //                 allowHalfRating: true,
-                          //                 itemCount: 5,
-                          //                 itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                          //                 itemBuilder: (context, _) => const Icon(
-                          //                   Icons.star, size: 12,
-                          //                   color: Color(0xffF2994A),
-                          //                 ),
-                          //                 onRatingUpdate: (rating) {
-                          //                 },
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       );
-                          //     })
-                          //   ],
-                          // ),
-                          const Divider(),
-                          Text("Location", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 10,),
-                          FilterDropDownTextField(
-                            onChanged: (value) {
-                              final index = rc.allStateResponse?.state?.indexWhere((element) => element.stateName == value.toString());
-                              stateId = rc.allStateResponse!.state![index!].stateId;
-                              log(stateId.toString());
-                            },
-                            items: rc.allStateResponse?.state?.map((item) => DropdownMenuItem<String>(
-                              value: item.stateName ?? "",
-                              child: Text("${item.stateName}",
-                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.black, fontSize: 15)),
-                            )).toList(),
-                            title: "Select Location",
-                          ),
-                        ],
-                      );
-                    }),
-                  ], context: context, isDismissible: false, height:  MediaQuery.of(context).size.height/1.2);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 3,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3), // changes position of shadow
+                                ),
+                                const Divider(),
+                                Text("Location", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
+                                const SizedBox(height: 10,),
+                                FilterDropDownTextField(
+                                  onChanged: (value) {
+                                    final index = rc.allStateResponse?.state?.indexWhere((element) => element.stateName == value.toString());
+                                    stateId = rc.allStateResponse!.state![index!].stateId;
+                                    log(stateId.toString());
+                                  },
+                                  items: rc.allStateResponse?.state?.map((item) => DropdownMenuItem<String>(
+                                    value: item.stateName ?? "",
+                                    child: Text("${item.stateName}",
+                                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.black, fontSize: 15)),
+                                  )).toList(),
+                                  title: "Select Location",
+                                ),
+                              ],
+                            );
+                          }),
+                        ], context: context, isDismissible: false, height:  MediaQuery.of(context).size.height/2.8);
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: const Row(
+                          children: [
+                            Icon(Icons.filter_alt, color: Color(0XFF187226),),
+                            Text('Filters', style: TextStyle(color: Color(0XFF187226)),),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * .05,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        children: const [
-                          Icon(Icons.filter_alt, color: Color(0XFF187226),),
-                          Text('Filters', style: TextStyle(color: Color(0XFF187226)),),
-                        ],
+                    ),
+                    const Text('|',style: TextStyle(color: Color(0XFF187226)),),
+                    GestureDetector(
+                      onTap: (){
+                        storeProductList = sc.storeProductList;
+                        selectedPrice = null;
+                        priceFilterValueIndex = null;
+                        esoLinkBottomSheet(children: [
+                          StatefulBuilder(builder: (context, update){
+                            return Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 8,),
+                                Align(alignment: Alignment.topCenter,
+                                    child: Container(height: 5, width: 50, decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(5)),)),
+                                const SizedBox(height: 18,),
+                                GestureDetector(
+                                  onTap: (){
+                                    storeProductList = sc.storeProductList;
+                                    selectedPrice = null;
+                                    priceFilterValueIndex = null;
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Align(alignment: Alignment.topLeft,
+                                    child: Icon(Icons.clear, color: Colors.black, size: 30,),
+                                  ),
+                                ),
+                                Align(alignment: Alignment.topRight,
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      if(selectedPrice != null){
+                                        setState(() {
+                                          final priceList = storeProductList?.where((element) =>
+                                          priceFilterValueIndex == 0 && element.amount != null ? element.amount!.toInt() >= 10 && element.amount!.toInt() <= v1! :
+                                          priceFilterValueIndex == 1 && element.amount != null ? element.amount!.toInt() >= 2000 && element.amount!.toInt() <= v2! :
+                                          priceFilterValueIndex == 2 && element.amount != null ? element.amount!.toInt() >= 5000 && element.amount!.toInt() <= v3! :
+                                          priceFilterValueIndex == 3 && element.amount != null ? element.amount!.toInt() >= 10000 && element.amount!.toInt() <= v4! :
+                                          priceFilterValueIndex == 4 && element.amount != null ? element.amount!.toInt() >= 15000 && element.amount!.toInt() <= v5! :
+                                          priceFilterValueIndex == 5 && element.amount != null ? element.amount!.toInt() >= 20000 && element.amount!.toInt() <= v6! :
+                                          element.amount?.toInt() != null
+                                          ).toList();
+                                          storeProductList = priceList;
+                                        });
+                                        Get.back();
+                                      }
+                                    },
+                                    child: Container(
+                                      height: 35, width: MediaQuery.of(context).size.width/4,
+                                      decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(10)),
+                                      child: Center(child: Text('Apply Filter', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white, fontSize: 13),),),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 9,),
+                                const Divider(),
+                                const SizedBox(height: 9,),
+                                Text("Price", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
+                                const SizedBox(height: 10,),
+                                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ...List.generate(price.length, (index){
+                                      return GestureDetector(
+                                        onTap: (){
+                                          update(() {
+                                            priceFilterValueIndex = index;
+                                          });
+                                          if(index == 0){
+                                            selectedPrice = 2000;
+                                            v1 = 2000;
+                                          }else if(index == 1){
+                                            selectedPrice = 5000;
+                                            v2 = 5000;
+                                          }else if(index == 2){
+                                            selectedPrice = 10000;
+                                            v3 = 10000;
+                                          }else if(index == 3){
+                                            selectedPrice = 15000;
+                                            v4 = 15000;
+                                          }else if(index == 4){
+                                            selectedPrice = 20000;
+                                            v5 = 20000;
+                                          }else if(index == 5){
+                                            selectedPrice = 25000;
+                                            v6 = 25000;
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                height: 18, width: 18,
+                                                decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.black), shape: BoxShape.circle),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(3.0),
+                                                  child: Container(
+                                                    height: 12, width: 12,
+                                                    decoration: BoxDecoration(color: priceFilterValueIndex == index ? primaryColor
+                                                        : Colors.white, shape: BoxShape.circle),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8,),
+                                              Text(price[index]),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    })
+                                  ],
+                                ),
+                                // const Divider(),
+                                // Text("Rating", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
+                                // const SizedBox(height: 10,),
+                                // Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                //   children: [
+                                //     ...List.generate(rating.length, (index){
+                                //       return GestureDetector(
+                                //         onTap: (){
+                                //           update((){
+                                //             ratingFilterValueIndex = index;
+                                //           });
+                                //           if(index == 0){
+                                //             selectedRating = 1.toString();
+                                //           }else if(index == 1){
+                                //             selectedRating = 2.toString();
+                                //           }else if(index == 2){
+                                //             selectedRating = 3.toString();
+                                //           }else if(index == 3){
+                                //             selectedRating = 4.toString();
+                                //           }else if(index == 4){
+                                //             selectedRating = 5.toString();
+                                //           }
+                                //         },
+                                //         child: Container(color: Colors.white,
+                                //           padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                //           child: Row(
+                                //             children: [
+                                //               Container(
+                                //                 height: 18, width: 18,
+                                //                 decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.black), shape: BoxShape.circle),
+                                //                 child: Padding(
+                                //                   padding: const EdgeInsets.all(3.0),
+                                //                   child: Container(
+                                //                     height: 12, width: 12,
+                                //                     decoration: BoxDecoration(color: ratingFilterValueIndex == index ? primaryColor
+                                //                         : Colors.white, shape: BoxShape.circle),
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //               const SizedBox(width: 8,),
+                                //               RatingBar.builder(
+                                //                 ignoreGestures: true,
+                                //                 glowColor:  const Color(0xffF2994A),
+                                //                 itemSize: 15,
+                                //                 initialRating: rating[index].toDouble(),
+                                //                 minRating: 1,
+                                //                 direction: Axis.horizontal,
+                                //                 allowHalfRating: true,
+                                //                 itemCount: 5,
+                                //                 itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                                //                 itemBuilder: (context, _) => const Icon(
+                                //                   Icons.star, size: 12,
+                                //                   color: Color(0xffF2994A),
+                                //                 ),
+                                //                 onRatingUpdate: (rating) {
+                                //                 },
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       );
+                                //     })
+                                //   ],
+                                // ),
+                              ],
+                            );
+                          }),
+                        ], context: context, isDismissible: false, height:  MediaQuery.of(context).size.height/2.2);
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: const Row(
+                          children: [
+                            Icon(Icons.filter_list_outlined, color: Color(0XFF187226),),
+                            Text('Sort', style: TextStyle(color: Color(0XFF187226)),),
+                          ],
+                        ),
                       ),
-                      const Text('|',style: TextStyle(color: Color(0XFF187226)),),
-                      Row(
-                        children: const [
-                          Icon(Icons.filter_list_outlined, color: Color(0XFF187226),),
-                          Text('Sort', style: TextStyle(color: Color(0XFF187226)),),
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -508,7 +523,13 @@ class _StoresProductState extends State<StoresProduct> {
             const Center(
               child: CupertinoActivityIndicator(),
             ) : storeProductList!.isEmpty || storeProductList == [] ?
-          const Center(child: Text('No Data in this category to Display', style: TextStyle(color: Colors.red),)) :
+          Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+               SizedBox(height: MediaQuery.of(context).size.height /3,),
+              const Center(child: Text('This products are not available in this location', style: TextStyle(color: Colors.red),)),
+              SizedBox(height: MediaQuery.of(context).size.height /3,),
+            ],
+          ) :
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 21, right: 21, bottom: 21),

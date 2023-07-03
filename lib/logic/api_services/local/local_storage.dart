@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:esolink/models/auth_model/auth_user_response.dart';
+import 'package:esolink/models/service_provider_response_model.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -103,5 +104,13 @@ Future<AuthUserResponse> fetchUserDetails() async {
   String? userData = _prefs.getString("saveUserDetails");
   return AuthUserResponse.fromJson(jsonDecode(userData!));
 }
+
+  Future<void> saveServiceProvidersList({required ServiceProviderResponseModel serviceProviderResponseModel}) async {
+    _prefs.setString("service_provider", jsonEncode(serviceProviderResponseModel.toJson()));
+  }
+  Future<ServiceProviderResponseModel> fetchServiceProvidersList() async {
+    final serviceProviders = _prefs.getString("service_provider");
+    return ServiceProviderResponseModel.fromJson(jsonDecode(serviceProviders!));
+  }
 
 }

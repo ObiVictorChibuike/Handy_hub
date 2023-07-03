@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:esolink/logic/account/controller.dart';
 import 'package:esolink/logic/services_category/category_controller.dart';
+import 'package:esolink/logic/services_category/reminder_response_controller.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
 import 'package:esolink/views/widgets/auth_header.dart';
@@ -42,7 +43,7 @@ class _AddReminderState extends State<AddReminder> {
       });
     }
   }
-  final _ctrl = Get.put(CategoryController());
+  final reminderController = Get.put(ReminderResponseController());
 
   getDate(String date) {
     var inputFormat = DateFormat('yyyy-MM-dd HH:mm');
@@ -82,7 +83,7 @@ class _AddReminderState extends State<AddReminder> {
                 DropDownTextField(
                   onChanged: (value) {
                     final index = controller.categories.indexWhere((element) => element.name == value.toString());
-                    _ctrl.getAllServiceProvider(controller.categories[index].categoryId.toString());
+                    reminderController.getAllReminderServices(categoryId: controller.categories[index].categoryId.toString());
                     serviceProviderType.text = controller.categories[index].categoryId.toString();
                     setState(() {});
                   },
@@ -96,10 +97,10 @@ class _AddReminderState extends State<AddReminder> {
                 const SizedBox(
                   height: 26,
                 ),
-                    GetBuilder<CategoryController>(
-                      init: CategoryController(),
+                    GetBuilder<ReminderResponseController>(
+                      init: ReminderResponseController(),
                         builder: (controller){
-                      return  controller.isLoadingAllRequest == true ?
+                      return  controller.isLoadingAllServices == true ?
                       const Center(child: CupertinoActivityIndicator()) :
                         Column(
                         children: [

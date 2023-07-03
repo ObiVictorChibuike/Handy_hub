@@ -27,12 +27,14 @@ class GetLocation {
       }
     }
     currentPosition = await Location().getLocation();
-    Location().onLocationChanged.listen((LocationData currentLocation) {
-      Location().enableBackgroundMode(enable: true);
+      Location().enableBackgroundMode(enable: false);
       Location().changeSettings(accuracy: LocationAccuracy.high);
-      currentPosition = currentLocation;
-    });
+    // currentPosition = currentLocation;
+    // Location().onLocationChanged.listen((LocationData currentLocation) {
+    // Location().enableBackgroundMode(enable: false);
+    // Location().changeSettings(accuracy: LocationAccuracy.high);
+    // currentPosition = currentLocation;
+    // });
     return currentPosition;
   }
-
 }

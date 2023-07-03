@@ -39,18 +39,11 @@ class _AllDeliveryScreenState extends State<AllDeliveryScreen> {
       init: DeliveryController(),
         builder: (controller){
       return Scaffold(
-        floatingActionButton: loginStatus == true && controller.isLoadingAllDeliveryResponse == false &&
-      controller.delivery!.isEmpty || controller.delivery == [] || controller.delivery == null ?
+          floatingActionButton: controller.delivery!.isEmpty || controller.delivery == [] || controller.delivery == null ?
         const SizedBox() :
-        // FloatingActionButton(onPressed: (){
-        //   Get.to(()=> const AddDelivery());
-        // }, child: const Icon(Icons.add, color: Colors.white,),) :
-        loginStatus == true && controller.isLoadingAllDeliveryResponse == false &&
-            controller.delivery!.isNotEmpty || controller.delivery != [] || controller.delivery != null ?
         FloatingActionButton(onPressed: (){
           Get.to(()=> const AddDelivery());
-        }, child: const Icon(Icons.add, color: Colors.white,),) :
-        const SizedBox(),
+        }, child: const Icon(Icons.add, color: Colors.white,),),
           appBar: AppBar(
             // leading: GestureDetector(
             //     onTap: (){

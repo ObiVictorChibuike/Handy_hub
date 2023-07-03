@@ -38,8 +38,9 @@ class _reminder_ListState extends State<reminder_List> {
       init: AccountController(),
         builder: (controller){
       return Scaffold(
-        floatingActionButton: loginStatus == true && controller.allReminderResponse == null ||
-            controller.allReminderResponse!.reminder!.isEmpty || controller.allReminderResponse!.reminder! == [] ?
+        floatingActionButton: controller.allReminderResponse == null ||
+            controller.allReminderResponse!.reminder!.isEmpty ||
+            controller.allReminderResponse!.reminder! == [] && loginStatus == true ?
             const SizedBox() :
         loginStatus == true && controller.allReminderResponse != null ||
             controller.allReminderResponse!.reminder!.isNotEmpty || controller.allReminderResponse!.reminder! != [] ?

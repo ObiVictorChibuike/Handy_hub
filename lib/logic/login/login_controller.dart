@@ -106,6 +106,37 @@ class LoginController extends GetxController{
     }
   }
 
+
+  Future<void> updateLocationInit() async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    final userDetails = await LocalCachedData.instance.fetchUserDetails();
+    final serviceProviderId = userDetails.serviceProviders![0].serviceProviderId;
+    final value = await GetLocation.instance!.checkLocation;
+    log("This it the longitude ${value.longitude.toString()}");
+    try{
+      var body = {
+        "serviceProviderId": serviceProviderId,
+        "latitude": value.latitude.toString(),
+        "longitude": value.longitude.toString(),
+      };
+      var response = await NetworkProvider().call(path: "/Services/update/location", method: RequestMethod.post, body: body,);
+      UpdateLocationResponse.fromJson(response!.data);
+    }on DioError catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      showErrorSnackBar(Get.context,
+          title: "Something Went Wrong",
+          content: err.response?.data['title'] ?? errorMessage);
+      update();
+      throw errorMessage;
+    } catch (err) {
+      showErrorSnackBar(Get.context,
+          title: "Something Went Wrong",
+          content: err.toString());
+      update();
+      throw err.toString();
+    }
+  }
+
   Future<void> getAuthUser({required email}) async {
     try{
       var response = await NetworkProvider().call(path: "/Services/identity/profile?email=$email", method: RequestMethod.get,);
