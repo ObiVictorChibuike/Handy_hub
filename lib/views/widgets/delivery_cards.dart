@@ -74,7 +74,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
       "Update Status"
     ];
     return GetBuilder<DeliveryController>(
-      init: DeliveryController(),
+      init: Get.find<DeliveryController>(),
         builder: (controller){
       return Padding(
         padding: const EdgeInsets.only(bottom: 30),
@@ -155,7 +155,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                           ),
                                           const SizedBox(height: 10,),
                                           GetBuilder<DeliveryController>(
-                                              init: DeliveryController(),
+                                              init: Get.find<DeliveryController>(),
                                               builder: (controller){
                                                 return  GestureDetector(
                                                   onTap: (){
@@ -169,7 +169,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                               }),
                                           const Divider(),
                                           GetBuilder<DeliveryController>(
-                                              init: DeliveryController(),
+                                              init:Get.find<DeliveryController>(),
                                               builder: (controller){
                                                 return  GestureDetector(
                                                   onTap: (){
@@ -268,7 +268,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           ),
                           const SizedBox(height: 10,),
                           GetBuilder<DeliveryController>(
-                              init: DeliveryController(),
+                              init: Get.find<DeliveryController>(),
                               builder: (controller){
                                 return  GestureDetector(
                                   onTap: (){
@@ -342,7 +342,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                               }),
                           const Divider(),
                           GetBuilder<DeliveryController>(
-                              init: DeliveryController(),
+                              init: Get.find<DeliveryController>(),
                               builder: (controller){
                                 return GestureDetector(
                                   onTap: (){
@@ -419,7 +419,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                               }),
                           const Divider(),
                           GetBuilder<DeliveryController>(
-                              init: DeliveryController(),
+                              init: Get.find<DeliveryController>(),
                               builder: (controller){
                                 return GestureDetector(
                                   onTap: (){

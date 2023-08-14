@@ -66,13 +66,12 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productAmountController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
-  final _controller = Get.put(AccountController());
+  final _controller = Get.find<AccountController>();
   _showImagePickerDialog(BuildContext context, int index) async {
     return showDialog(
       context: context,
       builder: (context) {
         return GetBuilder<AccountController>(
-            init: AccountController(),
             builder: (controller){
               return SimpleDialog(
                 backgroundColor: Colors.white,

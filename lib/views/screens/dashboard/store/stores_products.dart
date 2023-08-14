@@ -42,6 +42,7 @@ class _StoresProductState extends State<StoresProduct> {
   final _ctrl = Get.put(StoreController());
   bool? loginStatus;
   int? customerId;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_){
@@ -52,18 +53,20 @@ class _StoresProductState extends State<StoresProduct> {
     });
     super.initState();
   }
+
+  //Get Authentication
   Future<void> getAuthUser() async {
     Get.put<LocalCachedData>(await LocalCachedData.create());
     final userDetails = await LocalCachedData.instance.fetchUserDetails();
     customerId = userDetails.serviceProviders![0].serviceProviderId;
   }
 
+  //Get
   Future<bool> checkLoginStatus() async {
     Get.put<LocalCachedData>(await LocalCachedData.create());
     final isLoggedIn = await LocalCachedData.instance.getLoginStatus();
     loginStatus = isLoggedIn;
     loginStatus == true ? _ctrl.getTotalCartItemInit(context: context) : null;
-    log("finally !!!!");
     return isLoggedIn;
   }
 
@@ -217,7 +220,6 @@ class _StoresProductState extends State<StoresProduct> {
                   children: [
                     const Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 30,),
                     GetBuilder<StoreController>(
-                        init: StoreController(),
                         builder: (controller){
                           return Container(
                             height: 18, width: 18, decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(40)),
@@ -434,70 +436,6 @@ class _StoresProductState extends State<StoresProduct> {
                                     })
                                   ],
                                 ),
-                                // const Divider(),
-                                // Text("Rating", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)),
-                                // const SizedBox(height: 10,),
-                                // Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                //   children: [
-                                //     ...List.generate(rating.length, (index){
-                                //       return GestureDetector(
-                                //         onTap: (){
-                                //           update((){
-                                //             ratingFilterValueIndex = index;
-                                //           });
-                                //           if(index == 0){
-                                //             selectedRating = 1.toString();
-                                //           }else if(index == 1){
-                                //             selectedRating = 2.toString();
-                                //           }else if(index == 2){
-                                //             selectedRating = 3.toString();
-                                //           }else if(index == 3){
-                                //             selectedRating = 4.toString();
-                                //           }else if(index == 4){
-                                //             selectedRating = 5.toString();
-                                //           }
-                                //         },
-                                //         child: Container(color: Colors.white,
-                                //           padding: const EdgeInsets.symmetric(vertical: 5.0),
-                                //           child: Row(
-                                //             children: [
-                                //               Container(
-                                //                 height: 18, width: 18,
-                                //                 decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.black), shape: BoxShape.circle),
-                                //                 child: Padding(
-                                //                   padding: const EdgeInsets.all(3.0),
-                                //                   child: Container(
-                                //                     height: 12, width: 12,
-                                //                     decoration: BoxDecoration(color: ratingFilterValueIndex == index ? primaryColor
-                                //                         : Colors.white, shape: BoxShape.circle),
-                                //                   ),
-                                //                 ),
-                                //               ),
-                                //               const SizedBox(width: 8,),
-                                //               RatingBar.builder(
-                                //                 ignoreGestures: true,
-                                //                 glowColor:  const Color(0xffF2994A),
-                                //                 itemSize: 15,
-                                //                 initialRating: rating[index].toDouble(),
-                                //                 minRating: 1,
-                                //                 direction: Axis.horizontal,
-                                //                 allowHalfRating: true,
-                                //                 itemCount: 5,
-                                //                 itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                                //                 itemBuilder: (context, _) => const Icon(
-                                //                   Icons.star, size: 12,
-                                //                   color: Color(0xffF2994A),
-                                //                 ),
-                                //                 onRatingUpdate: (rating) {
-                                //                 },
-                                //               ),
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       );
-                                //     })
-                                //   ],
-                                // ),
                               ],
                             );
                           }),
@@ -526,7 +464,7 @@ class _StoresProductState extends State<StoresProduct> {
           Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
             children: [
                SizedBox(height: MediaQuery.of(context).size.height /3,),
-              const Center(child: Text('This products are not available in this location', style: TextStyle(color: Colors.red),)),
+              const Center(child: Text('These products are not available in this location', style: TextStyle(color: Colors.red),)),
               SizedBox(height: MediaQuery.of(context).size.height /3,),
             ],
           ) :

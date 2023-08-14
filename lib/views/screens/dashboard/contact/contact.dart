@@ -19,7 +19,7 @@ class _contact_PageState extends State<contact_Page> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
+      init: Get.find<AccountController>(),
         builder: (controller){
       return SafeArea(top: false, bottom: false,
         child: Scaffold(
@@ -71,7 +71,7 @@ class _contact_PageState extends State<contact_Page> {
                           ],
                         ),
                         const SizedBox(height: 5,),
-                        const Text('handyhubapp@gmail.com)'),
+                        const Text('handyhubapp@gmail.com'),
                       ],
                     ),
                   ),

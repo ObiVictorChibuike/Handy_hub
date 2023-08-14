@@ -56,7 +56,7 @@ class _VendorProductPageState extends State<VendorProductPage> {
     return isLoggedIn;
   }
   bool? loginStatus;
-  final _controller = Get.put(AccountController());
+  final _controller = Get.find<AccountController>();
 
   @override
   void initState() {
@@ -68,7 +68,6 @@ class _VendorProductPageState extends State<VendorProductPage> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
         final buttonTitle = [
           "Edit",

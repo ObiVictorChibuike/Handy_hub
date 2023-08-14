@@ -305,6 +305,7 @@ class _HomepageState extends State<Homepage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CupertinoSearchTextField(
+                          placeholder: "Search for services",
                           onChanged: (value) => input(value),
                         ),
                         const SizedBox(

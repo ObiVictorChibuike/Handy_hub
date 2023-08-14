@@ -15,7 +15,7 @@ class jobs_Page extends StatefulWidget {
 }
 
 class _jobs_PageState extends State<jobs_Page> {
-  final _ctrl = Get.put(AccountController());
+  final _ctrl = Get.find<AccountController>();
 
   @override
   void initState() {
@@ -26,7 +26,6 @@ class _jobs_PageState extends State<jobs_Page> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
       return Scaffold(
         appBar: AppBar(

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231136300656:android:4dfdbba9ae37d77f53eeb5",
+        "mobilesdk_app_id": "1:231136300656:android:a6ef5249bdd78ba953eeb5",
         "android_client_info": {
-          "package_name": "com.example.esolink"
+          "package_name": "com.app.handyhub"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "231136300656-h7qveo65r9odgskov9qdkjgb5ab695r3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "231136300656-dackiafoiha5mr94mgko0krht8o3mpbe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.esolink"
+              }
             }
           ]
         }

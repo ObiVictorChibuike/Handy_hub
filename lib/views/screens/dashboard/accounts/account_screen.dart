@@ -11,11 +11,11 @@ import 'package:esolink/views/screens/sign_in/initial_sign_in.dart';
 import 'package:esolink/views/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../constants/colors.dart';
 import '../../../widgets/accountsCard.dart';
 import '../contact/contact.dart';
 import '../faq/faqScreen.dart';
-import '../inv-mgt/inventoryScreen.dart';
 import '../password/password.dart';
 import '../profile/profile.dart';
 
@@ -56,6 +56,32 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
     );
   }
+
+  unSubscribeAlertDialog({required void Function() onPressed}){
+    showDialog(context: context,
+      builder: (context) => CleanDialog(
+        title: 'Unsubscribe from HandyHub?',
+        content: 'Are you sure you want to unsubscribe from HandyHub ? Your account and data would be deleted',
+        backgroundColor:  primaryColor,
+        titleTextStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+        contentTextStyle: const TextStyle(fontSize: 13, color: Colors.white),
+        actions: [
+          CleanDialogActionButtons(
+            actionTitle: 'Accept',
+            textColor: primaryColor,
+            onPressed: onPressed,
+          ),
+          CleanDialogActionButtons(
+            actionTitle: 'Cancel',
+            textColor: const Color(0xffbe3a2c),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+
   showSignInAlertDialog({required void Function() onPressed}){
     showDialog(context: context,
       builder: (context) => CleanDialog(
@@ -79,7 +105,6 @@ class _AccountScreenState extends State<AccountScreen> {
       ),
     );
   }
-  final _controller = Get.put(AccountController());
   AuthUserResponse? authUserResponse;
   Future<void> getAuthUser() async {
     Get.put<LocalCachedData>(await LocalCachedData.create());
@@ -93,14 +118,12 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     checkLoginStatus();
-    _controller.getAllRequestedServices();
     getAuthUser();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
           return SafeArea(top: false, bottom: false,
             child: Scaffold(
@@ -220,15 +243,54 @@ class _AccountScreenState extends State<AccountScreen> {
                         });
                       }
                     },),
+                    GestureDetector(
+                      onTap: ()async{
+                        if(loginStatus == true){
+                          unSubscribeAlertDialog(onPressed: ()async{
+                            Navigator.of(context).pop();
+                            final Uri url = Uri.parse('https://gethandyhub.com/#/unsubscribe');
+                            if (!await launchUrl(url).then((value){
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (context) => const InitialSignIn()),
+                                      (Route<dynamic> route) => false);
+                              return true;
+                            })) {
+                              throw Exception('Could not launch $url');
+                            }
+                          });
+                        }else{
+                          showSignInAlertDialog(onPressed: (){
+                            Navigator.of(context).pop();
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitialSignIn(route: "account",)));
+                          });
+                        }
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * .07,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 17.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right:15.0),
+                                child: Icon(Icons.unsubscribe, color: Colors.black,),
+                              ),
+                              Text('Unsubscribe', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     const Padding(
                       padding: EdgeInsets.only(left:15.0, top: 15.0, bottom: 15.0),
                       child: Text('About HandyHub', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
                     ),
                     accounts_Card(iconText: 'question', text: 'Frequently Asked Questions', onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return const faq_Page();
-                          }));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const faq_Page();
+                      }));
                     },),
                     accounts_Card(iconText: 'comments', text: 'Contact Us', onTap: () {
                       Navigator.push(context,

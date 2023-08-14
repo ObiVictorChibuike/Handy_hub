@@ -37,6 +37,22 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class AccountController extends GetxController{
+  int page = 1;
+  final int _limit = 20;
+  List<RequestedServices>? requestedServices = <RequestedServices>[].obs;
+  Future<void> _firstLoad()async{
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    final userDetails = await LocalCachedData.instance.fetchUserDetails();
+    final customerId = userDetails.serviceProviders![0].serviceProviderId;
+    try{
+      var response = await NetworkProvider().call(path: "/Services/requested/services/by/customerId/pagination?PageNumber=$page&PageSize=$_limit&PageId=$customerId", method: RequestMethod.get,);
+        requestedServices = AllRequestedServicesResponse.fromJson(response!.data).response?.data;
+        update();
+    }catch(err){
+      update();
+      throw err.toString();
+    }
+  }
   bool hasReminder = false;
   AllReminderResponse? allReminderResponse;
 
@@ -160,28 +176,28 @@ class AccountController extends GetxController{
         }
   }
 
-  Future<void> getAllRequestedServices() async {
-    Get.put<LocalCachedData>(await LocalCachedData.create());
-    final userDetails = await LocalCachedData.instance.fetchUserDetails();
-    final customerId = userDetails.serviceProviders![0].serviceProviderId;
-    hasRequestedServices = false;
-    update();
-    try{
-      var response = await NetworkProvider().call(path: "/Services/requested/services/by/customerId?customerId=$customerId", method: RequestMethod.get,);
-      allRequestedServicesResponse = AllRequestedServicesResponse.fromJson(response!.data);
-      hasRequestedServices = true;
-      update();
-    }on dio.DioError catch (err) {
-      hasRequestedServices = false;
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      update();
-      throw errorMessage;
-    } catch (err) {
-      hasRequestedServices = false;
-      update();
-      throw err.toString();
-    }
-  }
+  // Future<void> getAllRequestedServices() async {
+  //   Get.put<LocalCachedData>(await LocalCachedData.create());
+  //   final userDetails = await LocalCachedData.instance.fetchUserDetails();
+  //   final customerId = userDetails.serviceProviders![0].serviceProviderId;
+  //   hasRequestedServices = false;
+  //   update();
+  //   try{
+  //     var response = await NetworkProvider().call(path: "/Services/requested/services/by/customerId?customerId=$customerId", method: RequestMethod.get,);
+  //     allRequestedServicesResponse = AllRequestedServicesResponse.fromJson(response!.data);
+  //     hasRequestedServices = true;
+  //     update();
+  //   }on dio.DioError catch (err) {
+  //     hasRequestedServices = false;
+  //     final errorMessage = Future.error(ApiError.fromDio(err));
+  //     update();
+  //     throw errorMessage;
+  //   } catch (err) {
+  //     hasRequestedServices = false;
+  //     update();
+  //     throw err.toString();
+  //   }
+  // }
 
   @override
   void onInit() {
@@ -442,7 +458,8 @@ class AccountController extends GetxController{
         showMessageSnackBar(context, title: "Success", content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
         log(payLoad.status!.isSuccessful.toString());
         if(payLoad.status?.isSuccessful == true && context.mounted){
-          await getAllRequestedServices().then((value){
+          await _firstLoad().then((value){
+            update();
             Get.back();
           });
         }else{
@@ -477,7 +494,7 @@ class AccountController extends GetxController{
       var response = await NetworkProvider().call(path: "/Services/update/service/checkout/cash", method: RequestMethod.post, body: body,);
       final payLoad = PaymentRequestResponse.fromJson(response!.data);
         if(payLoad.status?.isSuccessful == true){
-          await getAllRequestedServices().then((value){
+          await _firstLoad().then((value){
             log("Done");
             showMessageSnackBar(Get.context, title: "Success", content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
             Get.back();
@@ -530,7 +547,7 @@ class AccountController extends GetxController{
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         showMessageSnackBar(context, title: "Success", content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
         if(payLoad.status?.isSuccessful == true && context.mounted){
-          await getAllRequestedServices().then((value){
+          await _firstLoad().then((value){
             Get.back();
           });
         }else{
@@ -616,7 +633,7 @@ class AccountController extends GetxController{
       var response = await NetworkProvider().call(path: "/Services/update/job/rating", method: RequestMethod.post, body: body,);
       final payLoad = RatingResponse.fromJson(response!.data);
       if(payLoad.status?.isSuccessful == true){
-        await getAllRequestedServices().then((value){
+        await _firstLoad().then((value){
           showMessageSnackBar(Get.context, title: "Success", content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
           Get.back();
         });
@@ -655,7 +672,7 @@ class AccountController extends GetxController{
       var response = await NetworkProvider().call(path: "/Services/delete/requested/service?Id=$requestId", method: RequestMethod.get,);
       final payLoad = RatingResponse.fromJson(response!.data);
       if(payLoad.status?.isSuccessful == true){
-        await getAllRequestedServices().then((value){
+        await _firstLoad().then((value){
           showMessageSnackBar(Get.context, title: "Success", content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
           Get.back();
         });
@@ -812,7 +829,7 @@ class AccountController extends GetxController{
       var response = await NetworkProvider().call(path: "/services/update/job/status", method: RequestMethod.post, body: body,);
       final payLoad = UpdateStatusResponse.fromJson(response!.data);
       if(payLoad.status?.isSuccessful == true){
-        await getAllRequestedServices().then((value){
+        await _firstLoad().then((value){
           showMessageSnackBar(Get.context, title: "Success", content: payLoad.status?.message?.friendlyMessage ?? "Request Successful");
           Get.back();
         });

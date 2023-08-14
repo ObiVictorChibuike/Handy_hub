@@ -42,7 +42,7 @@ class LoginController extends GetxController{
         await ctrl.getAllRiders();
         await getAuthUser(email: username).then((value) async {
           await LocalCachedData.instance.cacheLoginStatus(isLoggedIn: true);
-          await updateLocation();
+          // await updateLocation();
           Get.back();
           Get.offAll(()=> const Dashboard());
           dbc.index = 0;

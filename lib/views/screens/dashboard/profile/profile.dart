@@ -48,7 +48,7 @@ class profile_Screen extends StatefulWidget {
 class _profile_ScreenState extends State<profile_Screen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  final _ctrl = Get.put(AccountController());
+  final _ctrl = Get.find<AccountController>();
 
   @override
   void initState() {
@@ -65,7 +65,6 @@ class _profile_ScreenState extends State<profile_Screen>
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
       return Scaffold(
         appBar: AppBar(

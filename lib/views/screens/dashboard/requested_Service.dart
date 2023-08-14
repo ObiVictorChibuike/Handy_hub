@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:esolink/logic/account/controller.dart';
 import 'package:esolink/logic/api_services/local/local_storage.dart';
 import 'package:esolink/logic/api_services/remote/network_servcises/dio_service_config/dio_client.dart';
 import 'package:esolink/models/account/all_requested_services.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
-import 'package:esolink/views/screens/dashboard/reminder/add_reminder.dart';
 import 'package:esolink/views/screens/dashboard/requests/add_request.dart';
 import 'package:esolink/views/widgets/request_Card.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,20 +18,19 @@ class requested_Page extends StatefulWidget {
 }
 
 class _requested_PageState extends State<requested_Page> {
+  final _controller = Get.find<AccountController>();
   int page = 1;
   final int _limit = 20;
   bool hasNextPage = true;
   bool isLoadingMoreData = false;
   bool _isFirstLoadRunning = false;
-  List<RequestedServices>? requestedServices = <RequestedServices>[].obs;
   late ScrollController _scrollController;
 
   Future<void> _loadMore() async {
     Get.put<LocalCachedData>(await LocalCachedData.create());
     final userDetails = await LocalCachedData.instance.fetchUserDetails();
     final customerId = userDetails.serviceProviders![0].serviceProviderId;
-    if(hasNextPage == true && _isFirstLoadRunning == false && isLoadingMoreData == false
-    && _scrollController.position.extentAfter < 300){
+    if(hasNextPage == true && _isFirstLoadRunning == false && isLoadingMoreData == false && _scrollController.position.extentAfter < 300){
       setState(() {
         isLoadingMoreData = true;
       });
@@ -44,7 +40,7 @@ class _requested_PageState extends State<requested_Page> {
           final payLoad = AllRequestedServicesResponse.fromJson(response!.data).response?.data;
           if(payLoad!.isNotEmpty){
             setState(() {
-              requestedServices?.addAll(payLoad);
+              _controller.requestedServices?.addAll(payLoad);
             });
           }else{
             setState(() {
@@ -70,8 +66,7 @@ class _requested_PageState extends State<requested_Page> {
     try{
       var response = await NetworkProvider().call(path: "/Services/requested/services/by/customerId/pagination?PageNumber=$page&PageSize=$_limit&PageId=$customerId", method: RequestMethod.get,);
       setState(() {
-        requestedServices = AllRequestedServicesResponse.fromJson(response!.data).response?.data;
-        log('This is the length ${requestedServices?.length}');
+        _controller.requestedServices = AllRequestedServicesResponse.fromJson(response!.data).response?.data;
       });
     }catch(err){
       throw err.toString();
@@ -92,12 +87,11 @@ class _requested_PageState extends State<requested_Page> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
       return Scaffold(
         appBar: AppBar(
             backgroundColor: white, elevation: 0.0,
-            leading: requestedServices!.isEmpty || requestedServices == [] ?
+            leading: _controller.requestedServices!.isEmpty || _controller.requestedServices == [] ?
             const SizedBox() :
             GestureDetector(
                 onTap: (){
@@ -120,7 +114,7 @@ class _requested_PageState extends State<requested_Page> {
         body: _isFirstLoadRunning ?
             const Center(
               child: CupertinoActivityIndicator(),
-            ) : requestedServices!.isEmpty || requestedServices == [] ?
+            ) : _controller.requestedServices!.isEmpty || _controller.requestedServices == [] ?
         const AddRequest()
         : SingleChildScrollView(
           controller: _scrollController,
@@ -129,8 +123,8 @@ class _requested_PageState extends State<requested_Page> {
             padding: const EdgeInsets.all(10.0),
             child: Column(crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ...List.generate(requestedServices!.length, (index){
-                  return requests_Card(requestedService: requestedServices![index]);
+                ...List.generate(_controller.requestedServices!.length, (index){
+                  return requests_Card(requestedService: _controller.requestedServices![index]);
                 }),
                 if(isLoadingMoreData == true)
                   const Padding(

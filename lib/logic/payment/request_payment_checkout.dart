@@ -27,7 +27,7 @@ class RequestPayWithCardPayment{
   }
 
   chargeCard() async {
-    final ctrl = Get.put(AccountController());
+    final ctrl =  Get.find<AccountController>();
     final Flutterwave flutterWave = Flutterwave(
         context: context,
         publicKey: publicKey,

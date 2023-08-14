@@ -33,7 +33,7 @@ class _AddReminderState extends State<AddReminder> {
       initialDate: DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day),
       firstDate: DateTime(1900),
       lastDate: DateTime(2030),
-      helpText: 'SELECT YOUR DATE OF BIRTH',
+      helpText: 'SELECT REMINDER DATE',
       confirmText: 'SELECT',
     );
     if (picked != null ) {

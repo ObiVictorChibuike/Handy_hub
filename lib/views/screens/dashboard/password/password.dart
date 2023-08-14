@@ -25,7 +25,7 @@ class _change_PasswordState extends State<change_Password> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
+      init: Get.find<AccountController>(),
         builder: (controller){
       return Scaffold(
           appBar: AppBar(

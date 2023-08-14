@@ -2,8 +2,6 @@ import 'package:esolink/logic/login/registration_controller.dart';
 import 'package:esolink/logic/registration/registration_bloc.dart';
 import 'package:esolink/logic/services_category/service_bloc.dart';
 import 'package:esolink/logic/states/state_bloc.dart';
-import 'package:esolink/models/services_category/categories.dart';
-import 'package:esolink/models/states/states_model.dart';
 import 'package:esolink/service_locator.dart';
 import 'package:esolink/views/constants/colors.dart';
 import 'package:esolink/views/constants/text_decoration.dart';
@@ -17,11 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../logic/registration/registration_request.dart';
-
-// ignore: must_be_immutable
 class ServiceProviderRegistration extends StatefulWidget {
-  ServiceProviderRegistration({Key? key}) : super(key: key);
+  const ServiceProviderRegistration({Key? key}) : super(key: key);
 
   @override
   State<ServiceProviderRegistration> createState() => _ServiceProviderRegistrationState();
@@ -44,6 +39,7 @@ class _ServiceProviderRegistrationState extends State<ServiceProviderRegistratio
   int? stateId;
   int? categoryId;
   bool? onSelectTermsAndCondition;
+
   _launchURL() async {
     final Uri url = Uri.parse('https://gethandyhub.com/#/terms');
     if (!await launchUrl(url)) {

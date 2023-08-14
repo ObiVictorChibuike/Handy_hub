@@ -25,7 +25,7 @@ class _reminder_ListState extends State<reminder_List> {
     loginStatus = isLoggedIn;
     return isLoggedIn;
   }
-  final _ctrl = Get.put(AccountController());
+  final _ctrl = Get.find<AccountController>();
   @override
   void initState() {
     checkLoginStatus();
@@ -35,7 +35,6 @@ class _reminder_ListState extends State<reminder_List> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
       return Scaffold(
         floatingActionButton: controller.allReminderResponse == null ||

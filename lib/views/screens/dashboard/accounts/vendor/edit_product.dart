@@ -122,7 +122,6 @@ class _EditProductState extends State<EditProduct> {
       context: context,
       builder: (context) {
         return GetBuilder<AccountController>(
-            init: AccountController(),
             builder: (controller){
               return SimpleDialog(
                 backgroundColor: Colors.white,
@@ -184,11 +183,10 @@ class _EditProductState extends State<EditProduct> {
     );
   }
   bool? showAvailability;
-  final _controller = Get.put(AccountController());
+  final _controller = Get.find<AccountController>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-        init: AccountController(),
         builder: (controller){
           return SafeArea(top: false, bottom: false,
               child: Scaffold(

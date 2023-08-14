@@ -124,6 +124,7 @@ class  RegistrationController extends GetxController{
     required String address, int? categoryId,
     required int stateId, required String password,
     String? referralCode, bool? termsAndCondition}) async {
+    final value = await GetLocation.instance!.checkLocation;
     progressIndicator(Get.context);
     var body = {
       "serviceProviderId": 0,
@@ -138,7 +139,9 @@ class  RegistrationController extends GetxController{
       "stateId": stateId,
       "password": password,
       "referralCode": referralCode,
-      "termsAndCondition": termsAndCondition
+      "termsAndCondition": termsAndCondition,
+      "latitude": value.latitude,
+      "longitude": value.longitude,
     };
     try{
       var response = await NetworkProvider().call(path: "/Services/register/service/provider/website", method: RequestMethod.post, body: body);
@@ -146,7 +149,7 @@ class  RegistrationController extends GetxController{
       Get.put<LocalCachedData>(await LocalCachedData.create());
       // await LocalCachedData.instance.cacheAuthToken(token: registrationResponse.);
       if(registrationResponse?.status?.isSuccessful == true){
-        await updateLocation();
+        // await updateLocation();
         Get.back();
         Get.offAll(()=>OtpVerification(userEmail: email,password: password,));
         showMessageSnackBar(Get.context, title: "Success",
@@ -208,7 +211,7 @@ class  RegistrationController extends GetxController{
         await ctrl.getAllRiders();
         await getAuthUser(email: username, context: Get.context!).then((value) async {
           await LocalCachedData.instance.cacheLoginStatus(isLoggedIn: true);
-          await updateLocation();
+          // await updateLocation();
         });
         return payLoad;
       }else{
@@ -233,38 +236,6 @@ class  RegistrationController extends GetxController{
       throw err.toString();
     }
     return loginResponse!;
-  }
-
-  Future<void> updateLocation() async {
-    Get.put<LocalCachedData>(await LocalCachedData.create());
-    final userDetails = await LocalCachedData.instance.fetchUserDetails();
-    final serviceProviderId = userDetails.serviceProviders![0].serviceProviderId;
-    final value = await GetLocation.instance!.checkLocation;
-    log(value.longitude.toString());
-    try{
-      var body = {
-        "serviceProviderId": serviceProviderId,
-        "latitude": value.latitude.toString(),
-        "longitude": value.longitude.toString(),
-      };
-      var response = await NetworkProvider().call(path: "/Services/update/location", method: RequestMethod.post, body: body,);
-      UpdateLocationResponse.fromJson(response!.data);
-    }on DioError catch (err) {
-      final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.back();
-      showErrorSnackBar(Get.context,
-          title: "Something Went Wrong",
-          content: err.response?.data['title'] ?? errorMessage);
-      update();
-      throw errorMessage;
-    } catch (err) {
-      Get.back();
-      showErrorSnackBar(Get.context,
-          title: "Something Went Wrong",
-          content: err.toString());
-      update();
-      throw err.toString();
-    }
   }
 
   Future<void> getAuthUser({required email, required BuildContext context}) async {

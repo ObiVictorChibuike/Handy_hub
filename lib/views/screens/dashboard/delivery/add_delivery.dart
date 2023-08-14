@@ -25,7 +25,7 @@ class _AddDeliveryState extends State<AddDelivery> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DeliveryController>(
-        init: DeliveryController(),
+        init: Get.find<DeliveryController>(),
         builder: (controller){
           return Scaffold(
             backgroundColor: white,

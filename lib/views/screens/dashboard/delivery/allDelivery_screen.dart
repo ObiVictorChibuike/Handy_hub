@@ -36,7 +36,6 @@ class _AllDeliveryScreenState extends State<AllDeliveryScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DeliveryController>(
-      init: DeliveryController(),
         builder: (controller){
       return Scaffold(
           floatingActionButton: controller.delivery!.isEmpty || controller.delivery == [] || controller.delivery == null ?

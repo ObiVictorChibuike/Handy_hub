@@ -58,7 +58,7 @@ class _DeliveryScreenState extends State<DeliveryScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DeliveryController>(
-      init: DeliveryController(),
+      init: Get.find<DeliveryController>(),
         builder: (controller){
       return Scaffold(
         body: Padding(

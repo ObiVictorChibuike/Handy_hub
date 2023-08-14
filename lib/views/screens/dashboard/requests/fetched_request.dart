@@ -73,7 +73,7 @@ class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
       _isFirstLoadRunning = false;
     });
   }
-  final _ctrl = Get.put(CategoryController());
+  final _ctrl = Get.find<CategoryController>();
 
   @override
   void initState() {
@@ -85,7 +85,6 @@ class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(
-      init: CategoryController(),
         builder: (controller){
       return Scaffold(
           backgroundColor: white,

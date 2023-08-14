@@ -130,7 +130,7 @@ class _requests_CardState extends State<requests_Card> {
     );
   }
 
-  final _controller = Get.put(AccountController());
+  final _controller = Get.find<AccountController>();
   @override
   Widget build(BuildContext context) {
     final buttonTitle = [

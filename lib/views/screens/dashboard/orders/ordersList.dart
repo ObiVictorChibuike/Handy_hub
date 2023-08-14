@@ -16,7 +16,7 @@ class AllOrder extends StatefulWidget {
 }
 
 class _AllOrderState extends State<AllOrder> {
-  final _ctrl = Get.put(AccountController());
+  final _ctrl = Get.find<AccountController>();
 
   @override
   void initState() {
@@ -26,7 +26,6 @@ class _AllOrderState extends State<AllOrder> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
       return  Scaffold(
         appBar: AppBar(

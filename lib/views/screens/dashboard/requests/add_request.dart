@@ -54,11 +54,10 @@ class _AddRequestState extends State<AddRequest> {
       ),
     );
   }
-  final _ctrl = Get.put(AccountController());
+  final _ctrl = Get.find<AccountController>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AccountController>(
-      init: AccountController(),
         builder: (controller){
       return Scaffold(
         body: Padding(
