@@ -81,7 +81,7 @@ fetchAllStoresCategories(BuildContext? context) async {
   StoresBLoc storesBLoc = locator.get<StoresBLoc>();
   Get.put<LocalCachedData>(await LocalCachedData.create());
   final token = await LocalCachedData.instance.getAuthToken();
-  var url = "https://gethandyhub.com/Stores/all/store/category";
+  var url = '${BASE_URL}Stores/all/store/category';
   var response = await get(url: url, context: context, token: token);
   List<StoresCategory> storesCategories;
   storesCategories = response['data']['storeCategory'].map<StoresCategory>((e) {

@@ -99,8 +99,8 @@ class HomeController extends GetxController{
     try{
       var body = {
         "serviceProviderId": serviceProviderId,
-        "latitude": value.latitude,
-        "longitude": value.longitude,
+        "latitude": value.latitude.toString(),
+        "longitude": value.longitude.toString(),
       };
       var response = await NetworkProvider().call(path: "/Services/update/location", method: RequestMethod.post, body: body,);
       UpdateLocationResponse.fromJson(response!.data);
