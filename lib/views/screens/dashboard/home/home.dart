@@ -60,6 +60,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     pushNotificationOnInitConfiguration();
     getAuthUser();
+    ctrl.checkLoginStatus();
     super.initState();
   }
 
