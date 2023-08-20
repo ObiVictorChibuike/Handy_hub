@@ -21,6 +21,24 @@ class LocalCachedData{
     _prefs.setString("token", token!);
   }
 
+  Future<String?> getLongitude() async {
+    String? token = _prefs.getString("location");
+    return token;
+  }
+
+  Future<void> cacheLongitude({required String? long}) async {
+    _prefs.setString("location", long!);
+  }
+
+  Future<String?> getLatitude() async {
+    String? token = _prefs.getString("latitude");
+    return token;
+  }
+
+  Future<void> cacheLatitude({required String? lat}) async {
+    _prefs.setString("latitude", lat!);
+  }
+
   Future<int?> getCustomerId() async {
     int? id = _prefs.getInt("CustomerId");
     return id;

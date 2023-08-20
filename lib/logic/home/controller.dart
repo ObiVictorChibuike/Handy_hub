@@ -5,6 +5,7 @@ import 'package:esolink/logic/api_services/local/local_storage.dart';
 import 'package:esolink/logic/api_services/remote/network_servcises/dio_service_config/dio_client.dart';
 import 'package:esolink/logic/api_services/remote/network_servcises/dio_service_config/dio_error.dart';
 import 'package:esolink/logic/location/get_location.dart';
+import 'package:esolink/logic/services_category/category_controller.dart';
 import 'package:esolink/models/account/update_location_response.dart';
 import 'package:esolink/models/services_category/categories.dart';
 import 'package:esolink/models/stores_model/cart_payment_checkout_response.dart';
@@ -91,6 +92,8 @@ class HomeController extends GetxController{
     }
   }
 
+  final _ctrl = Get.put(CategoryController());
+
   Future<void> updateLocation() async {
     Get.put<LocalCachedData>(await LocalCachedData.create());
     final userDetails = await LocalCachedData.instance.fetchUserDetails();
@@ -103,6 +106,8 @@ class HomeController extends GetxController{
         "longitude": value.longitude.toString(),
       };
       var response = await NetworkProvider().call(path: "/Services/update/location", method: RequestMethod.post, body: body,);
+      await LocalCachedData.instance.cacheLatitude(lat: value.latitude.toString());
+      await LocalCachedData.instance.cacheLongitude(long: value.longitude.toString());
       UpdateLocationResponse.fromJson(response!.data);
     }on DioError catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));

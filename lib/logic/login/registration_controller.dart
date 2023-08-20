@@ -149,6 +149,8 @@ class  RegistrationController extends GetxController{
       Get.put<LocalCachedData>(await LocalCachedData.create());
       // await LocalCachedData.instance.cacheAuthToken(token: registrationResponse.);
       if(registrationResponse?.status?.isSuccessful == true){
+        await LocalCachedData.instance.cacheLatitude(lat: value.latitude.toString());
+        await LocalCachedData.instance.cacheLongitude(long: value.longitude.toString());
         // await updateLocation();
         Get.back();
         Get.offAll(()=>OtpVerification(userEmail: email,password: password,));

@@ -79,7 +79,6 @@ class LoginController extends GetxController{
     final userDetails = await LocalCachedData.instance.fetchUserDetails();
     final serviceProviderId = userDetails.serviceProviders![0].serviceProviderId;
     final value = await GetLocation.instance!.checkLocation;
-    log(value.longitude.toString());
     try{
       var body = {
         "serviceProviderId": serviceProviderId,
@@ -88,6 +87,8 @@ class LoginController extends GetxController{
       };
       var response = await NetworkProvider().call(path: "/Services/update/location", method: RequestMethod.post, body: body,);
       UpdateLocationResponse.fromJson(response!.data);
+      await LocalCachedData.instance.cacheLatitude(lat: value.latitude.toString());
+      await LocalCachedData.instance.cacheLongitude(long: value.longitude.toString());
     }on DioError catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
       Get.back();

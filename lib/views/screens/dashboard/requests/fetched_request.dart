@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:esolink/logic/api_services/local/local_storage.dart';
 import 'package:esolink/logic/api_services/remote/network_servcises/dio_service_config/dio_client.dart';
 import 'package:esolink/logic/services_category/category_controller.dart';
 import 'package:esolink/models/request_model/request_model.dart';
@@ -35,8 +34,11 @@ class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
         isLoadingMoreData = true;
       });
       page += 1;
+      Get.put<LocalCachedData>(await LocalCachedData.create());
+      final long = await LocalCachedData.instance.getLatitude();
+      final lat = await LocalCachedData.instance.getLongitude();
       try{
-        var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=9.08877&Latidude=4.78888", method: RequestMethod.get,);
+        var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=$long&Latitude=$lat", method: RequestMethod.get,);
         final payLoad = RequestsModel.fromJson(response!.data).response?.data;
         if(payLoad!.isNotEmpty){
           setState(() {
@@ -57,12 +59,14 @@ class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
   }
 
   void _firstLoad()async{
-    log("Started");
     setState(() {
       _isFirstLoadRunning = true;
     });
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    final long = await LocalCachedData.instance.getLatitude();
+    final lat = await LocalCachedData.instance.getLongitude();
     try{
-      var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=${_ctrl.long}&Latidude=${_ctrl.lat}", method: RequestMethod.get,);
+      var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=$long&Latitude=$lat", method: RequestMethod.get,);
       setState(() {
         requestModelList = RequestsModel.fromJson(response!.data).response?.data;
       });

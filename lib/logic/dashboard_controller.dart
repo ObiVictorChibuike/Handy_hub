@@ -26,8 +26,10 @@ class DashboardController extends GetxController{
     await GetLocation.instance!.checkLocation.then((value) async {
       latitude = value.latitude;
       longitude = value.longitude;
-      ctrl.lat = value.latitude;
-      ctrl.long = value.longitude;
+      await LocalCachedData.instance.cacheLatitude(lat: latitude.toString());
+      await LocalCachedData.instance.cacheLongitude(long: longitude.toString());
+      // ctrl.lat = value.latitude;
+      // ctrl.long = value.longitude;
       update();
     });
     // await checkLoginStatus();
