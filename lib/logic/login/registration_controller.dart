@@ -140,8 +140,8 @@ class  RegistrationController extends GetxController{
       "password": password,
       "referralCode": referralCode,
       "termsAndCondition": termsAndCondition,
-      "latitude": value.latitude,
-      "longitude": value.longitude,
+      "latitude": value.latitude.toString(),
+      "longitude": value.longitude.toString(),
     };
     try{
       var response = await NetworkProvider().call(path: "/Services/register/service/provider/website", method: RequestMethod.post, body: body);
