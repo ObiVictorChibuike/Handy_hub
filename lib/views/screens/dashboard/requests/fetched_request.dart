@@ -63,10 +63,10 @@ class _FetchedRequestScreenState extends State<FetchedRequestScreen> {
       _isFirstLoadRunning = true;
     });
     Get.put<LocalCachedData>(await LocalCachedData.create());
-    final long = await LocalCachedData.instance.getLatitude();
-    final lat = await LocalCachedData.instance.getLongitude();
+    final long = await LocalCachedData.instance.getLongitude();
+    final lat = await LocalCachedData.instance.getLatitude();
     try{
-      var response = await NetworkProvider().call(path: "/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=$long&Latitude=$lat", method: RequestMethod.get,);
+      var response = await NetworkProvider().call(path: '/Services/all/providers/by/category/pagination?PageNumber=$page&PageSize=$_limit&PageId=${widget.id}&Longitude=$long&Latidude=$lat', method: RequestMethod.get,);
       setState(() {
         requestModelList = RequestsModel.fromJson(response!.data).response?.data;
       });
