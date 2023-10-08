@@ -41,6 +41,8 @@ class LocalNotificationService{
             priority: Priority.high,
             playSound: true,
             enableVibration: true,
+            icon: "@mipmap/ic_launcher",
+            largeIcon: DrawableResourceAndroidBitmap("@mipmap/ic_launcher")
           )
       );
       await _notificationsPlugin.show(
